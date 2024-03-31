@@ -2,9 +2,9 @@
 #define __PEMAIN_H__
 
 #include <string>
-#include "Matrix.hpp"
-#include "Tanaman.hpp"
-#include "Hewan.hpp"
+// #include "Matrix.hpp"
+// #include "Tanaman.hpp"
+// #include "Hewan.hpp"
 using namespace std;
 
 // Abstract Base Class
@@ -13,38 +13,43 @@ class Pemain {
         string username;
         int uang;
         int beratBadan;
+        static int jumlahPemain;
     public:
         Pemain();
-        void next();  
-        void makan();
-        void cetakPenyimpanan();
-        void beli();
-        void jual();
+        // void next();  
+        // void makan();
+        // void cetakPenyimpanan();
+        // void beli();
+        // void jual();
 };
 
 class Walikota : public Pemain {
     public:
         Walikota();
-        void pungutPajak();
-        void bangunBangunan();
-        void tambahPemain();
+        // void pungutPajak();
+        // void bangunBangunan();
+        // void tambahPemain();
 };
 
 class Petani : public Pemain {
     private:
-        Matrix<Tanaman> ladang;
+        // Matrix<Tanaman> ladang;
+        static int jumlahPetani;
     public:
-        void tanam();
-        void panen();
+        Petani();
+        // void tanam();
+        // void panen();
 };  
 
 class Peternak : public Pemain {
     private:
-        Matrix<Hewan> peternakan;
+        // Matrix<Hewan> peternakan;
+        static int jumlahPeternak;
     public:
-        void kasihMakan();
-        void ternak();
-        void panen();
+        Peternak();
+        // void kasihMakan();
+        // void ternak();
+        // void panen();
 };  
 
 #endif 

@@ -1,22 +1,30 @@
-# Makefile for Writing Make Files Example
- 
-# *****************************************************
-# Variables to control Makefile operation
- 
 CC = g++
 CFLAGS = -Wall -g
- 
-# ****************************************************
-# Targets needed to bring the executable up to date
- 
-main: main.o Point.o Square.o
-    $(CC) $(CFLAGS) -o main main.o Point.o Square.o
- 
-# The main.o target can be written more simply
- 
-main.o: main.cpp Point.h Square.h
-    $(CC) $(CFLAGS) -c main.cpp
- 
-Point.o: Point.h
- 
-Square.o: Square.h Point.h
+
+SRC_MAIN = main.cpp
+OBJ_MAIN = ../bin/$(SRC_MAIN:.cpp=.o)
+
+SRC_GAME = Game.cpp
+OBJ_GAME = ../bin/$(SRC_GAME:.cpp=.o)
+
+SRC_PEMAIN = Pemain.cpp
+OBJ_PEMAIN = ../bin/$(SRC_PEMAIN:.cpp=.o)
+
+EXECUTABLE = ../bin/main_program
+
+all: directories $(EXECUTABLE)
+
+directories:
+	mkdir -p ../bin
+
+$(EXECUTABLE): $(OBJ_MAIN) $(OBJ_PEMAIN) $(OBJ_GAME)
+	$(CC) $(CFLAGS) -o $@ $^
+
+../bin/%.o: %.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(EXECUTABLE) $(OBJ_MAIN) $(OBJ_PEMAIN) $(OBJ_GAME)
+
+run: all
+	$(EXECUTABLE)
