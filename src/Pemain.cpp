@@ -10,7 +10,7 @@ Pemain::Pemain() {
     this->username = "Pemain" + to_string(Pemain::jumlahPemain);
     this->uang = 50;
     this->beratBadan = 40;
-}
+}   
 
 // Walikota
 Walikota::Walikota() : Pemain() {

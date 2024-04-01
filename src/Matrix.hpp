@@ -4,12 +4,14 @@
 template <class T>
 class Matrix {
     private: 
-        int baris;
-        int kolom;
-        T **matrix;
+        const int baris;
+        const int kolom;
+        T ** matrix;
     public :
-        Matrix();
+        Matrix(int baris, int kolom);
         ~Matrix();
+        void setValue(int baris, int kolom, T value);
+        void printMatrix();
 };
 
 #endif 
