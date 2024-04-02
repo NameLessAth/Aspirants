@@ -27,7 +27,7 @@ void Matrix<T>::setValue(int row, int col, T value) {
     if (row >= 1 && row <= baris && col >= 1 && col <= kolom) {
         matrix[row - 1][col - 1] = value;
     } else {
-        cerr << "Index out of bounds!" << endl;
+        cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
     }
 }
 

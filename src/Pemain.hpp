@@ -2,9 +2,8 @@
 #define __PEMAIN_H__
 
 #include <string>
-// #include "Matrix.hpp"
-// #include "Tanaman.hpp"
-// #include "Hewan.hpp"
+#include "Matrix.hpp"
+#include "Simpanan.hpp"
 using namespace std;
 
 // Pemain
@@ -14,7 +13,10 @@ class Pemain {
         string username;
         int uang;
         int beratBadan;
+        Matrix<Simpanan> penyimpanan;
         static int jumlahPemain;
+        static int barisPenyimpanan;
+        static int kolomPenyimpanan;
     public:
         Pemain();
         // void next();  
@@ -36,8 +38,10 @@ class Walikota : public Pemain {
 // Petani
 class Petani : public Pemain {
     private:
-        // Matrix<Tanaman> ladang;
+        Matrix<Tanaman> ladang;
         static int jumlahPetani;
+        static int barisLadang;
+        static int kolomLadang;
     public:
         Petani();
         // void tanam();
@@ -47,8 +51,10 @@ class Petani : public Pemain {
 // Peternak 
 class Peternak : public Pemain {
     private:
-        // Matrix<Hewan> peternakan;
+        Matrix<Hewan> peternakan;
         static int jumlahPeternak;
+        static int barisTernak;
+        static int kolomTernak;
     public:
         Peternak();
         // void kasihMakan();
