@@ -1,4 +1,5 @@
 #include "Matrix.hpp"
+#include "Simpanan.hpp"
 #include <iostream>
 using namespace std;
 
@@ -56,3 +57,4 @@ void Matrix<T>::printMatrix() {
 }
 
 template class Matrix<int>;
+template class Matrix<Simpanan>;

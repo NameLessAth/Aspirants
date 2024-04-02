@@ -4,12 +4,24 @@
 #include <string>
 using namespace std;
 
-class Item {
+// Parent class Simpanan, sehingga semua item child dapat 
+// disimpan di penyimpanan
+class Simpanan {
     protected:
         int id;
-        string kode;
         string name;
         string tipe;
+};
+
+class Bangunan : public Simpanan {
+    public: 
+        Bangunan();
+};
+
+class Item : public Simpanan {
+    protected:
+        string kode;
+        string name;
         int harga;
 };
 
