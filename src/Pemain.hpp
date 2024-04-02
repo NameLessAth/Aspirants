@@ -7,6 +7,7 @@
 // #include "Hewan.hpp"
 using namespace std;
 
+// Pemain
 // Abstract Base Class
 class Pemain {
     protected: 
@@ -23,6 +24,7 @@ class Pemain {
         // void jual();
 };
 
+// Walikota
 class Walikota : public Pemain {
     public:
         Walikota();
@@ -31,6 +33,7 @@ class Walikota : public Pemain {
         // void tambahPemain();
 };
 
+// Petani
 class Petani : public Pemain {
     private:
         // Matrix<Tanaman> ladang;
@@ -41,6 +44,7 @@ class Petani : public Pemain {
         // void panen();
 };  
 
+// Peternak 
 class Peternak : public Pemain {
     private:
         // Matrix<Hewan> peternakan;
