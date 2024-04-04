@@ -27,25 +27,48 @@ void Matrix<T>::setValue(int row, int col, T value) {
     if (row >= 1 && row <= baris && col >= 1 && col <= kolom) {
         matrix[row - 1][col - 1] = value;
     } else {
-        cerr << "Index out of bounds!" << endl;
+        cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
     }
 }
 
 template<class T>
 void Matrix<T>::printMatrix() {
     cout << "\t";
-    for (int i = 1; i <= kolom; ++i) {
-        cout << char('A' + i - 1) << "\t";
+    for (int i = 0; i < kolom; i++) {
+        cout << char('A' + i) << "\t";
     }
     cout << endl;
     cout << "\t+-------+-------+-------+-------+-------+" << endl;
-    for (int i = 1; i <= baris; ++i) {
-        if (i < 10) cout << " ";
-        cout << i << "\t|";
-        for (int j = 1; j <= kolom; ++j) {
-            cout << "   ";
-            if (matrix[i - 1][j - 1] != T()) {
-                cout << matrix[i - 1][j - 1];
+    for (int i = 0; i < baris; i++) {
+        cout << i+1 << "\t|";
+        for (int j = 0; j < kolom; j++) {
+            cout << "  ";
+            if (matrix[i][j] != T()) {
+                cout << matrix[i][j];
+            } else {
+                cout << "";
+            }
+            cout << "\t|";
+        }
+        cout << endl;
+        cout << "\t+-------+-------+-------+-------+-------+" << endl;
+    }
+}
+
+template<>
+void Matrix<Simpanan>::printMatrix() {
+    cout << "\t";
+    for (int i = 0; i < kolom; i++) {
+        cout << char('A' + i) << "\t";
+    }
+    cout << endl;
+    cout << "\t+-------+-------+-------+-------+-------+" << endl;
+    for (int i = 0; i < baris; i++) {
+        cout << i+1 << "\t|";
+        for (int j = 0; j < kolom; j++) {
+            cout << "  ";
+            if (matrix[i][j].getKode() != "XXXX") {
+                cout << matrix[i][j].getKode();
             } else {
                 cout << "";
             }
