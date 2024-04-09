@@ -31,6 +31,7 @@ class Item : public Simpanan {
     protected:
         int harga;
     public:
+        Item();
         Item(int id, string kode, string name, string tipe, int harga);
 };
 
@@ -40,6 +41,7 @@ class Hewan : public Item {
         int beratUntukPanen;
         int berat;
     public:
+        Hewan();
         Hewan(int id, string kode, string name, string tipe, int harga, int beratUntukPanen, int berat);
         // void makan();
 };
@@ -50,6 +52,7 @@ class Tanaman : public Item {
         int umurUntukPanen;
         int umur;
     public:
+        Tanaman();
         Tanaman(int id, string kode, string name, string tipe, int harga, int umurUntukPanen, int umur);
         void tambahUmur();
 };

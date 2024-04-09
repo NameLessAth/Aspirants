@@ -30,12 +30,16 @@ Bangunan::Bangunan(int id, string kode, string name, string tipe) : Simpanan(id,
 }
 
 // Item
+Item::Item() : Simpanan() {}
+
 Item::Item(int id, string kode, string name, string tipe, int harga) : Simpanan(id, kode, name, tipe) {
     this->harga = harga;
     cout << "Item " << this->name << " berhasil dibuat" << endl;
 }
 
 // Hewan
+Hewan::Hewan() : Item() {}
+
 Hewan::Hewan(int id, string kode, string name, string tipe, int harga, int beratUntukPanen, int berat) : Item(id, kode, name, tipe, harga) {
     this->beratUntukPanen = beratUntukPanen;
     this->berat = berat;
@@ -43,6 +47,8 @@ Hewan::Hewan(int id, string kode, string name, string tipe, int harga, int berat
 }
 
 // Tanaman
+Tanaman::Tanaman() : Item() {}
+
 Tanaman::Tanaman(int id, string kode, string name, string tipe, int harga, int umurUntukPanen, int umur) : Item(id, kode, name, tipe, harga) {
     this->umurUntukPanen = umurUntukPanen;
     this->umur = umur;

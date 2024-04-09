@@ -14,6 +14,10 @@ Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpana
     this->beratBadan = 40;
 }   
 
+void Pemain::printPenyimpanan() {
+    this->penyimpanan.printSimpananMatrix();
+}
+
 // Walikota
 Walikota::Walikota() : Pemain() {
     this->username = "Walikota";

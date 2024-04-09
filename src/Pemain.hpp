@@ -21,7 +21,7 @@ class Pemain {
         Pemain();
         // void next();  
         // void makan();
-        // void cetakPenyimpanan();
+        void printPenyimpanan();
         // void beli();
         // void jual();
 };
