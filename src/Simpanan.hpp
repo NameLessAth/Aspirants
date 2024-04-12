@@ -2,6 +2,7 @@
 #define __SIMPANAN_H__
 
 #include <string>
+#include <map>
 using namespace std;
 
 // Parent class Simpanan, sehingga semua item child dapat 
@@ -22,8 +23,11 @@ class Simpanan {
 
 // Bangunan
 class Bangunan : public Simpanan {
+    protected:
+        map<string, int> material;
     public: 
-        Bangunan(int id, string kode, string name, string tipe);
+        Bangunan(int id, string kode, string name, string tipe, map<string, int> material);
+        map<string, int> getMats();
 };
 
 // Item

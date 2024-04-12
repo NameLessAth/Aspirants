@@ -25,8 +25,13 @@ string Simpanan::getKode() {
 }
 
 // Bangunan
-Bangunan::Bangunan(int id, string kode, string name, string tipe) : Simpanan(id, kode, name, tipe) {
+Bangunan::Bangunan(int id, string kode, string name, string tipe, map<string, int> material) : Simpanan(id, kode, name, tipe){
+    this->material = material;
     cout << "Bangunan " << this->name << " berhasil dibangun" << endl;
+}
+
+map<string, int> Bangunan::getMats(){
+    return this->material;
 }
 
 // Item
@@ -65,4 +70,5 @@ Produk::Produk(int id, string kode, string name, string tipe, int harga, string 
     this->beratTambahan = beratTambahan;
     cout << "Produk " << this->name << " berhasil dihasilkan" << endl;
 }
+
 
