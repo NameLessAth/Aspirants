@@ -78,9 +78,40 @@ void Matrix<Simpanan>::printSimpananMatrix() {
 }
 
 
-// Untuk perintah CETAK_LADANG
+// Untuk perintah CETAK_LADANG (belum ada fitur warna untuk siap panen)
 template<>
 void Matrix<Tanaman>::printSimpananMatrix() {
+    cout << "\t";
+    for (int i = 0; i < this->kolom; i++) {
+        cout << char('A' + i) << "\t";
+    }
+    cout << endl;
+    this->printGaris();
+    std::set<std::string> KodedanNamaUnik;
+    for (int i = 0; i < this->baris; i++) {
+        cout << i+1 << "\t|";
+        for (int j = 0; j < this->kolom; j++) {
+            cout << "  ";
+            if (this->matrix[i][j]->getKode() != "XXXX") {
+                cout << this->matrix[i][j]->getKode();
+                cout << "  |";
+                std::string KodedanNama = "- " + this->matrix[i][j]->getKode() + ": " + this->matrix[i][j]->getNama();
+                KodedanNamaUnik.insert(KodedanNama);
+            } else {
+                cout << "     |";
+            }
+        }
+        cout << endl;
+        this->printGaris();
+    }
+    for (const std::string& KodedanNama : KodedanNamaUnik) {
+        cout << KodedanNama << "\n";
+    }
+}
+
+// Untuk perintah CETAK_PETERNAKAN (belum ada fitur warna untuk siap panen)
+template<>
+void Matrix<Hewan>::printSimpananMatrix() {
     cout << "\t";
     for (int i = 0; i < this->kolom; i++) {
         cout << char('A' + i) << "\t";
