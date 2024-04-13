@@ -1,6 +1,7 @@
 #include "Matrix.hpp"
 #include "Simpanan.hpp"
 #include <iostream>
+#include <set>
 using namespace std;
 
 template<class T>
@@ -72,6 +73,39 @@ void Matrix<Simpanan>::printSimpananMatrix() {
         }
         cout << endl;
         this->printGaris();
+    }
+    cout << "Total slot kosong: " << this->baris * this->kolom - this->banyakIsi << endl;
+}
+
+
+// Untuk perintah CETAK_LADANG
+template<>
+void Matrix<Tanaman>::printSimpananMatrix() {
+    cout << "\t";
+    for (int i = 0; i < this->kolom; i++) {
+        cout << char('A' + i) << "\t";
+    }
+    cout << endl;
+    this->printGaris();
+    std::set<std::string> KodedanNamaUnik;
+    for (int i = 0; i < this->baris; i++) {
+        cout << i+1 << "\t|";
+        for (int j = 0; j < this->kolom; j++) {
+            cout << "  ";
+            if (this->matrix[i][j]->getKode() != "XXXX") {
+                cout << this->matrix[i][j]->getKode();
+                cout << "  |";
+                std::string KodedanNama = "- " + this->matrix[i][j]->getKode() + ": " + this->matrix[i][j]->getNama();
+                KodedanNamaUnik.insert(KodedanNama);
+            } else {
+                cout << "     |";
+            }
+        }
+        cout << endl;
+        this->printGaris();
+    }
+    for (const std::string& KodedanNama : KodedanNamaUnik) {
+        cout << KodedanNama << "\n";
     }
 }
 

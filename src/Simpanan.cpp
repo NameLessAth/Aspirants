@@ -30,6 +30,9 @@ string Simpanan::getIsi() {
     return this->kode + " " + this->name + " " + this->tipe;
 }
 
+string Simpanan::getNama() {
+    return this->name;
+}
 
 // Bangunan
 Bangunan::Bangunan(int id, string kode, string name, string tipe, map<string, int> material) : Simpanan(id, kode, name, tipe){
