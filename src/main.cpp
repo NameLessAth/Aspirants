@@ -32,9 +32,12 @@ int main() {
     m.setValue(4,1,h);
     m.setValue(2,5,t);
     m.setValue(5,3,p);
-    m.printSimpananMatrix();
+    //m.printSimpananMatrix();
     Simpanan a = m.getValue(1,1);
     Simpanan b = m.getValue(3,2);
+    Item c = *dynamic_cast<Item *>(&b); 
+
+    cout << c.getIsi() << c.getHarga() << endl;
     // m.getValue(3,2);
     // m.getValue(4,1);
     // m.getValue(2,5);

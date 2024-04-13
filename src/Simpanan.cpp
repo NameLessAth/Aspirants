@@ -12,6 +12,8 @@ Simpanan::Simpanan() {
     this->kode = "XXXX";
 }
 
+Simpanan::~Simpanan(){}
+
 Simpanan::Simpanan(int id, string kode, string name, string tipe) {
     this->id = id;
     this->kode = kode;
@@ -23,6 +25,11 @@ Simpanan::Simpanan(int id, string kode, string name, string tipe) {
 string Simpanan::getKode() {
     return this->kode;
 }
+
+string Simpanan::getIsi() {
+    return this->kode + " " + this->name + " " + this->tipe;
+}
+
 
 // Bangunan
 Bangunan::Bangunan(int id, string kode, string name, string tipe, map<string, int> material) : Simpanan(id, kode, name, tipe){
@@ -40,6 +47,10 @@ Item::Item() : Simpanan() {}
 Item::Item(int id, string kode, string name, string tipe, int harga) : Simpanan(id, kode, name, tipe) {
     this->harga = harga;
     cout << "Item " << this->name << " berhasil dibuat" << endl;
+}
+
+int Item::getHarga(){
+    return this->harga;
 }
 
 // Hewan

@@ -17,8 +17,10 @@ class Simpanan {
         string tipe;
     public:
         Simpanan();
+        virtual ~Simpanan();
         Simpanan(int id, string kode, string name, string tipe);
         string getKode();
+        string getIsi();
 };
 
 // Bangunan
@@ -37,6 +39,7 @@ class Item : public Simpanan {
     public:
         Item();
         Item(int id, string kode, string name, string tipe, int harga);
+        int getHarga();
 };
 
 // Hewan

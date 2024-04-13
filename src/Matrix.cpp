@@ -35,8 +35,8 @@ void Matrix<T>::setValue(int row, int col, T value) {
 
 template <class T>
 T Matrix<T>::getValue(int baris, int kolom) {
-    if (baris >= 0 && baris < this->baris && kolom >= 0 && kolom < this->kolom) {
-        return this->matrix[baris][kolom];
+    if (baris >= 1 && baris < this->baris && kolom >= 1 && kolom < this->kolom) {
+        return this->matrix[baris - 1][kolom - 1];
     } else {
         cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
     }
