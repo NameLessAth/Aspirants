@@ -12,8 +12,9 @@ class Matrix {
         Matrix(int baris, int kolom);
         ~Matrix();
         void setValue(int baris, int kolom, T value);
+        T getValue(int baris, int kolom);
         void printGaris();
         void printSimpananMatrix();
 };
 
-#endif 
+#endif

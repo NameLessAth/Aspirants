@@ -16,6 +16,9 @@ OBJ_MATRIX = ../bin/$(SRC_MATRIX:.cpp=.o)
 SRC_SIMPANAN = Simpanan.cpp
 OBJ_SIMPANAN = ../bin/$(SRC_SIMPANAN:.cpp=.o)
 
+SRC_LOAD = Load.cpp
+OBJ_LOAD = ../bin/$(SRC_LOAD:.cpp=.o)
+
 EXECUTABLE = ../bin/main_program
 
 all: directories $(EXECUTABLE)
@@ -23,14 +26,14 @@ all: directories $(EXECUTABLE)
 directories:
 	mkdir -p ../bin
 
-$(EXECUTABLE): $(OBJ_MAIN) $(OBJ_PEMAIN) $(OBJ_GAME) $(OBJ_MATRIX) $(OBJ_SIMPANAN)
+$(EXECUTABLE): $(OBJ_MAIN) $(OBJ_PEMAIN) $(OBJ_GAME) $(OBJ_MATRIX) $(OBJ_SIMPANAN) $(OBJ_LOAD)
 	$(CC) $(CFLAGS) -o $@ $^
 
 ../bin/%.o: %.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(EXECUTABLE) $(OBJ_MAIN) $(OBJ_PEMAIN) $(OBJ_GAME) $(OBJ_MATRIX) $(OBJ_SIMPANAN)
+	rm -f $(EXECUTABLE) $(OBJ_MAIN) $(OBJ_PEMAIN) $(OBJ_GAME) $(OBJ_MATRIX) $(OBJ_SIMPANAN) $(OBJ_LOAD)
 
 run: all
 	$(EXECUTABLE)
