@@ -21,6 +21,7 @@ class Simpanan {
         Simpanan(int id, string kode, string name, string tipe);
         string getKode();
         string getIsi();
+        string getNama();
 };
 
 // Bangunan
