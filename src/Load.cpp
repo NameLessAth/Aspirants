@@ -10,7 +10,7 @@ vector<Hewan> Load::loadAnimal(){
     int id, beratpanen, harga; string kode, nama, tipe;
     vector<Hewan> newVec;
     while(fscanf(file, "%c", &var) == 1){
-        if ((var == ' ') or (var == '\n')){
+        if ((var == ' ') || (var == '\n')){
             switch (itr%6){
                 case 0:
                     id = stoi(tempvar); break;
@@ -45,7 +45,7 @@ vector<Tanaman> Load::loadPlant(){
     int id, umurpanen, harga; string kode, nama, tipe;
     vector<Tanaman> newVec;
     while(fscanf(file, "%c", &var) == 1){
-        if ((var == ' ') or (var == '\n')){
+        if ((var == ' ') || (var == '\n')){
             switch (itr%6){
                 case 0:
                     id = stoi(tempvar); break;
@@ -80,7 +80,7 @@ vector<Produk> Load::loadProduct(){
     int id, beratTambahan, harga; string kode, nama, tipe, origin;
     vector<Produk> newVec;
     while(fscanf(file, "%c", &var) == 1){
-        if ((var == ' ') or (var == '\n')){
+        if ((var == ' ') || (var == '\n')){
             switch (itr%7){
                 case 0:
                     id = stoi(tempvar); break;
@@ -117,7 +117,7 @@ vector<Bangunan> Load::loadRecipe(){
     int id, matqua, harga; string kode, nama, tipe, mat;
     vector<Bangunan> newVec; map<string, int> mats;
     while(fscanf(file, "%c", &var) == 1){
-        if ((var == ' ') or (var == '\n')){
+        if ((var == ' ') || (var == '\n')){
             switch (itr){
                 case 0:
                     id = stoi(tempvar); break;
