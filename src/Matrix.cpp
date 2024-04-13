@@ -33,6 +33,15 @@ void Matrix<T>::setValue(int row, int col, T value) {
     }
 }
 
+template <class T>
+T Matrix<T>::getValue(int baris, int kolom) {
+    if (baris >= 0 && baris < this->baris && kolom >= 0 && kolom < this->kolom) {
+        return this->matrix[baris][kolom];
+    } else {
+        cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
+    }
+}
+
 template<class T>
 void Matrix<T>::printGaris() {
     cout << "\t+";
