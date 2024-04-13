@@ -26,18 +26,18 @@ int main() {
     Produk p(1, "P01", "Produk 1", "Produk", 10000, "Indonesia", 10);
 
     Matrix<Simpanan> m(10,10);
-    m.setValue(1,1,s);
+    m.setValue(1,1,&s);
     // m.setValue(2,1,b);
-    m.setValue(3,2,i);
-    m.setValue(4,1,h);
-    m.setValue(2,5,t);
-    m.setValue(5,3,p);
+    m.setValue(3,2,&i);
+    m.setValue(4,1,&h);
+    m.setValue(2,5,&t);
+    m.setValue(5,3,&p);
     //m.printSimpananMatrix();
-    Simpanan a = m.getValue(1,1);
-    Simpanan b = m.getValue(3,2);
-    Item c = *dynamic_cast<Item *>(&b); 
-
-    cout << c.getIsi() << c.getHarga() << endl;
+    Simpanan *a = m.getValue(1,1);
+    Item* b = dynamic_cast<Item*>(m.getValue(3,2));
+    cout << b->getHarga();
+    // simpanan = a, item = b
+    // cout << c.getIsi() << c.getHarga() << endl;
     // m.getValue(3,2);
     // m.getValue(4,1);
     // m.getValue(2,5);

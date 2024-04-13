@@ -5,11 +5,11 @@ using namespace std;
 
 template<class T>
 Matrix<T>::Matrix(int baris, int kolom) : baris(baris), kolom(kolom) {
-    this->matrix = new T*[this->baris];
+    this->matrix = new T**[this->baris];
     for (int i = 0; i < this->baris; i++) {
-        matrix[i] = new T[this->kolom];
+        matrix[i] = new T*[this->kolom];
         for (int j = 0; j < this->kolom; j++) {
-            matrix[i][j] = T();
+            matrix[i][j] = new T();
         }
     }
     this->banyakIsi = 0;
@@ -24,7 +24,7 @@ Matrix<T>::~Matrix() {
 }
 
 template<class T>
-void Matrix<T>::setValue(int row, int col, T value) {
+void Matrix<T>::setValue(int row, int col, T* value) {
     if (row >= 1 && row <= this->baris && col >= 1 && col <= this->kolom) {
         matrix[row - 1][col - 1] = value;
         this->banyakIsi++;
@@ -34,7 +34,7 @@ void Matrix<T>::setValue(int row, int col, T value) {
 }
 
 template <class T>
-T Matrix<T>::getValue(int baris, int kolom) {
+T* Matrix<T>::getValue(int baris, int kolom) {
     if (baris >= 1 && baris < this->baris && kolom >= 1 && kolom < this->kolom) {
         return this->matrix[baris - 1][kolom - 1];
     } else {
@@ -63,8 +63,8 @@ void Matrix<Simpanan>::printSimpananMatrix() {
         cout << i+1 << "\t|";
         for (int j = 0; j < this->kolom; j++) {
             cout << "  ";
-            if (this->matrix[i][j].getKode() != "XXXX") {
-                cout << this->matrix[i][j].getKode();
+            if (this->matrix[i][j]->getKode() != "XXXX") {
+                cout << this->matrix[i][j]->getKode();
                 cout << "  |";
             } else {
                 cout << "     |";
