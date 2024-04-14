@@ -28,7 +28,12 @@ template<class T>
 void Matrix<T>::setValue(int row, int col, T* value) {
     if (row >= 1 && row <= this->baris && col >= 1 && col <= this->kolom) {
         matrix[row - 1][col - 1] = value;
-        this->banyakIsi++;
+        if (value == nullptr) {
+            this->banyakIsi--;
+        }
+        else {
+            this->banyakIsi++;
+        }
     } else {
         cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
     }
@@ -43,8 +48,8 @@ T* Matrix<T>::getValue(int baris, int kolom) {
     }
 }
 
-template <class T>
-T* Matrix<T>::extractSlot() {
+template <>
+Simpanan* Matrix<Simpanan>::extractSlot() {
     string slot;
     this->printSimpananMatrix();
     cout << "Slot: ";
@@ -58,6 +63,18 @@ T* Matrix<T>::extractSlot() {
     else {
         return getValue(baris, kolom);
     }
+}
+
+template <>
+Tanaman* Matrix<Tanaman>::extractSlot() {
+    string slot;
+    this->printSimpananMatrix();
+    cout << "Petak tanah: ";
+    cin >> slot;
+    char hurufKolom = slot[0];
+    int baris = stoi(slot.substr(1));
+    int kolom = toupper(hurufKolom) - 'A' + 1;
+    return getValue(baris, kolom);
 }
 
 template<class T>
@@ -98,6 +115,7 @@ void Matrix<Simpanan>::printSimpananMatrix() {
 // Untuk perintah CETAK_LADANG (belum ada fitur warna untuk siap panen)
 template<>
 void Matrix<Tanaman>::printSimpananMatrix() {
+    cout << "================[ Ladang ]==================" << endl;
     cout << "\t";
     for (int i = 0; i < this->kolom; i++) {
         cout << char('A' + i) << "\t";
@@ -129,6 +147,7 @@ void Matrix<Tanaman>::printSimpananMatrix() {
 // Untuk perintah CETAK_PETERNAKAN (belum ada fitur warna untuk siap panen)
 template<>
 void Matrix<Hewan>::printSimpananMatrix() {
+    cout << "================[ Peternakan ]==================" << endl;
     cout << "\t";
     for (int i = 0; i < this->kolom; i++) {
         cout << char('A' + i) << "\t";
@@ -155,6 +174,11 @@ void Matrix<Hewan>::printSimpananMatrix() {
     for (const std::string& KodedanNama : KodedanNamaUnik) {
         cout << KodedanNama << "\n";
     }
+}
+
+template<class T>
+bool Matrix<T>::isEmpty() {
+    return (this->banyakIsi == 0);
 }
 
 // template<>
