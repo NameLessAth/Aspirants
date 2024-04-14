@@ -45,14 +45,15 @@ T* Matrix<T>::getValue(int baris, int kolom) {
 
 template <class T>
 T* Matrix<T>::extractSlot() {
-    this->penyimpanan.printSimpananMatrix();
+    string slot;
+    this->printSimpananMatrix();
     cout << "Slot: ";
     cin >> slot;
-    char hurufKolom = input[0];
-    int baris = stoi(input.substr(1));
+    char hurufKolom = slot[0];
+    int baris = stoi(slot.substr(1));
     int kolom = toupper(hurufKolom) - 'A' + 1;
     if (getValue(baris, kolom) == nullptr) {
-        cerr << "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan slot yang tidak kosong."
+        cerr << "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan slot yang tidak kosong.";
     }
     else {
         return getValue(baris, kolom);

@@ -72,6 +72,7 @@ class Produk : public Item {
         int beratTambahan;
     public:
         Produk(int id, string kode, string name, string tipe, int harga, string origin, int beratTambahan);
+        int getBeratTambahan();
 };
 
 #endif 

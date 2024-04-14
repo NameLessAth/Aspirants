@@ -85,4 +85,6 @@ Produk::Produk(int id, string kode, string name, string tipe, int harga, string 
     cout << "Produk " << this->name << " berhasil dihasilkan" << endl;
 }
 
-
+int Produk::getBeratTambahan() {
+    return this->beratTambahan;
+}
