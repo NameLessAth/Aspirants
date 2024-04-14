@@ -13,6 +13,7 @@ class Matrix {
         ~Matrix();
         void setValue(int baris, int kolom, T* value);
         T* getValue(int baris, int kolom);
+        T* extractSlot();
         void printGaris();
         void printSimpananMatrix();
 };
