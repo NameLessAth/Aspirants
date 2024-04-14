@@ -9,7 +9,7 @@ using namespace std;
 // Pemain
 // Abstract Base Class
 class Pemain {
-    protected: 
+    public: 
         string username;
         int uang;
         int beratBadan;
@@ -20,7 +20,7 @@ class Pemain {
     public:
         Pemain();
         // void next();  
-        // void makan();
+        void makan();
         void printPenyimpanan();
         // void beli();
         // void jual();

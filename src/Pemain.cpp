@@ -1,4 +1,5 @@
 #include "Pemain.hpp"
+#include "Simpanan.hpp"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -16,7 +17,24 @@ Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpana
 }   
 
 void Pemain::printPenyimpanan() {
+    cout << "================[ Penyimpanan ]==================" << endl;
     this->penyimpanan.printSimpananMatrix();
+}
+
+void Pemain::makan() {
+    cout << "Pilih makanan dari penyimpanan" << endl;
+    this->printPenyimpanan();
+    Simpanan* simpanan = this->penyimpanan.extractSlot();
+    Produk* produk = dynamic_cast<Produk*>(simpanan);
+    while (!produk || produk->getBeratTambahan() == 0) {
+        cout << "Ini bukan makanan!" << endl;
+        cout << "Silahkan masukan slot yang berisi makanan" << endl;
+        Simpanan* simpanan = this->penyimpanan.extractSlot();
+        Produk* produk = dynamic_cast<Produk*>(simpanan);   
+    }
+    cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl;
+    this->beratBadan += produk->getBeratTambahan();
+    cout << "Alhasil, berat badan kamu naik menjadi " << this->beratBadan << endl;
 }
 
 // Walikota
