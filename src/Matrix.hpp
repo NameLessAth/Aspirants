@@ -16,6 +16,7 @@ class Matrix {
         T* extractSlot();
         void printGaris();
         void printSimpananMatrix();
+        bool isEmpty();
 };
 
 #endif
