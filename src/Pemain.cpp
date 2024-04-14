@@ -1,5 +1,6 @@
 #include "Pemain.hpp"
 #include <iostream>
+#include <string>
 using namespace std;
 
 // Pemain
@@ -33,7 +34,11 @@ Petani::Petani() : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
     Petani::jumlahPetani++;
     this->username = "Petani" + to_string(Petani::jumlahPetani);
     cout << "Petani " << this->username << " siap bermain!" << endl;
+}
 
+void Petani::tanam() {
+    cout << "Pilih tanaman dari penyimpanan" << endl;
+    this->penyimpanan.printSimpananMatrix();
 }
 
 // Peternak

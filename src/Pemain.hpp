@@ -44,8 +44,8 @@ class Petani : public Pemain {
         static int kolomLadang;
     public:
         Petani();
-        // void tanam();
-        // void panen();
+        void tanam();
+        void panen();
 };  
 
 // Peternak 
