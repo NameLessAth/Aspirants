@@ -49,7 +49,7 @@ T* Matrix<T>::getValue(int baris, int kolom) {
 }
 
 template <class T>
-T* Matrix<T>::extractSlot() {
+std::pair<int,int> Matrix<T>::extractSlot() {
     string slot;
     this->printSimpananMatrix();
     cout << "Slot: ";
@@ -61,7 +61,7 @@ T* Matrix<T>::extractSlot() {
         cerr << "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan slot yang tidak kosong.";
     }
     else {
-        return getValue(baris, kolom);
+        return std::make_pair<baris, kolom>;
     }
 }
 
@@ -196,6 +196,49 @@ void Matrix<Hewan>::printSimpananMatrix() {
 template<class T>
 bool Matrix<T>::isEmpty() {
     return (this->banyakIsi == 0);
+}
+
+template<>
+bool Matrix<Simpanan>::check(std::string kelas) {
+    Simpanan* simpanan = nullptr;
+    bool found = false;
+    if (kelas == "Tanaman") {
+        Tanaman* tanaman = nullptr;
+        for (int i = 1; i <= this->baris; ++i) {
+            for (int j = 1; j <= this->kolom; ++j) {
+                tanaman = dynamic_cast<Tanaman*>(tanaman);
+                if (tanaman) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+    else if (kelas == "Hewan") {
+        Hewan* hewan = nullptr;
+        for (int i = 1; i <= this->baris; ++i) {
+            for (int j = 1; j <= this->kolom; ++j) {
+                hewan = dynamic_cast<Hewan*>(hewan);
+                if (hewan) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+    else if (kelas == "Makanan") {
+        Produk* produk = nullptr;
+        for (int i = 1; i <= this->baris; ++i) {
+            for (int j = 1; j <= this->kolom; ++j) {
+                produk = dynamic_cast<Produk*>(produk);
+                if (produk && produk->getBeratTambahan() == 0) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+    return found;
 }
 
 // template<>
