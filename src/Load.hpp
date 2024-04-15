@@ -18,10 +18,10 @@ class Load{
         static string ADVWORD(FILE*);
         static vector<Hewan> loadAnimal();
         static vector<Tanaman> loadPlant();
-        // static vector<Item> loadMisc();
+        static vector<int> loadMisc();
         static vector<Produk> loadProduct();
         static vector<Bangunan> loadRecipe();
-        static void loadState(string);
+        static vector<Pemain*> loadState(string);
 };
 
 #endif

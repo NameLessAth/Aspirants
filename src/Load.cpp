@@ -1,4 +1,5 @@
 #include "Load.hpp"
+#define PB push_back
 
 string Load::ADVWORD(FILE *file)
 {
@@ -14,8 +15,7 @@ string Load::ADVWORD(FILE *file)
     }
 }
 
-vector<Hewan> Load::loadAnimal()
-{
+vector<Hewan> Load::loadAnimal(){
     FILE *file = fopen("../Config/config1/animal.txt", "r");
     
     if (file == NULL) throw FileNotFound();
@@ -23,7 +23,7 @@ vector<Hewan> Load::loadAnimal()
     string tempvar = ""; char var; int itr = 0;
     int id, beratpanen, harga; string kode, nama, tipe;
     vector<Hewan> newVec;
-    while(ADV(file, var) == 1){
+    while(fscanf(file, "%c", &var) == 1){
         if ((var == ' ') || (var == '\n')){
             switch (itr%6){
                 case 0:
@@ -45,7 +45,7 @@ vector<Hewan> Load::loadAnimal()
             itr++;
         } else tempvar += var;
     } harga = stoi(tempvar);
-    Hewan newAnimal(id, kode, nama, tipe, harga, beratpanen, 69);
+    Hewan newAnimal(id, kode, nama, tipe, harga, beratpanen, 0);
     newVec.PB(newAnimal);    
     return newVec;
 }
@@ -58,7 +58,7 @@ vector<Tanaman> Load::loadPlant(){
     string tempvar = ""; char var; int itr = 0;
     int id, umurpanen, harga; string kode, nama, tipe;
     vector<Tanaman> newVec;
-    while(ADV(file, var) == 1){
+    while(fscanf(file, "%c", &var) == 1){
         if ((var == ' ') || (var == '\n')){
             switch (itr%6){
                 case 0:
@@ -80,9 +80,21 @@ vector<Tanaman> Load::loadPlant(){
             itr++;
         } else tempvar += var;
     } harga = stoi(tempvar);
-    Tanaman newPlant(id, kode, nama, tipe, harga, umurpanen, 69);
+    Tanaman newPlant(id, kode, nama, tipe, harga, umurpanen, 0);
     newVec.PB(newPlant);    
     return newVec;
+}
+
+vector<int> Load::loadMisc(){
+    FILE *file = fopen("../Config/config1/misc.txt", "r");
+
+    if (file == NULL) throw FileNotFound();
+
+    string tempvar = Load::ADVWORD(file); vector<int> temp;
+    
+    while(tempvar != "habis"){
+        temp.PB(stoi(tempvar)); tempvar = Load::ADVWORD(file);
+    } return temp;
 }
 
 vector<Produk> Load::loadProduct(){
@@ -93,7 +105,7 @@ vector<Produk> Load::loadProduct(){
     string tempvar = ""; char var; int itr = 0;
     int id, beratTambahan, harga; string kode, nama, tipe, origin;
     vector<Produk> newVec;
-    while(ADV(file, var) == 1){
+    while(fscanf(file, "%c", &var) == 1){
         if ((var == ' ') || (var == '\n')){
             switch (itr%7){
                 case 0:
@@ -130,7 +142,7 @@ vector<Bangunan> Load::loadRecipe(){
     string tempvar = ""; char var; int itr = 0;
     int id, matqua, harga; string kode, nama, tipe, mat;
     vector<Bangunan> newVec; map<string, int> mats;
-    while(ADV(file, var) == 1){
+    while(fscanf(file, "%c", &var) == 1){
         if ((var == ' ') || (var == '\n')){
             switch (itr){
                 case 0:
@@ -149,7 +161,7 @@ vector<Bangunan> Load::loadRecipe(){
                     } break;
             } if (var == ' ') itr++;
             else {
-                Bangunan newBangunan(id, kode, nama, "tipe", harga, mats);
+                Bangunan newBangunan(id, kode, nama, "PLACEHOLDER", harga, mats);
                 newVec.PB(newBangunan);
                 mats.clear();
                 itr = 0;
@@ -157,12 +169,16 @@ vector<Bangunan> Load::loadRecipe(){
         } else tempvar += var;
     } matqua = stoi(tempvar);
     mats[mat] = matqua;
-    Bangunan newBangunan(id, kode, nama, "tipe", harga, mats);
+    Bangunan newBangunan(id, kode, nama, "PLACEHOLDER", harga, mats);
     newVec.PB(newBangunan);
     return newVec;
 }
 
-void Load::loadState(string path){
+vector<Pemain*> Load::loadState(string path){
+    vector<Hewan> animalVec = Load::loadAnimal();
+    vector<Tanaman> plantVec = Load::loadPlant();
+    vector<Produk> prodVec = Load::loadProduct();
+    vector<Bangunan> buildVec = Load::loadRecipe();
     FILE *file = fopen(path.c_str(), "r");
 
     if (file == NULL) throw FileNotFound();
@@ -191,4 +207,3 @@ void Load::loadState(string path){
     }
 
 }
-
