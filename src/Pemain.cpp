@@ -34,26 +34,17 @@ void Pemain::printPenyimpanan() {
 }
 
 void Pemain::makan() {
-    bool found = false;
-    for (int i = 1; i <= this->barisPenyimpanan; ++i) {
-        for (int j = 1; j <= this->kolomPenyimpanan; ++j) {
-            Simpanan* simpanan = this->penyimpanan.getValue(i, j);
-            Produk* produk = dynamic_cast<Produk*>(simpanan);
-            if (produk) {
-                found = true;
-                break;
-            }
-        }
-    }
-    if (found) {
+    if (this->penyimpanan.check("Makanan")) {
         cout << "Pilih makanan dari penyimpanan" << endl;
         this->printPenyimpanan();
-        Simpanan* simpanan = this->penyimpanan.extractSlot();
+        std::pair<int, int> barisdankolomsimpanan = this->penyimpanan.extractSlot();
+        Simpanan* simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
         Produk* produk = dynamic_cast<Produk*>(simpanan);
         while (!produk || produk->getBeratTambahan() == 0) {
             cout << "Ini bukan makanan!" << endl;
             cout << "Silahkan masukan slot yang berisi makanan" << endl;
-            simpanan = this->penyimpanan.extractSlot();
+            barisdankolomsimpanan = this->penyimpanan.extractSlot();
+            simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
             produk = dynamic_cast<Produk*>(simpanan);   
         }
         cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl;
@@ -95,47 +86,35 @@ Petani::Petani(string username, int uang, int berat, Matrix<Simpanan> inventory,
 }
 
 void Petani::tanam() {
-    bool found = false;
-    for (int i = 1; i <= this->barisPenyimpanan; ++i) {
-        for (int j = 1; j <= this->kolomPenyimpanan; ++j) {
-            Simpanan* simpanan = this->penyimpanan.getValue(i, j);
-            Tanaman* tanaman = dynamic_cast<Tanaman*>(tanaman);
-            if (tanaman) {
-                found = true;
-                break;
-            }
-        }
-    }
-    if (found) {
+    if (this->penyimpanan.check("Tanaman")) {
         cout << "Pilih tanaman dari penyimpanan" << endl;
         this->printPenyimpanan();
-        Simpanan* simpanan = this->penyimpanan.extractSlot();
+        std::pair<int, int> barisdankolomsimpanan = this->penyimpanan.extractSlot();
+        Simpanan* simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
         Tanaman* tanaman = dynamic_cast<Tanaman*>(simpanan);
         while (!tanaman) {
             cout << "Ini bukan tanaman!" << endl;
             cout << "Silahkan masukan slot yang berisi tanaman" << endl;
-            simpanan = this->penyimpanan.extractSlot();
+            barisdankolomsimpanan = this->penyimpanan.extractSlot();
+            simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
             tanaman = dynamic_cast<Tanaman*>(simpanan);   
         }
         cout << "Kamu memilih " << tanaman->getNama() << "." << endl;
         cout << "Pilih petak tanah yang akan ditanami" << endl;
         this->ladang.printSimpananMatrix();
-        Tanaman* petak = this->ladang.extractSlot();
+        std::pair<int, int> barisdankolomladang = this->ladang.extractSlot();
+        Tanaman* petak = this->ladang.getValue(barisdankolomladang.first, barisdankolomladang.second);
         while (petak != nullptr) {
             cout << "Petak tanah ini sudah terisi" << endl;
             cout << "Silahkan pilih petak tanah yang kosong" << endl;
-            petak = this->ladang.extractSlot();
+            barisdankolomladang = this->ladang.extractSlot();
+            petak = this->ladang.getValue(barisdankolomladang.first, barisdankolomladang.second);
         }
-        
+        this->ladang.setValue(barisdankolomladang.first, barisdankolomladang.second, tanaman);  
+        this->penyimpanan.setValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second, nullptr);      
     }
     else {
         cout << "Perintah tidak dapat dijalankan" << endl;
-    }
-    cout << "Pilih tanaman dari penyimpanan" << endl;
-    Simpanan *simpanan = this->penyimpanan.extractSlot();
-    Tanaman* tanaman = dynamic_cast<Tanaman*>(simpanan);
-    while (!tanaman) {
-        
     }
 }
 
