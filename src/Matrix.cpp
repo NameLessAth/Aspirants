@@ -48,8 +48,8 @@ T* Matrix<T>::getValue(int baris, int kolom) {
     }
 }
 
-template <>
-Simpanan* Matrix<Simpanan>::extractSlot() {
+template <class T>
+T* Matrix<T>::extractSlot() {
     string slot;
     this->printSimpananMatrix();
     cout << "Slot: ";
@@ -65,17 +65,34 @@ Simpanan* Matrix<Simpanan>::extractSlot() {
     }
 }
 
-template <>
-Tanaman* Matrix<Tanaman>::extractSlot() {
-    string slot;
-    this->printSimpananMatrix();
-    cout << "Petak tanah: ";
-    cin >> slot;
-    char hurufKolom = slot[0];
-    int baris = stoi(slot.substr(1));
-    int kolom = toupper(hurufKolom) - 'A' + 1;
-    return getValue(baris, kolom);
-}
+// template <>
+// Simpanan* Matrix<Simpanan>::extractSlot() {
+//     string slot;
+//     this->printSimpananMatrix();
+//     cout << "Slot: ";
+//     cin >> slot;
+//     char hurufKolom = slot[0];
+//     int baris = stoi(slot.substr(1));
+//     int kolom = toupper(hurufKolom) - 'A' + 1;
+//     if (getValue(baris, kolom) == nullptr) {
+//         cerr << "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan slot yang tidak kosong.";
+//     }
+//     else {
+//         return getValue(baris, kolom);
+//     }
+// }
+
+// template <>
+// Tanaman* Matrix<Tanaman>::extractSlot() {
+//     string slot;
+//     this->printSimpananMatrix();
+//     cout << "Petak tanah: ";
+//     cin >> slot;
+//     char hurufKolom = slot[0];
+//     int baris = stoi(slot.substr(1));
+//     int kolom = toupper(hurufKolom) - 'A' + 1;
+//     return getValue(baris, kolom);
+// }
 
 template<class T>
 void Matrix<T>::printGaris() {

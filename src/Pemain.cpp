@@ -22,18 +22,7 @@ void Pemain::printPenyimpanan() {
 }
 
 void Pemain::makan() {
-    bool found = false;
-    for (int i = 0; i < this->barisPenyimpanan; ++i) {
-        for (int j = 0; j < this->kolomPenyimpanan; ++j) {
-            Simpanan* simpanan = this->penyimpanan.extractSlot();
-            Produk* produk = dynamic_cast<Produk*>(simpanan);
-            if (produk) {
-                bool found = true;
-                break;
-            }
-        }
-    }
-    if (found) {
+    if (!this->penyimpanan.isEmpty()) {
         cout << "Pilih makanan dari penyimpanan" << endl;
         this->printPenyimpanan();
         Simpanan* simpanan = this->penyimpanan.extractSlot();
@@ -41,14 +30,13 @@ void Pemain::makan() {
         while (!produk || produk->getBeratTambahan() == 0) {
             cout << "Ini bukan makanan!" << endl;
             cout << "Silahkan masukan slot yang berisi makanan" << endl;
-            Simpanan* simpanan = this->penyimpanan.extractSlot();
-            Produk* produk = dynamic_cast<Produk*>(simpanan);   
+            simpanan = this->penyimpanan.extractSlot();
+            produk = dynamic_cast<Produk*>(simpanan);   
         }
         cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl;
         this->beratBadan += produk->getBeratTambahan();
         cout << "Alhasil, berat badan kamu naik menjadi " << this->beratBadan << endl;
-    }
-    else {
+    } else {
         cout << "Perintah tidak dapat dijalankan" << endl;
     }
 }
@@ -71,7 +59,7 @@ Petani::Petani() : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
 }
 
 void Petani::tanam() {
-    if (!this->ladang.isEmpty()) {
+    if (!this->penyimpanan.isEmpty()) {
         cout << "Pilih tanaman dari penyimpanan" << endl;
         this->printPenyimpanan();
         Simpanan* simpanan = this->penyimpanan.extractSlot();
@@ -79,8 +67,8 @@ void Petani::tanam() {
         while (!tanaman) {
             cout << "Ini bukan tanaman!" << endl;
             cout << "Silahkan masukan slot yang berisi tanaman" << endl;
-            Simpanan* simpanan = this->penyimpanan.extractSlot();
-            Tanaman* tanaman = dynamic_cast<Tanaman*>(simpanan);   
+            simpanan = this->penyimpanan.extractSlot();
+            tanaman = dynamic_cast<Tanaman*>(simpanan);   
         }
         cout << "Kamu memilih " << tanaman->getNama() << "." << endl;
         cout << "Pilih petak tanah yang akan ditanami" << endl;
@@ -89,7 +77,7 @@ void Petani::tanam() {
         while (petak != nullptr) {
             cout << "Petak tanah ini sudah terisi" << endl;
             cout << "Silahkan pilih petak tanah yang kosong" << endl;
-            Tanaman* petak = this->ladang.extractSlot();
+            petak = this->ladang.extractSlot();
         }
         
     }
