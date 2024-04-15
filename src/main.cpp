@@ -1,9 +1,25 @@
 #include "Game.hpp"
 #include "Pemain.hpp"
 #include "Matrix.hpp"
+#include "Toko.hpp"
 #include "Simpanan.hpp"
 #include <iostream>
 using namespace std;
+
+
+// Testing Toko
+int main() {
+    Toko toko;
+    Hewan cow(1, "COW", "Cow", "Hewan", 100, 500, 20);
+    Tanaman wheat(2, "WHEAT", "Wheat", "Tanaman", 50, 10, 2);
+
+    toko.insertItem(&cow, 5);
+    toko.insertItem(&wheat, 20);
+
+    toko.printToko();
+
+    return 0;
+}
 
 // int main() {
 
@@ -18,13 +34,12 @@ using namespace std;
 // }
 
 // Testing Simpanan
-int main() {
+// int main() {
 
     // Petani petani1;
 
     // Simpanan s(1, "S01", "Simpanan 1", "Simpanan");
     // Bangunan b(1, "B01", "Bangunan 1", "Bangunan");
-    // Item i(1, "I01", "Item 1", "Item", 10000);
     // Hewan h(1, "H01", "Hewan 1", "Hewan", 10000, 50, 20);
     // Tanaman t1(1, "T01", "Tanaman 1", "Tanaman", 10000, 10, 2);
     // Tanaman t2(1, "T01", "Tanaman 1", "Tanaman", 10000, 10, 2);
@@ -58,9 +73,9 @@ int main() {
     // m.getValue(4,1);
     // m.getValue(2,5);
     // m.getValue(5,3);
-}
+// }
 
-int main(){
-    Game::start();
-    Game::main();
-}
+// int main(){
+//     Game::start();
+//     Game::main();
+// }

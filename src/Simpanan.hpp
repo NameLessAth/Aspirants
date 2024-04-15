@@ -12,16 +12,18 @@ using namespace std;
 class Simpanan {
     protected:
         int id;
+        int harga;
         string kode;
         string name;
         string tipe;
     public:
         Simpanan();
         virtual ~Simpanan();
-        Simpanan(int id, string kode, string name, string tipe);
+        Simpanan(int id, string kode, string name, string tipe, int harga);
         string getKode();
         string getIsi();
         string getNama();
+        int getHarga();
 };
 
 // Bangunan
@@ -29,22 +31,13 @@ class Bangunan : public Simpanan {
     protected:
         map<string, int> material;
     public: 
-        Bangunan(int id, string kode, string name, string tipe, map<string, int> material);
+        Bangunan() {};
+        Bangunan(int id, string kode, string name, string tipe, int harga, map<string, int> material);
         map<string, int> getMats();
 };
 
-// Item
-class Item : public Simpanan {
-    protected:
-        int harga;
-    public:
-        Item();
-        Item(int id, string kode, string name, string tipe, int harga);
-        int getHarga();
-};
-
 // Hewan
-class Hewan : public Item {
+class Hewan : public Simpanan {
     private:
         int beratUntukPanen;
         int berat;
@@ -55,7 +48,7 @@ class Hewan : public Item {
 };
 
 // Tanaman
-class Tanaman : public Item {
+class Tanaman : public Simpanan {
     private:
         int umurUntukPanen;
         int umur;
@@ -66,11 +59,12 @@ class Tanaman : public Item {
 };
 
 // Produk
-class Produk : public Item {
+class Produk : public Simpanan {
     private:
         string origin;
         int beratTambahan;
     public:
+        Produk();
         Produk(int id, string kode, string name, string tipe, int harga, string origin, int beratTambahan);
         int getBeratTambahan();
 };
