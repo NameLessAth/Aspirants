@@ -29,7 +29,18 @@ void Pemain::printPenyimpanan() {
 }
 
 void Pemain::makan() {
-    if (!this->penyimpanan.isEmpty()) {
+    bool found = false;
+    for (int i = 1; i <= this->barisPenyimpanan; ++i) {
+        for (int j = 1; j <= this->kolomPenyimpanan; ++j) {
+            Simpanan* simpanan = this->penyimpanan.getValue(i, j);
+            Produk* produk = dynamic_cast<Produk*>(simpanan);
+            if (produk) {
+                found = true;
+                break;
+            }
+        }
+    }
+    if (found) {
         cout << "Pilih makanan dari penyimpanan" << endl;
         this->printPenyimpanan();
         Simpanan* simpanan = this->penyimpanan.extractSlot();
@@ -77,7 +88,18 @@ Petani::Petani(string username) : Pemain(), ladang(Petani::barisLadang, Petani::
 }
 
 void Petani::tanam() {
-    if (!this->penyimpanan.isEmpty()) {
+    bool found = false;
+    for (int i = 1; i <= this->barisPenyimpanan; ++i) {
+        for (int j = 1; j <= this->kolomPenyimpanan; ++j) {
+            Simpanan* simpanan = this->penyimpanan.getValue(i, j);
+            Tanaman* tanaman = dynamic_cast<Tanaman*>(tanaman);
+            if (tanaman) {
+                found = true;
+                break;
+            }
+        }
+    }
+    if (found) {
         cout << "Pilih tanaman dari penyimpanan" << endl;
         this->printPenyimpanan();
         Simpanan* simpanan = this->penyimpanan.extractSlot();
