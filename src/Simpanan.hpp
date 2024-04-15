@@ -44,6 +44,8 @@ class Hewan : public Simpanan {
     public:
         Hewan();
         Hewan(int id, string kode, string name, string tipe, int harga, int beratUntukPanen, int berat);
+        void tambahBerat(int beratTambahan);
+        int getBerat();
         // void makan();
 };
 

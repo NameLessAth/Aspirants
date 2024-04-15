@@ -22,7 +22,6 @@ class Pemain {
         Pemain(string, int, int, Matrix<Simpanan>);
         // void next();  
         void makan();
-        void printPenyimpanan();
         virtual void tumbal(){};
         // void beli();
         // void jual();
@@ -63,9 +62,9 @@ class Peternak : public Pemain {
     public:
         Peternak();
         Peternak(string, int, int, Matrix<Simpanan>, Matrix<Hewan>);
-        // void kasihMakan();
-        // void ternak();
-        // void panen();
+        void kasihMakan();
+        void ternak();
+        void panen();
 };
 
 // TODO: ListPemain : Aggregate of Pemain

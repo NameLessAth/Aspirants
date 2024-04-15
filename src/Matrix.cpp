@@ -98,21 +98,16 @@ T* Matrix<T>::getValue(int baris, int kolom) {
     }
 }
 
-template <class T>
+template<class T>
 std::pair<int,int> Matrix<T>::extractSlot() {
+    // this->printSimpananMatrix();
+    // cout << "Slot: ";
     string slot;
-    this->printSimpananMatrix();
-    cout << "Slot: ";
     cin >> slot;
     char hurufKolom = slot[0];
     int baris = stoi(slot.substr(1));
     int kolom = toupper(hurufKolom) - 'A' + 1;
-    if (getValue(baris, kolom) == nullptr) {
-        cerr << "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan slot yang tidak kosong.";
-    }
-    else {
-        return std::make_pair<baris, kolom>;
-    }
+    return std::make_pair<baris, kolom>;
 }
 
 // template <>
@@ -155,6 +150,7 @@ void Matrix<T>::printGaris() {
 
 template<>
 void Matrix<Simpanan>::printSimpananMatrix() {
+    cout << "================[ Penyimpanan ]==================" << endl;
     cout << "\t";
     for (int i = 0; i < this->kolom; i++) {
         cout << char('A' + i) << "\t";
@@ -246,6 +242,11 @@ void Matrix<Hewan>::printSimpananMatrix() {
 template<class T>
 bool Matrix<T>::isEmpty() {
     return (this->banyakIsi == 0);
+}
+
+template<class T>
+bool Matrix<T>::isFull() {
+    return (this->banyakIsi <= this->baris * this->kolom);
 }
 
 template<>

@@ -23,6 +23,7 @@ class Matrix {
         void printGaris();
         void printSimpananMatrix();
         bool isEmpty();
+        bool isFull();
         bool check(std::string kelas);
 };
 

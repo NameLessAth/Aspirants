@@ -60,6 +60,14 @@ Hewan::Hewan(int id, string kode, string name, string tipe, int harga, int berat
     cout << "Hewan " << this->name << " berhasil dilahirkan" << endl;
 }
 
+void Hewan::tambahBerat(int beratTambahan) {
+    this->berat += beratTambahan;
+}
+
+int Hewan::getBerat() {
+    return this->berat;
+}
+
 // Tanaman
 Tanaman::Tanaman() : Simpanan() {}
 
