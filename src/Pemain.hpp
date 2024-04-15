@@ -9,7 +9,7 @@ using namespace std;
 // Pemain
 // Abstract Base Class
 class Pemain {
-    public: 
+    protected: 
         string username;
         int uang;
         int beratBadan;
@@ -19,9 +19,11 @@ class Pemain {
         static int kolomPenyimpanan;
     public:
         Pemain();
+        Pemain(string);
         // void next();  
         void makan();
         void printPenyimpanan();
+        virtual void tumbal(){};
         // void beli();
         // void jual();
 };
@@ -30,9 +32,11 @@ class Pemain {
 class Walikota : public Pemain {
     public:
         Walikota();
+        Walikota(string);
         // void pungutPajak();
         // void bangunBangunan();
         // void tambahPemain();
+        virtual void tumbal(){};
 };
 
 // Petani
@@ -44,6 +48,7 @@ class Petani : public Pemain {
         static int kolomLadang;
     public:
         Petani();
+        Petani(string);
         void tanam();
         void panen();
 };  
@@ -57,6 +62,7 @@ class Peternak : public Pemain {
         static int kolomTernak;
     public:
         Peternak();
+        Peternak(string);
         // void kasihMakan();
         // void ternak();
         // void panen();
