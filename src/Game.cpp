@@ -1,20 +1,7 @@
 #include "Game.hpp"
 
 int Game::currentPemain = 0;
-
-Game::Game() {
-
-    Petani Petani1;
-    Peternak Peternak1;
-    Walikota Walikota;
-
-    this->listPemain.push_back(&Petani1);
-    this->listPemain.push_back(&Peternak1);
-    this->listPemain.push_back(&Walikota);
-
-    Game::currentPemain = 0;
-    
-}
+vector<Pemain*> listPemain;
 
 void Game::next() {
     Game::currentPemain = (Game::currentPemain + 1) % listPemain.size();
@@ -26,6 +13,12 @@ int Game::getCurrentPemain() {
 
 vector<Pemain*> Game::getListPemain() {
     return listPemain;
+}
+
+void Game::setListPemain(vector<Pemain *> inputListPemain){
+    for(int i=0;i<inputListPemain.size();i++){
+        Game::listPemain.push_back(inputListPemain[i]);
+    }
 }
 
 void Game::start(){
@@ -43,7 +36,13 @@ void Game::start(){
         cin >> input;
         //Load::loadState(input);
     } else {
-        Game game;
+        Petani Petani1;
+        Peternak Peternak1;
+        Walikota Walikota;
+
+        Game::listPemain.push_back(&Petani1);
+        Game::listPemain.push_back(&Peternak1);
+        Game::listPemain.push_back(&Walikota);
     }
 }
 
@@ -57,7 +56,7 @@ void Game::main(){
             Game::next();
         } else if (input == "CETAK_PENYIMPANAN"){
             
-        } else if (input == "PUNGUT_PAJAK"){
+        } else if (dynamic_cast<Walikota*>(listPemain[currentPemain]) && input == "PUNGUT_PAJAK"){
             
         } else if (input == "CETAK_LADANG"){
             

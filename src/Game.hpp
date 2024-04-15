@@ -12,10 +12,10 @@ private:
     static vector<Pemain*> listPemain;
     static int currentPemain;
 public:
-    Game();
     static void next();
     static int getCurrentPemain();
     static vector<Pemain*> getListPemain();
+    static void setListPemain(vector<Pemain*>);
     static void start();
     static void main();
 };
