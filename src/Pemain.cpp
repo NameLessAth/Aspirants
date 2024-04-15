@@ -96,6 +96,12 @@ void Petani::tanam() {
     else {
         cout << "Perintah tidak dapat dijalankan" << endl;
     }
+    cout << "Pilih tanaman dari penyimpanan" << endl;
+    Simpanan *simpanan = this->penyimpanan.extractSlot();
+    Tanaman* tanaman = dynamic_cast<Tanaman*>(simpanan);
+    while (!tanaman) {
+        
+    }
 }
 
 // Peternak
