@@ -188,8 +188,7 @@ vector<Pemain*> Load::loadState(string path){
 
     // declare var
     string username, role, kode; int beratbadan, uang;
-    vector<Pemain*> tempVec;
-
+    vector<Pemain*> playerVec; 
 
     FOR(i, jumlahPemain){
         // word pertama per pemain adalah username
@@ -201,9 +200,119 @@ vector<Pemain*> Load::loadState(string path){
         // bb dan uang
         beratbadan = stoi(Load::ADVWORD(file)); uang = stoi(Load::ADVWORD(file));
 
-        
+        // jumlah item
+        int itemCount = stoi(Load::ADVWORD(file));  Matrix<Simpanan> invVec(69, 69);
+        // scan item2
+        FOR(j, itemCount){
+            string item = Load::ADVWORD(file);
+            bool ketemu = false;
+            int itr = 0;
+            while (!ketemu && itr <= animalVec.size()+plantVec.size()+prodVec.size()+buildVec.size()){
+                if (itr >= 0 && itr <= animalVec.size()-1){
+                    if (item == animalVec[itr].getNama()){
+                        ketemu = true;
+                        Hewan* tempvar = new Hewan(animalVec[itr]);
+                        invVec.addNearby(tempvar);
+                    } else itr++;
+                } else if (itr >= animalVec.size() && itr <= animalVec.size()+plantVec.size()-1){
+                    if (item == plantVec[itr-animalVec.size()].getNama()){
+                        ketemu = true;
+                        Tanaman* tempvar = new Tanaman(plantVec[itr-animalVec.size()]);
+                        invVec.addNearby(tempvar);
+                    } else itr++;
+                } else if (itr >= animalVec.size()+plantVec.size() && itr <= animalVec.size()+plantVec.size()+prodVec.size()-1){
+                    if (item == prodVec[itr-animalVec.size()-plantVec.size()].getNama()){
+                        ketemu = true;
+                        Produk* tempvar = new Produk(prodVec[itr-animalVec.size()-plantVec.size()]);
+                        invVec.addNearby(tempvar);
+                    } else itr++;
+                } else {
+                    if (item == buildVec[itr-animalVec.size()-plantVec.size()-prodVec.size()].getNama()){
+                        ketemu = true;
+                        Bangunan* tempvar = new Bangunan(buildVec[itr-animalVec.size()-plantVec.size()-prodVec.size()]);
+                        invVec.addNearby(tempvar);
+                    } else itr++;
+                }
+            }
+        } 
+
+        //  scan untuk petani dan peternak
+        if (role == "Petani"){
+            itemCount = stoi(Load::ADVWORD(file));
+
+            // var
+            Matrix<Tanaman> plantMatx(69, 69);
+            string lokasi, x = "", y = "", item; int xval = 0, yval, itr, age;
+            bool ketemu;
 
 
-    }
+            FOR(j, itemCount){
 
+                // scan lokasi
+                lokasi = Load::ADVWORD(file);
+                for(char& c : lokasi){
+                    if (!isdigit(c)) x += c;
+                    else y += c;
+                } for(char& c : x){
+                    xval += int(c);
+                } xval -= (int('A')-1);
+                yval = stoi(y);
+                
+                // scan nama tanaman
+                item = Load::ADVWORD(file);
+
+                // cari nama di database
+                ketemu = false; itr = 0;
+                while(!ketemu){
+                    if (plantVec[itr].getNama() == item){
+                        ketemu = true;
+                        age = stoi(Load::ADVWORD(file));
+                        Tanaman* temp = new Tanaman(plantVec[itr]);
+                        temp->setUmur(age);
+                        plantMatx.setValue(xval, yval, temp);
+                    } else itr++;
+                }
+            } Petani* tempvar = new Petani(username, uang, beratbadan, invVec, plantMatx);
+            playerVec.push_back(tempvar);
+        } else if (role == "Peternak"){
+            itemCount = stoi(Load::ADVWORD(file));
+
+            // var
+            Matrix<Hewan> animalMatx(69, 69);
+            string lokasi, x = "", y = "", item; int xval = 0, yval, itr, bobot;
+            bool ketemu;
+
+            FOR(j, itemCount){
+
+                // scan lokasi
+                lokasi = Load::ADVWORD(file);
+                for(char& c : lokasi){
+                    if (!isdigit(c)) x += c;
+                    else y += c;
+                } for(char& c : x){
+                    xval += int(c);
+                } xval -= (int('A')-1);
+                yval = stoi(y);
+                
+                // scan nama hewan
+                item = Load::ADVWORD(file);
+
+                // cari nama di database
+                ketemu = false; itr = 0;
+                while(!ketemu){
+                    if (animalVec[itr].getNama() == item){
+                        ketemu = true;
+                        bobot = stoi(Load::ADVWORD(file));
+                        Hewan* temp = new Hewan(animalVec[itr]);
+                        temp->setBerat(bobot);
+                        animalMatx.setValue(xval, yval, temp);
+                    } else itr++;
+                }
+            } Peternak* tempvar = new Peternak(username, uang, beratbadan, invVec, animalMatx);
+            playerVec.push_back(tempvar);
+        } else{
+            Walikota* tempvar = new Walikota(username, uang, beratbadan, invVec);
+            playerVec.push_back(tempvar);
+        }
+    } return playerVec;
 }

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
-#include "Exception.hpp"
 #include "Pemain.hpp"
 #include "Simpanan.hpp"
 using namespace std;
