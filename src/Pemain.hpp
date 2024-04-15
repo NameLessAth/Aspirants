@@ -66,6 +66,18 @@ class Peternak : public Pemain {
         // void kasihMakan();
         // void ternak();
         // void panen();
-};  
+};
+
+// TODO: ListPemain : Aggregate of Pemain
+// Didefine di Pemain.hpp karena ListPemain butuh Pemain dan Walikota butuh ListPemain
+class ListPemain {
+private:
+    static vector<Pemain*> listPemain;
+    static int currentPemain;
+public:
+    static int getCurrentPemain();
+    static vector<Pemain*> getListPemain();
+    static void setListPemain(vector<Pemain*>);
+}
 
 #endif 
