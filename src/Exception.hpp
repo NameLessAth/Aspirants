@@ -16,6 +16,6 @@ class IndexPenyimpananOutOfBounds : public Exception {
 class FileNotFound : public Exception {
 	public:
 		char * what (){
-			return "File tidak ditemukan.";
+			return "Lokasi berkas tidak valid.";
 		}
 };

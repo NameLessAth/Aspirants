@@ -1,8 +1,12 @@
+#ifndef __LOAD_H__
+#define __LOAD_H__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include "Simpanan.hpp"
 #include <vector>
+#include "Simpanan.hpp"
+#include "Exception.hpp"
 using namespace std;
 
 class Load{
@@ -13,3 +17,5 @@ class Load{
         static vector<Produk> loadProduct();
         static vector<Bangunan> loadRecipe();
 };
+
+#endif

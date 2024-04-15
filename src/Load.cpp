@@ -4,7 +4,7 @@
 vector<Hewan> Load::loadAnimal(){
     FILE *file = fopen("../Config/config1/animal.txt", "r");
     
-    if (file == NULL) cerr << "read error\n";
+    if (file == NULL) throw FileNotFound();
 
     string tempvar = ""; char var; int itr = 0;
     int id, beratpanen, harga; string kode, nama, tipe;
@@ -39,7 +39,7 @@ vector<Hewan> Load::loadAnimal(){
 vector<Tanaman> Load::loadPlant(){
     FILE *file = fopen("../Config/config1/plant.txt", "r");
     
-    if (file == NULL) cerr << "read error\n";
+    if (file == NULL) throw FileNotFound();
 
     string tempvar = ""; char var; int itr = 0;
     int id, umurpanen, harga; string kode, nama, tipe;
@@ -74,7 +74,7 @@ vector<Tanaman> Load::loadPlant(){
 vector<Produk> Load::loadProduct(){
     FILE *file = fopen("../Config/config1/product.txt", "r");
     
-    if (file == NULL) cerr << "read error\n";
+    if (file == NULL) throw FileNotFound();
 
     string tempvar = ""; char var; int itr = 0;
     int id, beratTambahan, harga; string kode, nama, tipe, origin;
@@ -111,7 +111,7 @@ vector<Produk> Load::loadProduct(){
 vector<Bangunan> Load::loadRecipe(){
     FILE *file = fopen("../Config/config1/recipe.txt", "r");
     
-    if (file == NULL) cerr << "read error\n";
+    if (file == NULL) throw FileNotFound();
 
     string tempvar = ""; char var; int itr = 0;
     int id, matqua, harga; string kode, nama, tipe, mat;
