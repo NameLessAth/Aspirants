@@ -2,7 +2,6 @@
 #define __GAME_H__
 
 #include "Pemain.hpp"
-#include "Exception.hpp"
 #include "Load.hpp"
 #include <vector>
 #include <iostream>

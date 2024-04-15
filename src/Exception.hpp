@@ -1,4 +1,6 @@
-#include <iostream>
+#ifndef __EXCEPTION_H__
+#define __EXCEPTION_H__
+
 
 #include <iostream>
 
@@ -28,3 +30,5 @@ class InvalidInput : public Exception {
 			return "Input pengguna tidak valid.";
 		}
 };
+
+#endif
