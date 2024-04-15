@@ -19,7 +19,7 @@ class Pemain {
         static int kolomPenyimpanan;
     public:
         Pemain();
-        Pemain(string);
+        Pemain(string, int, int, Matrix<Simpanan>);
         // void next();  
         void makan();
         void printPenyimpanan();
@@ -32,7 +32,7 @@ class Pemain {
 class Walikota : public Pemain {
     public:
         Walikota();
-        Walikota(string);
+        Walikota(string, int, int, Matrix<Simpanan>);
         // void pungutPajak();
         // void bangunBangunan();
         // void tambahPemain();
@@ -48,7 +48,7 @@ class Petani : public Pemain {
         static int kolomLadang;
     public:
         Petani();
-        Petani(string);
+        Petani(string, int, int, Matrix<Simpanan>, Matrix<Tanaman>);
         void tanam();
         void panen();
 };  
@@ -62,7 +62,7 @@ class Peternak : public Pemain {
         static int kolomTernak;
     public:
         Peternak();
-        Peternak(string);
+        Peternak(string, int, int, Matrix<Simpanan>, Matrix<Hewan>);
         // void kasihMakan();
         // void ternak();
         // void panen();
@@ -70,14 +70,14 @@ class Peternak : public Pemain {
 
 // TODO: ListPemain : Aggregate of Pemain
 // Didefine di Pemain.hpp karena ListPemain butuh Pemain dan Walikota butuh ListPemain
-class ListPemain {
-private:
-    static vector<Pemain*> listPemain;
-    static int currentPemain;
-public:
-    static int getCurrentPemain();
-    static vector<Pemain*> getListPemain();
-    static void setListPemain(vector<Pemain*>);
-}
+// class ListPemain {
+// private:
+//     static vector<Pemain*> listPemain;
+//     static int currentPemain;
+// public:
+//     static int getCurrentPemain();
+//     static vector<Pemain*> getListPemain();
+//     static void setListPemain(vector<Pemain*>);
+// };
 
 #endif 

@@ -35,7 +35,7 @@ void Matrix<T>::setValue(int row, int col, T* value) {
             this->banyakIsi++;
         }
     } else {
-        cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
+        throw IndexPenyimpananOutOfBounds(); // Nanti diubah jadi throw error
     }
 }
 
@@ -44,7 +44,7 @@ T* Matrix<T>::getValue(int baris, int kolom) {
     if (baris >= 1 && baris < this->baris && kolom >= 1 && kolom < this->kolom) {
         return this->matrix[baris - 1][kolom - 1];
     } else {
-        cerr << "Index out of bounds!" << endl; // Nanti diubah jadi throw error
+         throw IndexPenyimpananOutOfBounds(); // Nanti diubah jadi throw error
     }
 }
 

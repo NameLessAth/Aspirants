@@ -1,5 +1,6 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
+#include "Exception.hpp"
 
 template <class T>
 class Matrix {  
@@ -12,6 +13,8 @@ class Matrix {
         Matrix(int baris, int kolom);
         ~Matrix();
         void setValue(int baris, int kolom, T* value);
+        int getBaris(){return this->baris}
+        int getKolom(){return this->kolom}
         T* getValue(int baris, int kolom);
         T* extractSlot();
         void printGaris();

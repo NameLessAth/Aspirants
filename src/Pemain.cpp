@@ -16,11 +16,16 @@ Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpana
     this->beratBadan = 40;
 }
 
-Pemain::Pemain(string username) : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpanan) {
+Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory) : penyimpanan(inventory.getBaris(), inventory.getKolom()) {
     Pemain::jumlahPemain++;
     this->username = username;
-    this->uang = 50;
-    this->beratBadan = 40;
+    this->uang = uang;
+    this->beratBadan = berat;
+    for (int i = 1; i <= this->penyimpanan.getBaris(); i++){
+        for (int j = 1; j <= this->penyimpanan.getKolom(); j++){
+            this->penyimpanan.setValue(i, j, inventory.getValue(i, j));
+        }
+    }
 }
 
 void Pemain::printPenyimpanan() {
@@ -65,8 +70,7 @@ Walikota::Walikota() : Pemain() {
     cout << "Walikota " << this->username << " siap bermain!" << endl;
 }
 
-Walikota::Walikota(string username) : Pemain(){
-    this->username = username;
+Walikota::Walikota(string username, int uang, int berat, Matrix<Simpanan> inventory) : Pemain(username, uang, berat, inventory){
     cout << "Walikota " << this->username << " siap bermain!" << endl;
 }
 
@@ -81,10 +85,13 @@ Petani::Petani() : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
     cout << "Petani " << this->username << " siap bermain!" << endl;
 }
 
-Petani::Petani(string username) : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
+Petani::Petani(string username, int uang, int berat, Matrix<Simpanan> inventory, Matrix<Tanaman> kebun) : Pemain(username, uang, berat, inventory), ladang(kebun.getBaris(), kebun.getKolom()) {
+    for (int i = 1; i <= this->ladang.getBaris(); i++){
+        for (int j = 1; j <= this->ladang.getKolom(); j++){
+            this->ladang.setValue(i, j, kebun.getValue(i, j));
+        }
+    } cout << "Petani " << this->username << " siap bermain!" << endl;
     Petani::jumlahPetani++;
-    this->username = username;
-    cout << "Petani " << this->username << " siap bermain!" << endl;
 }
 
 void Petani::tanam() {
@@ -143,8 +150,12 @@ Peternak::Peternak() : Pemain(), peternakan(Peternak::barisTernak, Peternak::kol
     cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
 
-Peternak::Peternak(string username) : Pemain(), peternakan(Peternak::barisTernak, Peternak::kolomTernak) {
+Peternak::Peternak(string username, int uang, int berat, Matrix<Simpanan> inventory, Matrix<Hewan> ternak) : Pemain(username, uang, berat, inventory), peternakan(ternak.getBaris(), ternak.getKolom()) {
+    for (int i = 1; i <= this->peternakan.getBaris(); i++){
+        for (int j = 1; j <= this->peternakan.getKolom(); j++){
+            this->peternakan.setValue(i, j, ternak.getValue(i, j));
+        }
+    }
     Peternak::jumlahPeternak++;
-    this->username = username;
     cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
