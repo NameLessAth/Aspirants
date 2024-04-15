@@ -47,6 +47,10 @@ Bangunan::Bangunan(int id, string kode, string name, string tipe, int harga, map
     cout << "Bangunan " << this->name << " berhasil dibangun" << endl;
 }
 
+void Bangunan::setTipe(string tipe){
+    this->tipe = tipe;
+}
+
 map<string, int> Bangunan::getMats(){
     return this->material;
 }
@@ -58,6 +62,10 @@ Hewan::Hewan(int id, string kode, string name, string tipe, int harga, int berat
     this->beratUntukPanen = beratUntukPanen;
     this->berat = berat;
     cout << "Hewan " << this->name << " berhasil dilahirkan" << endl;
+}
+
+void Hewan::setBerat(int berat){
+    this->berat = berat;
 }
 
 void Hewan::tambahBerat(int beratTambahan) {
@@ -75,6 +83,10 @@ Tanaman::Tanaman(int id, string kode, string name, string tipe, int harga, int u
     this->umurUntukPanen = umurUntukPanen;
     this->umur = umur;
     cout << "Tanaman " << this->name << " berhasil ditanam" << endl;
+}
+
+void Tanaman::setUmur(int umur){
+    this->umur = umur;
 }
 
 void Tanaman::tambahUmur() {

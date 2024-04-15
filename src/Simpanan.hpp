@@ -33,6 +33,7 @@ class Bangunan : public Simpanan {
     public: 
         Bangunan();
         Bangunan(int id, string kode, string name, string tipe, int harga, map<string, int> material);
+        void setTipe(string tipe);
         map<string, int> getMats();
 };
 
@@ -44,6 +45,7 @@ class Hewan : public Simpanan {
     public:
         Hewan();
         Hewan(int id, string kode, string name, string tipe, int harga, int beratUntukPanen, int berat);
+        void setBerat(int berat);
         void tambahBerat(int beratTambahan);
         int getBerat();
         // void makan();
@@ -57,6 +59,7 @@ class Tanaman : public Simpanan {
     public:
         Tanaman();
         Tanaman(int id, string kode, string name, string tipe, int harga, int umurUntukPanen, int umur);
+        void setUmur(int umur);
         void tambahUmur();
 };
 

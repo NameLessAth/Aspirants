@@ -16,8 +16,8 @@ class Matrix {
         ~Matrix();
         void setValue(int baris, int kolom, T* value);
         void addNearby(T* value);
-        int getBaris(){return this->baris}
-        int getKolom(){return this->kolom}
+        int getBaris(){return this->baris;}
+        int getKolom(){return this->kolom;}
         T* getValue(int baris, int kolom);
         std::pair<int,int> extractSlot();
         void printGaris();
