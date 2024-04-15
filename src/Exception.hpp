@@ -1,27 +1,30 @@
 #include <iostream>
 
+#include <iostream>
+
 class Exception : public std::exception{
 	public:
-		virtual char * what () = 0;
+		virtual const char * what () const throw() = 0;
 };
 
 class IndexPenyimpananOutOfBounds : public Exception {
     public:
-		char * what () {
+		const char * what () const throw() {
 			return "Index Penyimpanan diluar batas!";
 		}
 };
 
 class FileNotFound : public Exception {
 	public:
-		char * what (){
+		const char * what () const throw(){
 			return "Lokasi berkas tidak valid.";
 		}
 };
 
+
 class InvalidInput : public Exception {
 	public:
-		char * what (){
+		const char * what () const throw(){
 			return "Input pengguna tidak valid.";
 		}
 };
