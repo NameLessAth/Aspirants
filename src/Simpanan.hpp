@@ -31,7 +31,7 @@ class Bangunan : public Simpanan {
     protected:
         map<string, int> material;
     public: 
-        Bangunan() {};
+        Bangunan();
         Bangunan(int id, string kode, string name, string tipe, int harga, map<string, int> material);
         map<string, int> getMats();
 };

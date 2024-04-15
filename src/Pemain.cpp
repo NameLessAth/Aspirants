@@ -14,7 +14,14 @@ Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpana
     this->username = "Pemain" + to_string(Pemain::jumlahPemain);
     this->uang = 50;
     this->beratBadan = 40;
-}   
+}
+
+Pemain::Pemain(string username) : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpanan) {
+    Pemain::jumlahPemain++;
+    this->username = username;
+    this->uang = 50;
+    this->beratBadan = 40;
+}
 
 void Pemain::printPenyimpanan() {
     cout << "================[ Penyimpanan ]==================" << endl;
@@ -47,6 +54,11 @@ Walikota::Walikota() : Pemain() {
     cout << "Walikota " << this->username << " siap bermain!" << endl;
 }
 
+Walikota::Walikota(string username) : Pemain(){
+    this->username = username;
+    cout << "Walikota " << this->username << " siap bermain!" << endl;
+}
+
 // Petani
 int Petani::jumlahPetani = 0;
 int Petani::barisLadang = 10; // Berdasarkan berkas
@@ -55,6 +67,12 @@ int Petani::kolomLadang = 10; // Berdasarkan berkas
 Petani::Petani() : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
     Petani::jumlahPetani++;
     this->username = "Petani" + to_string(Petani::jumlahPetani);
+    cout << "Petani " << this->username << " siap bermain!" << endl;
+}
+
+Petani::Petani(string username) : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
+    Petani::jumlahPetani++;
+    this->username = username;
     cout << "Petani " << this->username << " siap bermain!" << endl;
 }
 
@@ -100,5 +118,11 @@ int Peternak::kolomTernak = 10; // Berdasarkan berkas
 Peternak::Peternak() : Pemain(), peternakan(Peternak::barisTernak, Peternak::kolomTernak) {
     Peternak::jumlahPeternak++;
     this->username = "Peternak" + to_string(Peternak::jumlahPeternak);
+    cout << "Peternak " << this->username << " siap bermain!" << endl;
+}
+
+Peternak::Peternak(string username) : Pemain(), peternakan(Peternak::barisTernak, Peternak::kolomTernak) {
+    Peternak::jumlahPeternak++;
+    this->username = username;
     cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
