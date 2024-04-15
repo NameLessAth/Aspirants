@@ -8,18 +8,18 @@ using namespace std;
 
 
 // Testing Toko
-int main() {
-    Toko toko;
-    Hewan cow(1, "COW", "Cow", "Hewan", 100, 500, 20);
-    Tanaman wheat(2, "WHEAT", "Wheat", "Tanaman", 50, 10, 2);
+// int main() {
+//     Toko toko;
+//     Hewan cow(1, "COW", "Cow", "Hewan", 100, 500, 20);
+//     Tanaman wheat(2, "WHEAT", "Wheat", "Tanaman", 50, 10, 2);
 
-    toko.insertItem(&cow, 5);
-    toko.insertItem(&wheat, 20);
+//     toko.insertItem(&cow, 5);
+//     toko.insertItem(&wheat, 20);
 
-    toko.printToko();
+//     toko.printToko();
 
-    return 0;
-}
+//     return 0;
+// }
 
 // int main() {
 
@@ -34,9 +34,9 @@ int main() {
 // }
 
 // Testing Simpanan
-// int main() {
+int main() {
 
-    // Petani petani1;
+    Petani petani1;
 
     // Simpanan s(1, "S01", "Simpanan 1", "Simpanan");
     // Bangunan b(1, "B01", "Bangunan 1", "Bangunan");
