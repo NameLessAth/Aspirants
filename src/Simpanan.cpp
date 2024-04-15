@@ -40,7 +40,7 @@ int Simpanan::getHarga(){
 }
 
 // Bangunan
-Bangunan::Bangunan() : Simpanan();
+Bangunan::Bangunan() : Simpanan() {}
 
 Bangunan::Bangunan(int id, string kode, string name, string tipe, int harga, map<string, int> material) : Simpanan(id, kode, name, tipe, harga){
     this->material = material;
@@ -74,7 +74,7 @@ void Tanaman::tambahUmur() {
 }
 
 // Produk
-Produk::Produk : Simpanan() {}
+Produk::Produk() : Simpanan() {}
 
 Produk::Produk(int id, string kode, string name, string tipe, int harga, string origin, int beratTambahan) : Simpanan(id, kode, name, tipe, harga) {
     this->origin = origin;
