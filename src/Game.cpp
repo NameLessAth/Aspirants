@@ -1,7 +1,12 @@
 #include "Game.hpp"
 
 int Game::currentPemain = 0;
+int Game::goldRequirement = 0;
+int Game::weightRequirement = 0;
 vector<Pemain*> Game::listPemain;
+pair<int,int> Game::ukuranPenyimpanan(0,0);
+pair<int,int> Game::ukuranLadang(0,0);
+pair<int,int> Game::ukuranTernak(0,0);
 
 void Game::next() {
     Game::currentPemain = (Game::currentPemain + 1) % listPemain.size();
@@ -22,6 +27,16 @@ void Game::setListPemain(vector<Pemain *> inputListPemain){
 }
 
 void Game::start(){
+    vector<int> temp = Load::loadMisc();
+    Game::goldRequirement = temp[0];
+    Game::weightRequirement = temp[1];
+    Game::ukuranPenyimpanan.first = temp[2];
+    Game::ukuranPenyimpanan.second = temp[3];
+    Game::ukuranLadang.first = temp[4];
+    Game::ukuranLadang.second = temp[5];
+    Game::ukuranTernak.first = temp[6];
+    Game::ukuranTernak.second = temp[7];
+
     cout << "Selamat datang di Kelola Kerajaan Bersama Labpro\n";
     cout << "Apakah anda ingin memuat state? (y/n)\n\n> ";
     char* input;
@@ -49,7 +64,7 @@ void Game::start(){
 void Game::main(){
     string input;
     while(1){
-        cout << "> ";   
+        cout << "> ";
         cin >> input;
 
         if (input == "NEXT"){
@@ -58,32 +73,34 @@ void Game::main(){
             
         } else if (dynamic_cast<Walikota*>(listPemain[currentPemain]) && input == "PUNGUT_PAJAK"){
             
-        } else if (input == "CETAK_LADANG"){
+        } else if (dynamic_cast<Petani*>(listPemain[currentPemain]) && input == "CETAK_LADANG"){
             
-        } else if (input == "CETAK_PETERNAKAN"){
+        } else if (dynamic_cast<Peternak*>(listPemain[currentPemain]) && input == "CETAK_PETERNAKAN"){
             
-        } else if (input == "TANAM"){
+        } else if (dynamic_cast<Petani*>(listPemain[currentPemain]) && input == "TANAM"){
             
-        } else if (input == "TERNAK"){
+        } else if (dynamic_cast<Peternak*>(listPemain[currentPemain]) && input == "TERNAK"){
             
-        } else if (input == "BANGUN"){
+        } else if (dynamic_cast<Walikota*>(listPemain[currentPemain]) && input == "BANGUN"){
             
         } else if (input == "MAKAN"){
             
-        } else if (input == "KASIH_MAKAN"){
+        } else if (dynamic_cast<Peternak*>(listPemain[currentPemain]) && input == "KASIH_MAKAN"){
             
         } else if (input == "BELI"){
             
         } else if (input == "JUAL"){
             
-        } else if (input == "PANEN"){
+        } else if ((dynamic_cast<Walikota*>(listPemain[currentPemain]) || dynamic_cast<Walikota*>(listPemain[currentPemain])) && input == "PANEN"){
             
         } else if (input == "SIMPAN"){
             
-        } else if (input == "TAMBAH_PEMAIN"){
+        } else if (dynamic_cast<Walikota*>(listPemain[currentPemain]) && input == "TAMBAH_PEMAIN"){
             
         } else {
             throw InvalidInput();
         }
+
+        // Cek apakah menang
     }
 }

@@ -8,7 +8,7 @@ string Load::ADVWORD(FILE *file)
     string toberet = "";
     if (success != 1) return "habis";
     else{
-        while (var != ' ' and var != '\n' and success == 1){
+        while (var != ' ' && var != '\n' && success == 1){
             toberet += var; 
             success = ADV(file, var);
         } return toberet;
