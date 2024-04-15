@@ -15,6 +15,7 @@ class Matrix {
         Matrix(int baris, int kolom);
         ~Matrix();
         void setValue(int baris, int kolom, T* value);
+        void addNearby(T* value);
         int getBaris(){return this->baris}
         int getKolom(){return this->kolom}
         T* getValue(int baris, int kolom);

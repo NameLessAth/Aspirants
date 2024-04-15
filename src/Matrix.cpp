@@ -39,9 +39,59 @@ void Matrix<T>::setValue(int row, int col, T* value) {
     }
 }
 
+template<>
+void Matrix<Simpanan>::addNearby(Simpanan *value){
+    cout << "simpanan\n";
+    if (this->banyakIsi == this->baris*this->kolom) cout << "Matrix penuh\n";
+    else{
+        int i = 1, j = 1; bool ketemu = false;
+        while(!ketemu){
+            if (this->getValue(i, j)->getKode() == "XXXX") ketemu = true;
+            else{
+                j++; 
+                if (j > this->kolom){
+                    j = 1; i++;
+                }
+            }
+        } this->setValue(i, j, value);
+    }
+}
+
+template<>
+void Matrix<Tanaman>::addNearby(Tanaman *value){
+    if (this->banyakIsi == this->baris*this->kolom) cout << "Matrix penuh\n";
+    else{
+        int i = 1, j = 1; bool ketemu = false;
+        while(!ketemu){
+            if (this->getValue(i, j)->getKode() == "XXXX") ketemu = true;
+            else{
+                j++; if (j > this->kolom){
+                    j = 1; i++;
+                }
+            }
+        } this->setValue(i, j, value);
+    }
+}
+
+template<>
+void Matrix<Hewan>::addNearby(Hewan *value){
+    if (this->banyakIsi == this->baris*this->kolom) cout << "Matrix penuh\n";
+    else{
+        int i = 1, j = 1; bool ketemu = false;
+        while(!ketemu){
+            if (this->getValue(i, j)->getKode() == "XXXX") ketemu = true;
+            else{
+                j++; if (j > this->kolom){
+                    j = 1; i++;
+                }
+            }
+        } this->setValue(i, j, value);
+    }
+}
+
 template <class T>
 T* Matrix<T>::getValue(int baris, int kolom) {
-    if (baris >= 1 && baris < this->baris && kolom >= 1 && kolom < this->kolom) {
+    if (baris >= 1 && baris <= this->baris && kolom >= 1 && kolom <= this->kolom) {
         return this->matrix[baris - 1][kolom - 1];
     } else {
          throw IndexPenyimpananOutOfBounds(); // Nanti diubah jadi throw error
