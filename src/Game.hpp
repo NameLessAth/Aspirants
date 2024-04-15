@@ -2,19 +2,23 @@
 #define __GAME_H__
 
 #include "Pemain.hpp"
+#include "Exception.hpp"
+#include "Load.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;
 
 class Game {
 private:
-    vector<Pemain*> listPemain;
+    static vector<Pemain*> listPemain;
     static int currentPemain;
 public:
     Game();
-    void next();
+    static void next();
     static int getCurrentPemain();
-    vector<Pemain*> getListPemain();
+    static vector<Pemain*> getListPemain();
+    static void start();
+    static void main();
 };
 
 #endif

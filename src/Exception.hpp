@@ -18,3 +18,10 @@ class FileNotFound : public Exception {
 			return "Lokasi berkas tidak valid.";
 		}
 };
+
+class InvalidInput : public Exception {
+	public:
+		char * what (){
+			return "Input pengguna tidak valid.";
+		}
+};
