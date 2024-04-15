@@ -28,21 +28,23 @@ Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory)
     }
 }
 
-void Pemain::printPenyimpanan() {
-    cout << "================[ Penyimpanan ]==================" << endl;
-    this->penyimpanan.printSimpananMatrix();
-}
-
 void Pemain::makan() {
     if (this->penyimpanan.check("Makanan")) {
         cout << "Pilih makanan dari penyimpanan" << endl;
-        this->printPenyimpanan();
+        this->penyimpanan.printSimpananMatrix();
+        cout << "Slot: ";
         std::pair<int, int> barisdankolomsimpanan = this->penyimpanan.extractSlot();
         Simpanan* simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
         Produk* produk = dynamic_cast<Produk*>(simpanan);
         while (!produk || produk->getBeratTambahan() == 0) {
-            cout << "Ini bukan makanan!" << endl;
+            if (simpanan == nullptr) {
+                cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl;
+            }
+            else {
+                cout << "Ini bukan makanan!" << endl;
+            }
             cout << "Silahkan masukan slot yang berisi makanan" << endl;
+            cout << "Slot: ";
             barisdankolomsimpanan = this->penyimpanan.extractSlot();
             simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
             produk = dynamic_cast<Produk*>(simpanan);   
@@ -86,15 +88,17 @@ Petani::Petani(string username, int uang, int berat, Matrix<Simpanan> inventory,
 }
 
 void Petani::tanam() {
-    if (this->penyimpanan.check("Tanaman")) {
+    if (this->penyimpanan.check("Tanaman") && !this->ladang.isFull()) {
         cout << "Pilih tanaman dari penyimpanan" << endl;
-        this->printPenyimpanan();
+        this->penyimpanan.printSimpananMatrix();
+        cout << "Slot: ";
         std::pair<int, int> barisdankolomsimpanan = this->penyimpanan.extractSlot();
         Simpanan* simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
         Tanaman* tanaman = dynamic_cast<Tanaman*>(simpanan);
         while (!tanaman) {
             cout << "Ini bukan tanaman!" << endl;
             cout << "Silahkan masukan slot yang berisi tanaman" << endl;
+            cout << "Slot: ";
             barisdankolomsimpanan = this->penyimpanan.extractSlot();
             simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
             tanaman = dynamic_cast<Tanaman*>(simpanan);   
@@ -102,11 +106,13 @@ void Petani::tanam() {
         cout << "Kamu memilih " << tanaman->getNama() << "." << endl;
         cout << "Pilih petak tanah yang akan ditanami" << endl;
         this->ladang.printSimpananMatrix();
+        cout << "Petak tanah: ";
         std::pair<int, int> barisdankolomladang = this->ladang.extractSlot();
         Tanaman* petak = this->ladang.getValue(barisdankolomladang.first, barisdankolomladang.second);
         while (petak != nullptr) {
             cout << "Petak tanah ini sudah terisi" << endl;
             cout << "Silahkan pilih petak tanah yang kosong" << endl;
+            cout << "Petak tanah: ";
             barisdankolomladang = this->ladang.extractSlot();
             petak = this->ladang.getValue(barisdankolomladang.first, barisdankolomladang.second);
         }
@@ -137,4 +143,83 @@ Peternak::Peternak(string username, int uang, int berat, Matrix<Simpanan> invent
     }
     Peternak::jumlahPeternak++;
     cout << "Peternak " << this->username << " siap bermain!" << endl;
+}
+
+void Peternak::kasihMakan() {
+    if (this->penyimpanan.check("Makanan") && !this->peternakan.isEmpty()) {
+        cout << "Pilih petak kandang yang akan ditinggali" << endl;
+        this->peternakan.printSimpananMatrix();
+        cout << "Petak kandang: ";
+        std::pair<int, int> barisdankolompeternakan = this->peternakan.extractSlot();
+        Simpanan* simpanan = this->penyimpanan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
+        Hewan* hewan = dynamic_cast<Hewan*>(simpanan);
+        while (hewan == nullptr) {
+            cout << "Kamu mengambil harapan kosong dari peternakan" << endl;
+            cout << "Silahkan masukan petak kandang yang ditinggali hewan" << endl;
+            cout << "Slot: ";
+            barisdankolompeternakan = this->peternakan.extractSlot();
+            simpanan = this->penyimpanan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
+            hewan = dynamic_cast<Hewan*>(simpanan);   
+        }
+        cout << "Kamu memilih " << hewan->getNama() << " untuk diberi makan." << endl;
+        cout << "Pilih pangan yang akan diberikan:" << endl;
+        this->penyimpanan.printSimpananMatrix();
+        cout << "Slot: ";
+        std::pair<int, int> barisdankolomsimpanan = this->peternakan.extractSlot();
+        Simpanan* simpanan = this->penyimpanan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
+        Produk* produk = dynamic_cast<Produk*>(simpanan);
+        while (!produk || produk->getBeratTambahan() == 0) {
+            if (simpanan == nullptr) {
+                cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl;
+            }
+            else {
+                cout << "Ini bukan makanan!" << endl;
+            }
+            cout << "Silahkan masukan slot yang berisi makanan" << endl;
+            cout << "Slot: ";
+            barisdankolomsimpanan = this->penyimpanan.extractSlot();
+            simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
+            produk = dynamic_cast<Produk*>(simpanan);
+        }
+        hewan->tambahBerat(produk->getBeratTambahan());
+        this->penyimpanan.setValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second, nullptr);
+        cout << hewan->getNama() << " sudah diberi makan dan beratnya menjadi " << hewan->getBerat() << endl;
+    }
+}
+
+void Peternak::ternak() {
+    if (this->penyimpanan.check("Hewan") && !this->peternakan.isFull()) {
+        cout << "Pilih hewan dari penyimpanan" << endl;
+        this->penyimpanan.printSimpananMatrix();
+        cout << "Slot: ";
+        std::pair<int, int> barisdankolomsimpanan = this->penyimpanan.extractSlot();
+        Simpanan* simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
+        Hewan* hewan = dynamic_cast<Hewan*>(simpanan);
+        while (!hewan) {
+            cout << "Ini bukan hewan!" << endl;
+            cout << "Silahkan masukan slot yang berisi hewan" << endl;
+            cout << "Slot: ";
+            barisdankolomsimpanan = this->penyimpanan.extractSlot();
+            simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
+            hewan = dynamic_cast<Hewan*>(simpanan);   
+        }
+        cout << "Kamu memilih " << hewan->getNama() << "." << endl;
+        cout << "Pilih petak tanah yang akan ditinggali" << endl;
+        this->peternakan.printSimpananMatrix();
+        cout << "Petak tanah: ";
+        std::pair<int, int> barisdankolompeternakan = this->peternakan.extractSlot();
+        Hewan* petak = this->peternakan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
+        while (petak != nullptr) {
+            cout << "Petak tanah ini sudah terisi" << endl;
+            cout << "Silahkan pilih petak tanah yang kosong" << endl;
+            cout << "Petak tanah: ";
+            barisdankolompeternakan = this->peternakan.extractSlot();
+            petak = this->peternakan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
+        }
+        this->peternakan.setValue(barisdankolompeternakan.first, barisdankolompeternakan.second, hewan);  
+        this->penyimpanan.setValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second, nullptr);      
+    }
+    else {
+        cout << "Perintah tidak dapat dijalankan" << endl;
+    }
 }
