@@ -1,7 +1,7 @@
 #include "Game.hpp"
 
 int Game::currentPemain = 0;
-vector<Pemain*> listPemain;
+vector<Pemain*> Game::listPemain;
 
 void Game::next() {
     Game::currentPemain = (Game::currentPemain + 1) % listPemain.size();
@@ -12,7 +12,7 @@ int Game::getCurrentPemain() {
 }
 
 vector<Pemain*> Game::getListPemain() {
-    return listPemain;
+    return Game::listPemain;
 }
 
 void Game::setListPemain(vector<Pemain *> inputListPemain){
