@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
-#include "Simpanan.hpp"
 #include "Exception.hpp"
-#include "Game.hpp"
+#include "Pemain.hpp"
+#include "Simpanan.hpp"
 using namespace std;
 #define PB push_back
 #define ADV(arg1, arg2) fscanf(arg1, "%c", &arg2)
@@ -21,7 +21,7 @@ class Load{
         // static vector<Item> loadMisc();
         static vector<Produk> loadProduct();
         static vector<Bangunan> loadRecipe();
-        static Game loadState(string);
+        static void loadState(string);
 };
 
 #endif

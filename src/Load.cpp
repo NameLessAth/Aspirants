@@ -162,7 +162,7 @@ vector<Bangunan> Load::loadRecipe(){
     return newVec;
 }
 
-Game Load::loadState(string path){
+void Load::loadState(string path){
     FILE *file = fopen(path.c_str(), "r");
 
     if (file == NULL) throw FileNotFound();
@@ -171,11 +171,22 @@ Game Load::loadState(string path){
     int jumlahPemain = stoi(Load::ADVWORD(file));
 
     // declare var
-    string username;
+    string username, role, kode; int beratbadan, uang;
+    vector<Pemain*> tempVec;
+
 
     FOR(i, jumlahPemain){
         // word pertama per pemain adalah username
         username = Load::ADVWORD(file);
+
+        // word selanjutnya rolenya
+        role = Load::ADVWORD(file);
+
+        // bb dan uang
+        beratbadan = stoi(Load::ADVWORD(file)); uang = stoi(Load::ADVWORD(file));
+
+        
+
 
     }
 
