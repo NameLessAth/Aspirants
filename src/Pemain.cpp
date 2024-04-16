@@ -94,7 +94,7 @@ void Pemain::beli(){
     }
 
     Toko::printToko();
-    cout << "Uang anda : " << this->uang << "\nSlot penyimpanan tersedia : " << (this->barisPenyimpanan * this->kolomPenyimpanan) - this->penyimpanan.getBanyakIsi();
+    cout << "Uang anda : " << this->uang << "\nSlot penyimpanan tersedia : " << (this->barisPenyimpanan * this->kolomPenyimpanan) - this->penyimpanan.getBanyakIsi() << endl;
 
     string input;
     cout << "Barang yang ingin dibeli : ";

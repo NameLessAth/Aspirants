@@ -262,7 +262,7 @@ bool Matrix<T>::isEmpty() {
 
 template<class T>
 bool Matrix<T>::isFull() {
-    return (this->banyakIsi <= this->baris * this->kolom);
+    return (this->banyakIsi > this->baris * this->kolom);
 }
 
 template<>
