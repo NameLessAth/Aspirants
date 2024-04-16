@@ -89,6 +89,10 @@ void Tanaman::setUmur(int umur){
     this->umur = umur;
 }
 
+int Tanaman::getUmur(){
+    return this->umur;
+}
+
 void Tanaman::tambahUmur() {
     this->umur++;
 }
