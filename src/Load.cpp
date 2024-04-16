@@ -315,5 +315,5 @@ void Load::loadState(string path){
             playerVec.push_back(tempvar);
         }
     }
-    Pemain::setListPemain(playerVec);
+    ListPemain::setListPemain(playerVec);
 }
