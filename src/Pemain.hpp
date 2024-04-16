@@ -18,7 +18,7 @@ class Pemain {
         static int jumlahPemain;
         static int barisPenyimpanan;
         static int kolomPenyimpanan;
-        static vector<Pemain*> listPemain;
+
     public:
         Pemain();
         Pemain(string, int, int, Matrix<Simpanan>);
@@ -30,8 +30,16 @@ class Pemain {
         int getUang();
         int getBerat();
         string getName();
+
+};
+
+class ListPemain {
+    private:
+        static vector<Pemain*> listPemain;
+    public:
         static vector<Pemain*> getListPemain();
         static void setListPemain(vector<Pemain*>);
+        static void pushPemain(Pemain*);
 };
 
 // Walikota

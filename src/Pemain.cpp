@@ -8,14 +8,14 @@ using namespace std;
 int Pemain::jumlahPemain = 0;
 int Pemain::barisPenyimpanan = 10; // Berdasarkan berkas
 int Pemain::kolomPenyimpanan = 10; // Berdasarkan berkas
-vector<Pemain*> Pemain::listPemain;
+vector<Pemain*> ListPemain::listPemain;
 
 Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpanan) {
     Pemain::jumlahPemain++;
     this->username = "Pemain" + to_string(Pemain::jumlahPemain);
     this->uang = 50;
     this->beratBadan = 40;
-    this->listPemain.push_back(this);
+    ListPemain::pushPemain(this);
 }
 
 Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory) : penyimpanan(inventory.getBaris(), inventory.getKolom()) {
@@ -28,7 +28,7 @@ Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory)
             this->penyimpanan.setValue(i, j, inventory.getValue(i, j));
         }
     }
-    this->listPemain.push_back(this);
+    ListPemain::pushPemain(this);
 }
 
 void Pemain::makan() {
@@ -72,14 +72,19 @@ string Pemain::getName(){
     return this->username;
 }
 
-vector<Pemain*> Pemain::getListPemain(){
-    return Pemain::listPemain;
+vector<Pemain*> ListPemain::getListPemain(){
+    return ListPemain::listPemain;
 }
 
-void Pemain::setListPemain(vector<Pemain *> inputListPemain){
+void ListPemain::setListPemain(vector<Pemain *> inputListPemain){
+    ListPemain::listPemain.clear();
     for(int i=0;i<inputListPemain.size();i++){
-        Pemain::listPemain.push_back(inputListPemain[i]);
+        ListPemain::listPemain.push_back(inputListPemain[i]);
     }
+}
+
+void ListPemain::pushPemain(Pemain * p){
+    ListPemain::listPemain.push_back(p);
 }
 
 // Walikota
@@ -248,3 +253,5 @@ void Peternak::ternak() {
         cout << "Perintah tidak dapat dijalankan" << endl;
     }
 }
+
+
