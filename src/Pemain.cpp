@@ -112,7 +112,7 @@ int Walikota::getNetoKekayaan(Pemain* p) {
     }
 
     //Lahan/Peternakan
-    
+
 
     //Bangunan
 
@@ -283,4 +283,14 @@ void Peternak::ternak() {
 Matrix<Simpanan> Pemain::getPenyimpanan()
 {
 	return this->penyimpanan;
+}
+
+Matrix<Tanaman> Petani::getLadang()
+{
+	return this->ladang;
+}
+
+Matrix<Hewan> Peternak::getPeternakan()
+{
+	return this->peternakan;
 }

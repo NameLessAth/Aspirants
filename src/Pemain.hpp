@@ -70,6 +70,7 @@ class Petani : public Pemain {
         Petani(string, int, int, Matrix<Simpanan>, Matrix<Tanaman>);
         void tanam();
         void panen();
+        Matrix<Tanaman> getLadang();
 };  
 
 // Peternak 
@@ -85,6 +86,7 @@ class Peternak : public Pemain {
         void kasihMakan();
         void ternak();
         void panen();
+        Matrix<Hewan> getPeternakan();
 };
 
 #endif 
