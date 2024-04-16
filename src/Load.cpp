@@ -175,11 +175,12 @@ vector<Bangunan> Load::loadRecipe(){
     return newVec;
 }
 
-vector<Pemain*> Load::loadState(string path){
+void Load::loadState(string path){
     vector<Hewan> animalVec = Load::loadAnimal();
     vector<Tanaman> plantVec = Load::loadPlant();
     vector<Produk> prodVec = Load::loadProduct();
     vector<Bangunan> buildVec = Load::loadRecipe();
+    vector<int> miscVec = Load::loadMisc();
     FILE *file = fopen(path.c_str(), "r");
 
     if (file == NULL) throw FileNotFound();
@@ -202,7 +203,7 @@ vector<Pemain*> Load::loadState(string path){
         beratbadan = stoi(Load::ADVWORD(file)); uang = stoi(Load::ADVWORD(file));
 
         // jumlah item
-        int itemCount = stoi(Load::ADVWORD(file));  Matrix<Simpanan> invVec(69, 69);
+        int itemCount = stoi(Load::ADVWORD(file));  Matrix<Simpanan> invVec(miscVec[2], miscVec[3]);
         // scan item2
         FOR(j, itemCount){
             string item = Load::ADVWORD(file);
@@ -242,7 +243,7 @@ vector<Pemain*> Load::loadState(string path){
             itemCount = stoi(Load::ADVWORD(file));
 
             // var
-            Matrix<Tanaman> plantMatx(69, 69);
+            Matrix<Tanaman> plantMatx(miscVec[4], miscVec[5]);
             string lokasi, x = "", y = "", item; int xval = 0, yval, itr, age;
             bool ketemu;
 
@@ -282,7 +283,7 @@ vector<Pemain*> Load::loadState(string path){
             itemCount = stoi(Load::ADVWORD(file));
             
             // var
-            Matrix<Hewan> animalMatx(69, 69);
+            Matrix<Hewan> animalMatx(miscVec[6], miscVec[7]);
             string lokasi, x = "", y = "", item; int xval = 0, yval, itr, bobot;
             bool ketemu;
             
@@ -317,13 +318,49 @@ vector<Pemain*> Load::loadState(string path){
                     } else itr++;
                 }
             } Peternak* tempvar = new Peternak(username, uang, beratbadan, invVec, animalMatx);
-            cout << "jembut debug " << xval << " " <<  yval << endl;
+            cout << "masuk sini sekali\n";
             playerVec.push_back(tempvar);
         } else{
             Walikota* tempvar = new Walikota(username, uang, beratbadan, invVec);
             playerVec.push_back(tempvar);
         }
-    } return playerVec;
+    } ListPemain::setListPemain(playerVec);
+
+    int jumlahitem = stoi(Load::ADVWORD(file)), itr;
+    string firstArg; int secondArg; bool ketemu;
+
+    FOR(i, jumlahitem){
+        firstArg = Load::ADVWORD(file);
+        secondArg = stoi(Load::ADVWORD(file));\
+        itr = 0;
+        while (!ketemu && itr <= animalVec.size()+plantVec.size()+prodVec.size()+buildVec.size()){
+            if (itr >= 0 && itr <= animalVec.size()-1){
+                if (firstArg == animalVec[itr].getNama()){
+                    ketemu = true;
+                    Hewan* tempvar = new Hewan(animalVec[itr]);
+                    Toko::insertItem(tempvar, secondArg);
+                } else itr++;
+            } else if (itr >= animalVec.size() && itr <= animalVec.size()+plantVec.size()-1){
+                if (firstArg == plantVec[itr-animalVec.size()].getNama()){
+                    ketemu = true;
+                    Tanaman* tempvar = new Tanaman(plantVec[itr-animalVec.size()]);
+                    Toko::insertItem(tempvar, secondArg);;
+                } else itr++;
+            } else if (itr >= animalVec.size()+plantVec.size() && itr <= animalVec.size()+plantVec.size()+prodVec.size()-1){
+                if (firstArg == prodVec[itr-animalVec.size()-plantVec.size()].getNama()){
+                    ketemu = true;
+                    Produk* tempvar = new Produk(prodVec[itr-animalVec.size()-plantVec.size()]);
+                    Toko::insertItem(tempvar, secondArg);;
+                } else itr++;
+            } else {
+                if (firstArg == buildVec[itr-animalVec.size()-plantVec.size()-prodVec.size()].getNama()){
+                    ketemu = true;
+                    Bangunan* tempvar = new Bangunan(buildVec[itr-animalVec.size()-plantVec.size()-prodVec.size()]);
+                    Toko::insertItem(tempvar, secondArg);;
+                } else itr++;
+            }
+        }
+    }
 }
 
 void Save::saveState(string path, vector<Pemain*> playerVec){
@@ -335,7 +372,7 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
     // vector<Pemain*> playerVec = ListPemain::getListPemain(); 
     string role;
     Peternak* tempPeternak; Petani* tempPetani;
-    int i, j, k;
+    long i, j, k;
 
     // write jumlah pemain'
     fprintf(file, "%ld", playerVec.size());
@@ -353,19 +390,22 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
         } else{ 
             role = "Peternak";
             tempPeternak = dynamic_cast<Peternak*>(playerVec[i]);
-        }fprintf(file, "%s ", role.c_str());
+        } fprintf(file, "%s ", role.c_str());
         
         // write uang dan berat badan
         fprintf(file, "%d %d", playerVec[i]->getBerat(), playerVec[i]->getUang());
 
         // write inventory
         fprintf(file, "\n%d", playerVec[i]->getPenyimpanan().getBanyakIsi());
-        cout << "rolenya " << role << playerVec[i]->getName() << endl;
+        cout << "pre\n";
+        // Pemain* newtemp =  playerVec[i];
+        cout << "rolenya " << role << playerVec[i]->getPenyimpanan().getValue(1,1) << endl;
         // write masing2 inventory
-        for (int x = 1; x <= playerVec[i]->getPenyimpanan().getBaris(); x++){
-            for (int j = 1; j <= playerVec[i]->getPenyimpanan().getKolom(); j++){
-                if (playerVec[i]->getPenyimpanan().getValue(x, j)->getKode() != "XXXX"){
-                    fprintf(file, "\n%s", playerVec[i]->getPenyimpanan().getValue(x, j)->getNama().c_str());
+        if (playerVec[i]->getPenyimpanan().getValue(1, 1) == NULL) cout << "NULL\n";
+        for (k = 1; k <= playerVec[i]->getPenyimpanan().getBaris(); k++){
+            for (j = 1; j <= playerVec[i]->getPenyimpanan().getKolom(); j++){
+                if (playerVec[i]->getPenyimpanan().getValue(k, j)->getKode() != "XXXX"){
+                    fprintf(file, "\n%s", playerVec[i]->getPenyimpanan().getValue(k, j)->getNama().c_str());
                 }
             }
         }
@@ -377,10 +417,11 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
             fprintf(file, "\n%d", tempPetani->getLadang().getBanyakIsi());
             cout << "jembut petani " << tempPetani->getLadang().getBaris() << endl;
             // write sesuai format tanaman
+            if (tempPetani == NULL) cout << "NULL\n";
             for (k = 1; k <= tempPetani->getLadang().getBaris(); k++){
                 for (j = 1; j <= tempPetani->getLadang().getKolom(); j++){
                     if (tempPetani->getLadang().getValue(k, j)->getKode() != "XXXX"){
-                        fprintf(file, "\n%c%02d ", char('A'+k-1), j);
+                        fprintf(file, "\n%c%02ld ", char('A'+k-1), j);
                         fprintf(file, "%s ", tempPetani->getLadang().getValue(k, j)->getNama().c_str());
                         fprintf(file, "%d", tempPetani->getLadang().getValue(k, j)->getUmur());
                     }
@@ -398,7 +439,7 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
             for (k = 1; k <= tempPeternak->getPeternakan().getBaris(); k++){
                 for (j = 1; j <= tempPeternak->getPeternakan().getKolom(); j++){
                     if (tempPeternak->getPeternakan().getValue(k, j)->getKode() != "XXXX"){
-                        fprintf(file, "\n%c%02d ", char('A'+k-1), j);
+                        fprintf(file, "\n%c%02ld ", char('A'+k-1), j);
                         fprintf(file, "%s ", tempPeternak->getPeternakan().getValue(k, j)->getNama().c_str());
                         fprintf(file, "%d", tempPeternak->getPeternakan().getValue(k, j)->getBerat());                       
                     }
@@ -407,5 +448,11 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
             cout << "role jembut " << role << endl;
         }
         
-    } fclose(file);
+    } 
+    vector<pair<Simpanan*, int>> cataloge = Toko::getCatalogue();
+    for (i = 0; i < cataloge.size(); i++){
+        fprintf(file, "\n%s %d", cataloge[i].first->getNama().c_str(), cataloge[i].second);
+    }
+
+    fclose(file);
 }

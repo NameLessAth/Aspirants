@@ -21,7 +21,7 @@ class Load{
         static vector<int> loadMisc();
         static vector<Produk> loadProduct();
         static vector<Bangunan> loadRecipe();
-        static vector<Pemain*> loadState(string path);
+        static void loadState(string path);
 };
 
 class Save{
