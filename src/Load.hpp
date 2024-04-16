@@ -7,6 +7,7 @@
 #include <vector>
 #include "Pemain.hpp"
 #include "Simpanan.hpp"
+#include <filesystem>
 using namespace std;
 #define PB push_back
 #define ADV(arg1, arg2) fscanf(arg1, "%c", &arg2)
@@ -20,7 +21,12 @@ class Load{
         static vector<int> loadMisc();
         static vector<Produk> loadProduct();
         static vector<Bangunan> loadRecipe();
-        static void loadState(string);
+        static vector<Pemain*> loadState(string path);
+};
+
+class Save{
+    public:
+        static void saveState(string path);
 };
 
 #endif

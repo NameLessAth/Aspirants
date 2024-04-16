@@ -125,7 +125,8 @@ vector<Produk> Load::loadProduct(){
                     Produk newProduk(id, kode, nama, tipe, harga, origin, beratTambahan);
                     newVec.PB(newProduk);
                     break;
-            } tempvar = "";
+            } 
+            tempvar = "";
             itr++;
         } else tempvar += var;
     } harga = stoi(tempvar);
@@ -174,7 +175,7 @@ vector<Bangunan> Load::loadRecipe(){
     return newVec;
 }
 
-void Load::loadState(string path){
+vector<Pemain*> Load::loadState(string path){
     vector<Hewan> animalVec = Load::loadAnimal();
     vector<Tanaman> plantVec = Load::loadPlant();
     vector<Produk> prodVec = Load::loadProduct();
@@ -248,6 +249,9 @@ void Load::loadState(string path){
 
             FOR(j, itemCount){
 
+                // reset variabel
+                x = ""; y = ""; xval = 0;
+
                 // scan lokasi
                 lokasi = Load::ADVWORD(file);
                 for(char& c : lokasi){
@@ -257,7 +261,7 @@ void Load::loadState(string path){
                     xval += int(c);
                 } xval -= (int('A')-1);
                 yval = stoi(y);
-                
+
                 // scan nama tanaman
                 item = Load::ADVWORD(file);
 
@@ -276,16 +280,20 @@ void Load::loadState(string path){
             playerVec.push_back(tempvar);
         } else if (role == "Peternak"){
             itemCount = stoi(Load::ADVWORD(file));
-
+            
             // var
             Matrix<Hewan> animalMatx(69, 69);
             string lokasi, x = "", y = "", item; int xval = 0, yval, itr, bobot;
             bool ketemu;
-
+            
             FOR(j, itemCount){
+                
+                // reset variabel
+                x = ""; y = ""; xval = 0;
 
                 // scan lokasi
                 lokasi = Load::ADVWORD(file);
+                
                 for(char& c : lokasi){
                     if (!isdigit(c)) x += c;
                     else y += c;
@@ -309,11 +317,93 @@ void Load::loadState(string path){
                     } else itr++;
                 }
             } Peternak* tempvar = new Peternak(username, uang, beratbadan, invVec, animalMatx);
+            cout << "jembut debug " << xval << " " <<  yval << endl;
             playerVec.push_back(tempvar);
         } else{
             Walikota* tempvar = new Walikota(username, uang, beratbadan, invVec);
             playerVec.push_back(tempvar);
         }
-    }
+    } return playerVec;
     ListPemain::setListPemain(playerVec);
+}
+
+void Save::saveState(string path){
+    FILE *file = fopen(path.c_str(), "w");
+
+    if (file == NULL) throw FileNotFound();
+
+    // declare var
+    vector<Pemain*> playerVec = ListPemain::getListPemain(); string role;
+    Peternak* tempPeternak; Petani* tempPetani;
+
+    // write jumlah pemain
+    fprintf(file, "%d", playerVec.size());
+
+    for (int i = 0; i < playerVec.size(); i++){
+        
+        // write nama pemain
+        fprintf(file, "\n%s ", playerVec[i]->getName());
+        
+        // write role
+        if (dynamic_cast<Walikota*>(playerVec[i])) role = "Walikota";
+        else if (dynamic_cast<Petani*>(playerVec[i])){
+            role = "Petani";
+            tempPetani = dynamic_cast<Petani*>(playerVec[i]);
+        } else{ 
+            role = "Peternak";
+            tempPeternak = dynamic_cast<Peternak*>(playerVec[i]);
+        }fprintf(file, "%s ", role);
+
+        // write uang dan berat badan
+        fprintf(file, "%d %d", playerVec[i]->getBerat(), playerVec[i]->getUang());
+
+        // write inventory
+        Matrix<Simpanan> inventory = playerVec[i]->getPenyimpanan();
+        fprintf(file, "\n%d", inventory.getBanyakIsi());
+        
+        // write masing2 inventory
+        for (int x = 1; x <= inventory.getBaris(); x++){
+            for (int j = 1; j <= inventory.getKolom(); j++){
+                if (inventory.getValue(x, j)->getKode() != "XXXX"){
+                    fprintf(file, "\n%s", inventory.getValue(x, j)->getNama());
+                }
+            }
+        }
+
+        // write peternakan/ladang
+        if (role == "Petani"){
+            
+            // write banyak tanaman di ladang
+            fprintf(file, "\n%d", tempPetani->getLadang().getBanyakIsi());
+
+            // write sesuai format tanaman
+            for (int x = 1; x <= tempPetani->getLadang().getBaris(); x++){
+                for (int j = 1; j <= tempPetani->getLadang().getKolom(); j++){
+                    if (tempPetani->getLadang().getValue(x, j)->getKode() != "XXXX"){
+                        fprintf(file, "\n%c%02d ", char('A'+x-1), j);
+                        fprintf(file, "%s ", tempPetani->getLadang().getValue(x, j)->getNama());
+                        fprintf(file, "%d", tempPetani->getLadang().getValue(x, j)->getUmur());
+                    }
+                }
+            }
+            
+        } else if (role == "Peternak"){
+
+            // write banyak hewan di peternakan
+            fprintf(file, "\n%d", tempPeternak->getPeternakan().getBanyakIsi());
+
+            // write sesuai format hewan
+            for (int x = 1; x <= tempPeternak->getPeternakan().getBaris(); x++){
+                for (int j = 1; j <= tempPeternak->getPeternakan().getKolom(); j++){
+                    if (tempPeternak->getPeternakan().getValue(x, j)->getKode() != "XXXX"){
+                        fprintf(file, "\n%c%02d ", char('A'+x-1), j);
+                        fprintf(file, "%s ", tempPeternak->getPeternakan().getValue(x, j)->getNama());
+                        fprintf(file, "%d", tempPeternak->getPeternakan().getValue(x, j)->getBerat());                       
+                    }
+                }
+            }
+            
+        }
+        
+    }
 }
