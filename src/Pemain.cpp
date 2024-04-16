@@ -58,6 +58,116 @@ void Pemain::makan() {
     }
 }
 
+
+bool isNumber(string input){
+    for(int i=0;i<input.length();i++){
+        if(!isdigit(input[i])){
+            return false;
+        }
+   }
+   return true;
+}
+
+vector<string> separator(string input){
+    vector<string> temp;
+    temp.push_back(input.substr(0,3));
+    input.erase(0,3);
+    while(input.length()){
+        input.erase(0,2);
+        temp.push_back(input.substr(0,3));
+        input.erase(0,3);
+    }
+    return temp;
+}
+
+void Pemain::beli(){
+    if(this->penyimpanan.isFull()){
+        throw FullStorage();
+    }
+
+    Toko::printToko();
+    cout << "Uang anda : " << this->uang << "\nSlot penyimpanan tersedia : " << (this->barisPenyimpanan * this->kolomPenyimpanan) - this->penyimpanan.getBanyakIsi();
+
+    string input;
+    cout << "Barang yang ingin dibeli : ";
+    cin >> input;
+
+    if(!isNumber(input) || stoi(input) > Toko::manyItem() || stoi(input) == 0){
+        throw InvalidInput();
+    }
+
+    int index = stoi(input);
+
+    cout << "Kuantitas : ";
+    cin >> input;
+
+    if(!isNumber(input) || stoi(input) > Toko::manyItem() || stoi(input) == 0){
+        throw InvalidInput();
+    }
+
+    int qty = stoi(input);
+
+    if(dynamic_cast<Bangunan*>(Toko::getCatalogue()[index-1].first)){
+        if(qty > Toko::getCatalogue()[index-1].second){
+            throw insufficientItems();
+        }
+        if(this->uang < qty * Toko::getCatalogue()[index-1].first->getHarga()){
+            throw insufficientMoney();
+        } else {
+            this->uang -= qty * Toko::getCatalogue()[index-1].first->getHarga();
+            Toko::getCatalogue()[index-1].second -= qty;
+        }
+    } else {
+        if(this->uang < qty * Toko::getCatalogue()[index-1].first->getHarga()){
+            throw insufficientMoney();
+        } else {
+            this->uang -= qty * Toko::getCatalogue()[index-1].first->getHarga();
+        }
+    }
+    
+    cout << "Selamat Anda berhasil membeli " << qty << " " << Toko::getCatalogue()[index-1].first->getNama() << ". Uang Anda tersisa " << this->uang << " gulden.\n\nPilih slot untuk menyimpan barang yang Anda beli!\n";
+
+    this->penyimpanan.printSimpananMatrix();
+
+    bool valid = true;
+    cout << "Petak slot : ";
+    cin >> input;
+    vector<string> temp = separator(input);
+
+    for(int i=0;i<temp.size();i++){
+        char hurufKolom = temp[i][0];
+        int baris = stoi(temp[i].substr(1));
+        int kolom = toupper(hurufKolom) - 'A' + 1;
+        if(this->penyimpanan.getValue(baris,kolom)->getKode() != "XXXX"){
+            valid = false;
+        }
+    }
+
+    while(!valid){
+        cout << "Petak tidak valid!\nMasukkan petak slot : ";
+        cin >> input;
+
+        vector<string> temp = separator(input);
+
+        for(int i=0;i<temp.size();i++){
+            char hurufKolom = temp[i][0];
+            int baris = stoi(temp[i].substr(1));
+            int kolom = toupper(hurufKolom) - 'A' + 1;
+            if(this->penyimpanan.getValue(baris,kolom)->getKode() != "XXXX"){
+                continue;
+            }
+        }
+        valid = true;
+    }
+
+    for(int i=0;i<temp.size();i++){
+        char hurufKolom = temp[i][0];
+        int baris = stoi(temp[i].substr(1));
+        int kolom = toupper(hurufKolom) - 'A' + 1;
+        this->penyimpanan.setValue(baris,kolom,Toko::getCatalogue()[index-1].first);
+    }
+}
+
 int Pemain::getUang(){
     return this->uang;
 }

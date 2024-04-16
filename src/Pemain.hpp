@@ -5,6 +5,7 @@
 #include <vector>
 #include "Matrix.hpp"
 #include "Simpanan.hpp"
+#include "Toko.hpp"
 using namespace std;
 
 // Pemain
@@ -25,7 +26,7 @@ class Pemain {
         // void next();  
         void makan();
         virtual void tumbal(){};
-        // void beli();
+        void beli();
         // void jual();
         void setUang(int);
         int getUang();
