@@ -32,11 +32,12 @@ int Matrix<T>::getBanyakIsi(){
 template<class T>
 void Matrix<T>::setValue(int row, int col, T* value) {
     if (row >= 1 && row <= this->baris && col >= 1 && col <= this->kolom) {
-        matrix[row - 1][col - 1] = value;
         if (value == nullptr) {
+            matrix[row - 1][col - 1] = T();
             this->banyakIsi--;
         }
         else {
+            matrix[row - 1][col - 1] = value;
             this->banyakIsi++;
         }
     } else {
@@ -256,14 +257,13 @@ bool Matrix<T>::isFull() {
 
 template<>
 bool Matrix<Simpanan>::check(std::string kelas) {
-    Simpanan* simpanan = nullptr;
     bool found = false;
+    Simpanan* simpanan;
     if (kelas == "Tanaman") {
-        Tanaman* tanaman = nullptr;
         for (int i = 1; i <= this->baris; ++i) {
             for (int j = 1; j <= this->kolom; ++j) {
-                tanaman = dynamic_cast<Tanaman*>(tanaman);
-                if (tanaman) {
+                simpanan = this->getValue(i, j);
+                if (dynamic_cast<Tanaman*>(simpanan)) {
                     found = true;
                     break;
                 }
@@ -271,11 +271,10 @@ bool Matrix<Simpanan>::check(std::string kelas) {
         }
     }
     else if (kelas == "Hewan") {
-        Hewan* hewan = nullptr;
         for (int i = 1; i <= this->baris; ++i) {
             for (int j = 1; j <= this->kolom; ++j) {
-                hewan = dynamic_cast<Hewan*>(hewan);
-                if (hewan) {
+                simpanan = this->getValue(i, j);
+                if (dynamic_cast<Hewan*>(simpanan)) {
                     found = true;
                     break;
                 }
@@ -283,11 +282,11 @@ bool Matrix<Simpanan>::check(std::string kelas) {
         }
     }
     else if (kelas == "Makanan") {
-        Produk* produk = nullptr;
         for (int i = 1; i <= this->baris; ++i) {
             for (int j = 1; j <= this->kolom; ++j) {
-                produk = dynamic_cast<Produk*>(produk);
-                if (produk && produk->getBeratTambahan() == 0) {
+                simpanan = this->getValue(i, j);
+                Produk* makanan = dynamic_cast<Produk*>(simpanan);
+                if (makanan && makanan->getBeratTambahan() > 0) {
                     found = true;
                     break;
                 }

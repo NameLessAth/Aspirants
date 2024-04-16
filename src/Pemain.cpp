@@ -36,9 +36,9 @@ void Pemain::makan() {
         cout << "Slot: ";
         std::pair<int, int> barisdankolomsimpanan = this->penyimpanan.extractSlot();
         Simpanan* simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
-        Produk* produk = dynamic_cast<Produk*>(simpanan);
-        while (!produk || produk->getBeratTambahan() == 0) {
-            if (simpanan == nullptr) {
+        Produk* makanan = dynamic_cast<Produk*>(simpanan);
+        while (!makanan || makanan->getBeratTambahan() == 0) {
+            if (simpanan->getKode() == "XXXX") {
                 cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl;
             }
             else {
@@ -48,10 +48,10 @@ void Pemain::makan() {
             cout << "Slot: ";
             barisdankolomsimpanan = this->penyimpanan.extractSlot();
             simpanan = this->penyimpanan.getValue(barisdankolomsimpanan.first, barisdankolomsimpanan.second);
-            produk = dynamic_cast<Produk*>(simpanan);   
+            makanan = dynamic_cast<Produk*>(simpanan);   
         }
         cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl;
-        this->beratBadan += produk->getBeratTambahan();
+        this->beratBadan += makanan->getBeratTambahan();
         cout << "Alhasil, berat badan kamu naik menjadi " << this->beratBadan << endl;
     } else {
         cout << "Perintah tidak dapat dijalankan" << endl;
