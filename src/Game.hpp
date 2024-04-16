@@ -3,7 +3,6 @@
 
 #include "Pemain.hpp"
 #include "Load.hpp"
-#include "Toko.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -19,7 +18,6 @@ private:
 public:
     static void next();
     static int getCurrentPemain();
-    static void start();
     static void main();
 };
 

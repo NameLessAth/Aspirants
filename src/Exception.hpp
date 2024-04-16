@@ -31,4 +31,25 @@ class InvalidInput : public Exception {
 		}
 };
 
+class FullStrorage : public Exception {
+	public:
+		const char * what () const throw(){
+			return "Penyimpanan sudah penuh.";
+		}
+};
+
+class insufficientMoney : public Exception {
+	public:
+		const char * what () const throw(){
+			return "Uang tidak cukup.";
+		}
+};
+
+class insufficientItems : public Exception {
+	public:
+		const char * what () const throw(){
+			return "Barang tidak cukup.";
+		}
+};
+
 #endif
