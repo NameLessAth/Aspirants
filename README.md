@@ -4,7 +4,7 @@ Tugas Besar 1 IF2210 Pemrograman Berbasis Objek
 <p align="center">
   <img height="360px" src="https://cdn.discordapp.com/attachments/1219832040480837687/1229808514894139432/image.png?ex=6631076e&is=661e926e&hm=e867da1e88ac30631dc25ac2a44e84eedadd793e16870f28c7e6c2df98648efe&" alt="logo HMIF"/>
   <br>
-  <a><i><sup>Personil kelompok "Daspro Gagal A"</sup></i></a>
+  <a><i><sup>Personil kelompok "Aspirants"</sup></i></a>
 </p>
 
 ## Anggota 
