@@ -168,6 +168,52 @@ void Pemain::beli(){
     }
 }
 
+void Pemain::jual(){
+    cout << "Berikut merupakan penyimpanan Anda\n";
+    this->penyimpanan.printSimpananMatrix();
+    cout << "Silahkan pilih petak yang ingin Anda jual!\n";
+
+    bool valid = true;
+    string input;
+    cout << "Petak slot : ";
+    cin >> input;
+    vector<string> temp = separator(input);
+
+    for(int i=0;i<temp.size();i++){
+        char hurufKolom = temp[i][0];
+        int baris = stoi(temp[i].substr(1));
+        int kolom = toupper(hurufKolom) - 'A' + 1;
+        if(this->penyimpanan.getValue(baris,kolom)->getKode() == "XXXX"){
+            valid = false;
+        }
+    }
+
+    while(!valid){
+        cout << "Petak tidak valid!\nMasukkan petak slot : ";
+        cin >> input;
+
+        vector<string> temp = separator(input);
+
+        for(int i=0;i<temp.size();i++){
+            char hurufKolom = temp[i][0];
+            int baris = stoi(temp[i].substr(1));
+            int kolom = toupper(hurufKolom) - 'A' + 1;
+            if(this->penyimpanan.getValue(baris,kolom)->getKode() != "XXXX"){
+                continue;
+            }
+        }
+        valid = true;
+    }
+
+    for(int i=0;i<temp.size();i++){
+        char hurufKolom = temp[i][0];
+        int baris = stoi(temp[i].substr(1));
+        int kolom = toupper(hurufKolom) - 'A' + 1;
+        Toko::insertItem(*this->penyimpanan.getValue(baris,kolom),1);
+        this->penyimpanan.setValue(baris,kolom,nullptr);
+    }
+}
+
 int Pemain::getUang(){
     return this->uang;
 }

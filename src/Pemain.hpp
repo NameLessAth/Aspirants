@@ -27,7 +27,7 @@ class Pemain {
         void makan();
         virtual void tumbal(){};
         void beli();
-        // void jual();
+        void jual();
         void setUang(int);
         int getUang();
         int getBerat();
