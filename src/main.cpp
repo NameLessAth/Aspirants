@@ -75,6 +75,5 @@ using namespace std;
 // }
 
 int main(){
-    Game::start();
     Game::main();
 }

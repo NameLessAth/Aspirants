@@ -15,7 +15,7 @@ int Game::getCurrentPemain() {
     return Game::currentPemain;
 }
 
-void Game::start(){
+void Game::main(){
     vector<int> temp = Load::loadMisc();
     Game::goldRequirement = temp[0];
     Game::weightRequirement = temp[1];
@@ -66,20 +66,18 @@ void Game::start(){
 
         ListPemain::pushPemain(&Petani1);
         ListPemain::pushPemain(&Peternak1);
-        ListPemain::pushPemain(&Peternak1);
+        ListPemain::pushPemain(&Walikota);
     }
-}
-
-void Game::main(){
-    string input;
+    cout << "Sekarang adalah giliran " << (ListPemain::getListPemain()[Game::currentPemain])->getName() << "!\n";
     bool win = false;
     while(!win){
-        // cout << "Sekarang adalah giliran " << ListPemain::getListPemain()[Game::currentPemain]->getName() << "!\n\n";
-        cout << "> ";
+        
+        cout << "\n> ";
         cin >> input;
 
         if (input == "NEXT"){
             Game::next();
+            cout << "Sekarang adalah giliran " << (ListPemain::getListPemain()[Game::currentPemain])->getName() << "!\n";
         } else if (input == "CETAK_PENYIMPANAN"){
             
         } else if (input == "PUNGUT_PAJAK" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
