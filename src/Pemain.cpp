@@ -96,15 +96,15 @@ Walikota::Walikota(string username, int uang, int berat, Matrix<Simpanan> invent
 }
 
 int Walikota::getNetoKekayaan(Pemain* p) {
-    //Neto kekayaan terdiri dari uang, harga setiap penyimpanan, harga setiap lahan/peternakan, dan yang ada di bangunan
+    //Neto kekayaan terdiri dari uang, harga setiap penyimpanan, dan harga setiap lahan/peternakan (bangunan termasuk penyimpanan).
     int netoKekayaan = 0;
 
     //Uang (gulden)
     netoKekayaan += p->getUang();
 
     //Penyimpanan
-    for (int i=1; i<p->getPenyimpanan().getBaris(); i++){
-        for (int j=1; j<p->getPenyimpanan().getKolom(); j++){
+    for (int i=1; i<=p->getPenyimpanan().getBaris(); i++){
+        for (int j=1; j<=p->getPenyimpanan().getKolom(); j++){
             if (p->getPenyimpanan().getValue(i,j) != nullptr){
                 netoKekayaan += p->getPenyimpanan().getValue(i, j)->getHarga();
             }
@@ -112,15 +112,102 @@ int Walikota::getNetoKekayaan(Pemain* p) {
     }
 
     //Lahan/Peternakan
-
-
-    //Bangunan
+    if(Petani* p2 = dynamic_cast<Petani*>(p)){
+    for (int i=1; i<=p2->getLadang().getBaris(); i++){
+        for (int j=1; j<=p2->getLadang().getKolom(); j++){
+            if (p2->getLadang().getValue(i,j) != nullptr){
+                netoKekayaan += p2->getLadang().getValue(i, j)->getHarga();
+            }
+        }
+    }
+    }
+    else if (Peternak* p2 = dynamic_cast<Peternak*>(p)){
+    for (int i=1; i<=p2->getPeternakan().getBaris(); i++){
+        for (int j=1; j<=p2->getPeternakan().getKolom(); j++){
+            if (p2->getPeternakan().getValue(i,j) != nullptr){
+                netoKekayaan += p2->getPeternakan().getValue(i, j)->getHarga();
+            }
+        }
+    }
+    }
 
 	return 0;
 }
 
-int Walikota::getTarifBesaranPajak(int KKP) {
-	return 0;
+float Walikota::getTarifBesaranPajak(int KKP) {
+    if (KKP <= 0) return 0;
+    else if (KKP <= 6) return 0.05;
+    else if (KKP <= 25) return 0.15;
+    else if (KKP <= 50) return 0.25;
+    else if (KKP <= 500) return 0.3;
+    else return 0.35;
+}
+
+void Walikota::pungutPajak(){
+    int indexWalikota;
+    int KTKP;
+    int uangPemain;
+    int hasilPajak = 0;
+    int currentPajak;
+    vector<Pemain*> sortedPemain;
+
+    for (int i=0; i<ListPemain::getListPemain().size(); i++){
+        if (!dynamic_cast<Walikota*>(ListPemain::getListPemain()[i])){
+            currentPajak = 0;
+            uangPemain = ListPemain::getListPemain()[i]->getUang();
+            if (dynamic_cast<Peternak*>(ListPemain::getListPemain()[i])){
+                KTKP = 11;
+            }
+            else { //Petani
+                KTKP = 13;
+            }
+            
+            currentPajak = (uangPemain - KTKP) * getTarifBesaranPajak(uangPemain);
+            ListPemain::getListPemain()[i]->setUang(uangPemain - currentPajak); //Untested
+            hasilPajak += currentPajak;
+
+            if (sortedPemain.size() == 0){
+                sortedPemain.push_back(ListPemain::getListPemain()[i]);
+            }
+            else{
+                int j = 0;
+                bool found = false;
+                while (j < sortedPemain.size() && !found){
+                    if (sortedPemain[j]->getUang() < uangPemain){
+                        sortedPemain.insert(sortedPemain.begin() + j, ListPemain::getListPemain()[i]);
+                    }
+                    j++;
+                }
+                if (!found) sortedPemain.push_back(ListPemain::getListPemain()[i]);
+            }
+            
+        }
+        else{
+            indexWalikota = i;
+        }
+    }
+
+    ListPemain::getListPemain()[indexWalikota]->setUang(
+        ListPemain::getListPemain()[indexWalikota]->getUang() + hasilPajak
+    );
+
+    cout << "Cring cring cring..." << endl;
+    cout << "Pajak sudah dipungut!" << endl << endl;
+    cout << "Berikut adalah detil dari pemungutan pajak:" << endl;
+    for (int i=0; i<sortedPemain.size(); i++){
+        cout << "  " << i+1 << ". " << sortedPemain[i]->getName() << " - ";
+        if (dynamic_cast<Peternak*>(ListPemain::getListPemain()[i])){
+            cout << "Peternak: ";
+        }
+        else { //Petani
+            cout << "Petani: ";
+        }
+        cout << sortedPemain[i]->getUang() << " gulden" << endl;
+    }
+
+    cout << "Negara mendapatkan pemasukan sebesar "<< hasilPajak << " gulden." << endl;
+    cout << "Gunakan dengan baik dan jangan dikorupsi ya!" << endl;
+
 }
 
 // Petani
@@ -280,17 +367,18 @@ void Peternak::ternak() {
     }
 }
 
-Matrix<Simpanan> Pemain::getPenyimpanan()
-{
+void Pemain::setUang(int newUang){
+	this->uang = newUang;
+}
+
+Matrix<Simpanan> Pemain::getPenyimpanan(){
 	return this->penyimpanan;
 }
 
-Matrix<Tanaman> Petani::getLadang()
-{
+Matrix<Tanaman> Petani::getLadang(){
 	return this->ladang;
 }
 
-Matrix<Hewan> Peternak::getPeternakan()
-{
+Matrix<Hewan> Peternak::getPeternakan(){
 	return this->peternakan;
 }

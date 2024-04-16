@@ -27,6 +27,7 @@ class Pemain {
         virtual void tumbal(){};
         // void beli();
         // void jual();
+        void setUang(int);
         int getUang();
         int getBerat();
         string getName();
@@ -48,11 +49,11 @@ class Walikota : public Pemain {
     private:
         //Helper pungutPajak
         int getNetoKekayaan(Pemain*);
-        int getTarifBesaranPajak(int KKP);
+        float getTarifBesaranPajak(int KKP);
     public:
         Walikota();
         Walikota(string, int, int, Matrix<Simpanan>);
-        // void pungutPajak();
+        void pungutPajak();
         // void bangunBangunan();
         // void tambahPemain();
         virtual void tumbal(){};
