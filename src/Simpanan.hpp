@@ -24,9 +24,6 @@ class Simpanan {
         string getIsi();
         string getNama() const;
         int getHarga() const;
-        bool operator<(const Simpanan& other) const {
-            return name < other.name;
-        }
 };
 
 // Bangunan
