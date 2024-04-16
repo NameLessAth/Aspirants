@@ -1,7 +1,6 @@
 #include "Game.hpp"
 #include "Pemain.hpp"
 #include "Matrix.hpp"
-#include "Toko.hpp"
 #include "Simpanan.hpp"
 #include <iostream>
 using namespace std;
@@ -34,9 +33,9 @@ using namespace std;
 // }
 
 // Testing Simpanan
-int main() {
+// int main() {
 
-    Petani petani1;
+//     Petani petani1;
 
     // Simpanan s(1, "S01", "Simpanan 1", "Simpanan");
     // Bangunan b(1, "B01", "Bangunan 1", "Bangunan");
@@ -75,7 +74,7 @@ int main() {
     // m.getValue(5,3);
 // }
 
-// int main(){
-//     Game::start();
-//     Game::main();
-// }
+int main(){
+    Game::start();
+    Game::main();
+}
