@@ -280,11 +280,9 @@ void ListPemain::next(){
 // Walikota
 Walikota::Walikota() : Pemain() {
     this->username = "Walikota";
-    cout << "Walikota " << this->username << " siap bermain!" << endl;
 }
 
 Walikota::Walikota(string username, int uang, int berat, Matrix<Simpanan> inventory) : Pemain(username, uang, berat, inventory){
-    cout << "Walikota " << this->username << " siap bermain!" << endl;
 }
 
 int Walikota::getNetoKekayaan(Pemain* p) {
@@ -518,13 +516,11 @@ int Petani::kolomLadang = 10; // Berdasarkan berkas
 Petani::Petani() : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
     Petani::jumlahPetani++;
     this->username = "Petani" + to_string(Petani::jumlahPetani);
-    cout << "Petani " << this->username << " siap bermain!" << endl;
     
 }
 
 Petani::Petani(string nama) : Pemain(nama), ladang(Petani::barisLadang, Petani::kolomLadang){
     Petani::jumlahPetani++;
-    cout << "Petani " << this->username << " siap bermain!" << endl;
 }
 
 
@@ -533,7 +529,7 @@ Petani::Petani(string username, int uang, int berat, Matrix<Simpanan> inventory,
         for (int j = 1; j <= this->ladang.getKolom(); j++){
             this->ladang.setValue(i, j, kebun.getValue(i, j));
         }
-    } cout << "Petani " << this->username << " siap bermain!" << endl;
+    }
     Petani::jumlahPetani++;
 }
 
@@ -587,12 +583,10 @@ int Peternak::kolomTernak = 10; // Berdasarkan berkas
 Peternak::Peternak() : Pemain(), peternakan(Peternak::barisTernak, Peternak::kolomTernak) {
     Peternak::jumlahPeternak++;
     this->username = "Peternak" + to_string(Peternak::jumlahPeternak);
-    cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
 
 Peternak::Peternak(string nama) : Pemain(nama), peternakan(Peternak::barisTernak, Peternak::kolomTernak){
     Peternak::jumlahPeternak++;
-    cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
 
 Peternak::Peternak(string username, int uang, int berat, Matrix<Simpanan> inventory, Matrix<Hewan> ternak) : Pemain(username, uang, berat, inventory), peternakan(ternak.getBaris(), ternak.getKolom()) {
@@ -602,7 +596,6 @@ Peternak::Peternak(string username, int uang, int berat, Matrix<Simpanan> invent
         }
     }
     Peternak::jumlahPeternak++;
-    cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
 
 void Peternak::kasihMakan() {

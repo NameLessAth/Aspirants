@@ -57,8 +57,7 @@ const int Matrix<T>::getKolom(){
 
 template<>
 void Matrix<Simpanan>::addNearby(Simpanan *value){
-    cout << "simpanan\n";
-    if (this->banyakIsi == this->baris*this->kolom) cout << "Matrix penuh\n";
+    if (this->banyakIsi == this->baris*this->kolom) throw FullStorage();
     else{
         int i = 1, j = 1; bool ketemu = false;
         while(!ketemu){
@@ -75,7 +74,7 @@ void Matrix<Simpanan>::addNearby(Simpanan *value){
 
 template<>
 void Matrix<Tanaman>::addNearby(Tanaman *value){
-    if (this->banyakIsi == this->baris*this->kolom) cout << "Matrix penuh\n";
+    if (this->banyakIsi == this->baris*this->kolom) throw FullStorage();
     else{
         int i = 1, j = 1; bool ketemu = false;
         while(!ketemu){
@@ -91,7 +90,7 @@ void Matrix<Tanaman>::addNearby(Tanaman *value){
 
 template<>
 void Matrix<Hewan>::addNearby(Hewan *value){
-    if (this->banyakIsi == this->baris*this->kolom) cout << "Matrix penuh\n";
+    if (this->banyakIsi == this->baris*this->kolom) throw FullStorage();
     else{
         int i = 1, j = 1; bool ketemu = false;
         while(!ketemu){
