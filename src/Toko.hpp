@@ -5,7 +5,7 @@
 
 class Toko {
     private:
-        static map<Simpanan, int> catalogue;
+        static map<Simpanan*, int> catalogue;
     public:
         void insertItem(Simpanan item, int quantity);
         void printToko();
