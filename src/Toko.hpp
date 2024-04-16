@@ -1,12 +1,13 @@
 #include "Simpanan.hpp"
 #include <iostream>
-#include <map>
+#include <vector>
 #include <utility>
+#include <typeinfo>
 
 class Toko {
     private:
-        static map<Simpanan*, int> catalogue;
+        static vector<pair<Simpanan, int>> catalogue;
     public:
-        void insertItem(Simpanan item, int quantity);
-        void printToko();
+        static void insertItem(Simpanan item, int quantity);
+        static void printToko();
 };

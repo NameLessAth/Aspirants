@@ -74,8 +74,7 @@ void Game::main(){
     string input;
     bool win = false;
     while(!win){
-        Toko::printToko();
-        cout << "Sekarang adalah giliran " << ListPemain::getListPemain()[Game::currentPemain]->getName() << "!\n\n";
+        // cout << "Sekarang adalah giliran " << ListPemain::getListPemain()[Game::currentPemain]->getName() << "!\n\n";
         cout << "> ";
         cin >> input;
 
@@ -101,6 +100,7 @@ void Game::main(){
             
         } else if (input == "BELI"){
             Toko::printToko();
+            // ListPemain::getListPemain()[currentPemain]->beli();
         } else if (input == "JUAL"){
             
         } else if (input == "PANEN" && (dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]) || dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]))){
