@@ -89,6 +89,10 @@ int Tanaman::getUmur(){
     return this->umur;
 }
 
+int Tanaman::getUmurUntukPanen() {
+    return this->umurUntukPanen;
+}
+
 void Tanaman::tambahUmur() {
     this->umur++;
 }
