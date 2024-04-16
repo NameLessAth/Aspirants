@@ -318,7 +318,6 @@ void Load::loadState(string path){
                     } else itr++;
                 }
             } Peternak* tempvar = new Peternak(username, uang, beratbadan, invVec, animalMatx);
-            cout << "masuk sini sekali\n";
             playerVec.push_back(tempvar);
         } else{
             Walikota* tempvar = new Walikota(username, uang, beratbadan, invVec);
@@ -397,9 +396,7 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
 
         // write inventory
         fprintf(file, "\n%d", playerVec[i]->getPenyimpanan().getBanyakIsi());
-        cout << "pre\n";
-        // Pemain* newtemp =  playerVec[i];
-        cout << "rolenya " << role << playerVec[i]->getPenyimpanan().getValue(1,1) << endl;
+
         // write masing2 inventory
         if (playerVec[i]->getPenyimpanan().getValue(1, 1) == NULL) cout << "NULL\n";
         for (k = 1; k <= playerVec[i]->getPenyimpanan().getBaris(); k++){
@@ -409,15 +406,13 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
                 }
             }
         }
-        cout << "rolenya  asu " << role << endl;
         // write peternakan/ladang
         if (role == "Petani"){
 
             // write banyak tanaman di ladang
             fprintf(file, "\n%d", tempPetani->getLadang().getBanyakIsi());
-            cout << "jembut petani " << tempPetani->getLadang().getBaris() << endl;
+
             // write sesuai format tanaman
-            if (tempPetani == NULL) cout << "NULL\n";
             for (k = 1; k <= tempPetani->getLadang().getBaris(); k++){
                 for (j = 1; j <= tempPetani->getLadang().getKolom(); j++){
                     if (tempPetani->getLadang().getValue(k, j)->getKode() != "XXXX"){
@@ -429,13 +424,11 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
             }
             
         } else if (role == "Peternak"){
-            cout << "sizenya " << playerVec.size() << endl;
 
             // write banyak hewan di peternakan
             fprintf(file, "\n%d", tempPeternak->getPeternakan().getBanyakIsi());
-            cout << "role jembut " << role << " " << tempPeternak->getPeternakan().getBaris() << endl;
+ 
             // write sesuai format hewan
-            cout << "jembut " << tempPeternak->getPeternakan().getBaris() << " " << endl;
             for (k = 1; k <= tempPeternak->getPeternakan().getBaris(); k++){
                 for (j = 1; j <= tempPeternak->getPeternakan().getKolom(); j++){
                     if (tempPeternak->getPeternakan().getValue(k, j)->getKode() != "XXXX"){
@@ -445,7 +438,6 @@ void Save::saveState(string path, vector<Pemain*> playerVec){
                     }
                 }
             }
-            cout << "role jembut " << role << endl;
         }
         
     } 

@@ -28,22 +28,22 @@ void Game::main(){
 
     vector<Hewan> temp2 = Load::loadAnimal();
     for(int i=0;i<temp2.size();i++){
-        Toko::insertItem(temp2[i],0);
+        Toko::insertItem(&temp2[i],0);
     }
 
     vector<Tanaman> temp3 = Load::loadPlant();
     for(int i=0;i<temp3.size();i++){
-        Toko::insertItem(temp3[i],0);
+        Toko::insertItem(&temp3[i],0);
     }
 
     vector<Produk> temp4 = Load::loadProduct();
     for(int i=0;i<temp4.size();i++){
-        Toko::insertItem(temp4[i],0);
+        Toko::insertItem(&temp4[i],0);
     }
 
     vector<Bangunan> temp5 = Load::loadRecipe();
     for(int i=0;i<temp5.size();i++){
-        Toko::insertItem(temp5[i],0);
+        Toko::insertItem(&temp5[i],0);
     }
 
     cout << "Selamat datang di Kelola Kerajaan Bersama Labpro\n";
@@ -98,11 +98,15 @@ void Game::main(){
         } else if (input == "KASIH_MAKAN" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
             
         } else if (input == "BELI"){
-            ListPemain::getListPemain()[currentPemain]->beli();
+            // ListPemain::getListPemain()[currentPemain]->beli();
         } else if (input == "JUAL"){
             ListPemain::getListPemain()[currentPemain]->jual();
         } else if (input == "PANEN" && (dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]) || dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]))){
-            
+            cout << "Masukkan lokasi berkas state :"; cin >> input;
+            try{
+                Save::saveState(input, ListPemain::getListPemain());
+                cout << "State berhasil disimpan\n";
+            } catch (const exception& err){cout << "Save gagal dengan message " << err.what();}
         } else if (input == "SIMPAN"){
             
         } else if (input == "TAMBAH_PEMAIN" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){

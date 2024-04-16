@@ -2,10 +2,10 @@
 
 vector<pair<Simpanan*, int>> Toko::catalogue;
 
-void Toko::insertItem(Simpanan item, int quantity){
+void Toko::insertItem(Simpanan* item, int quantity){
     bool found = false;
     for(int i=0;i<Toko::catalogue.size();i++){
-        if(Toko::catalogue[i].first->getKode() == item.getKode()){
+        if(Toko::catalogue[i].first->getKode() == item->getKode()){
             found = true;
             if(dynamic_cast<Bangunan*>(Toko::catalogue[i].first)){
                 Toko::catalogue[i].second += quantity;
@@ -14,7 +14,7 @@ void Toko::insertItem(Simpanan item, int quantity){
         }
     }
     if(!found){
-        Toko::catalogue.push_back(make_pair(&item,quantity));
+        Toko::catalogue.push_back(make_pair(item,quantity));
     }
 }
 

@@ -218,7 +218,7 @@ void Pemain::jual(){
         char hurufKolom = temp[i][0];
         int baris = stoi(temp[i].substr(1));
         int kolom = toupper(hurufKolom) - 'A' + 1;
-        Toko::insertItem(*this->penyimpanan.getValue(baris,kolom),1);
+        Toko::insertItem(this->penyimpanan.getValue(baris,kolom),1);
         net += this->penyimpanan.getValue(baris,kolom)->getHarga();
         this->penyimpanan.setValue(baris,kolom,nullptr);
     }
