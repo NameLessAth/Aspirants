@@ -27,6 +27,7 @@ class Matrix {
         bool isEmpty();
         bool isFull();
         bool check(std::string kelas);
+        int countSiapPanen(std::string kode);
 };
 
 #endif

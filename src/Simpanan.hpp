@@ -61,6 +61,7 @@ class Tanaman : public Simpanan {
         Tanaman(int id, string kode, string name, string tipe, int harga, int umurUntukPanen, int umur);
         void setUmur(int umur);
         int getUmur();
+        int getUmurUntukPanen();
         void tambahUmur();
 };
 

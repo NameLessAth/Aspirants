@@ -2,6 +2,7 @@
 #include "Simpanan.hpp"
 #include <iostream>
 #include <string>
+#include <set>
 using namespace std;
 
 // Pemain
@@ -570,9 +571,73 @@ void Petani::tanam() {
     }
 }
 
+void Petani::panen() {
+    this->ladang.printSimpananMatrix();
+    std::set<std::string> setSiapPanen;
+    int nomor = 0;
+    std::string str;
+    std::string siapPanen;
+    std::string kode;
+    int jumlahSiapPanen;
 
-Matrix<Tanaman> Petani::getLadang(){
-	return this->ladang;
+    std::set<std::string> kodeUnik;
+    std::string kode;
+    for (int i = 0; i < this->ladang.getBaris(); i++) {
+        for (int j = 0; j < this->ladang.getKolom(); j++) {
+            if (this->ladang.getValue(i, j)->getKode() != "XXXX") {
+                cout << this->ladang.getValue(i, j)->getKode();
+                kode = this->ladang.getValue(i, j)->getKode();
+                kodeUnik.insert(kode);
+            }
+        }
+    }
+
+    for (const std::string& kode : kodeUnik) {
+        jumlahSiapPanen = this->ladang.countSiapPanen(kode);
+        if (jumlahSiapPanen > 0){
+            nomor++;
+            str = std::to_string(nomor);
+            setSiapPanen.insert(kode);
+        }
+    }
+
+    cout << "Pilih tanaman siap panen yang kamu miliki" << endl;
+    nomor = 0;
+    for (const std::string& siapPanen : setSiapPanen) {
+        nomor++;
+        cout << std::to_string(nomor) << siapPanen << "(" << this->ladang.countSiapPanen(siapPanen) << " petak siap panen)" << "\n";
+    }
+    cout << "Nomor tanaman yang ingin dipanen: ";
+    int nomorPanen;
+    cin >> nomorPanen;
+    int jumlahPetak;
+    cout << "Berapa petak yang ingin dipanen: ";
+    cin >> jumlahPetak;
+    if (this->penyimpanan.getBanyakIsi() + jumlahPetak > this->penyimpanan.getBaris() * this->penyimpanan.getKolom()) {
+        cout << "Pilih petak yang ingin dipanen:" << endl;
+        for (int i = 1; i <= jumlahPetak; ++i) {
+            cout << "Petak ke-" << std::to_string(i) << ": ";
+            std::pair<int, int> barisdankolompetak = this->ladang.extractSlot();
+            bool found = false;
+            for (int j = 1; j <= this->penyimpanan.getBaris(); ++j) {
+                for (int k = 1; k <= this->penyimpanan.getKolom(); ++k) {
+                    if (this->penyimpanan.getValue(j, k)->getKode() == "XXXX") {
+                        this->penyimpanan.setValue(j, k, this->ladang.getValue(barisdankolompetak.first, barisdankolompetak.second));
+                        this->ladang.setValue(barisdankolompetak.first, barisdankolompetak.second, nullptr);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+        }
+        cout << std::to_string(jumlahPetak) << " petak tanaman telah dipanen!" << endl;
+    }
+    else {
+        cout << "Jumlah penyimpanan tidak cukup!" << endl;
+    }
 }
 
 // Peternak
@@ -675,6 +740,87 @@ void Peternak::ternak() {
     else {
         cout << "Perintah tidak dapat dijalankan" << endl;
     }
+}
+
+void Peternak::panen() {
+    this->peternakan.printSimpananMatrix();
+    std::set<std::string> setSiapPanen;
+    int nomor = 0;
+    std::string str;
+    std::string siapPanen;
+    std::string kode;
+    int jumlahSiapPanen;
+
+    std::set<std::string> kodeUnik;
+    std::string kode;
+    for (int i = 0; i < this->peternakan.getBaris(); i++) {
+        for (int j = 0; j < this->peternakan.getKolom(); j++) {
+            if (this->peternakan.getValue(i, j)->getKode() != "XXXX") {
+                cout << this->peternakan.getValue(i, j)->getKode();
+                kode = this->peternakan.getValue(i, j)->getKode();
+                kodeUnik.insert(kode);
+            }
+        }
+    }
+
+    for (const std::string& kode : kodeUnik) {
+        jumlahSiapPanen = this->peternakan.countSiapPanen(kode);
+        if (jumlahSiapPanen > 0){
+            nomor++;
+            str = std::to_string(nomor);
+            setSiapPanen.insert(kode);
+        }
+    }
+
+    cout << "Pilih hewan siap panen yang kamu miliki" << endl;
+    nomor = 0;
+    for (const std::string& siapPanen : setSiapPanen) {
+        nomor++;
+        cout << std::to_string(nomor) << siapPanen << "(" << this->peternakan.countSiapPanen(siapPanen) << " petak siap panen)" << "\n";
+    }
+    cout << "Nomor hewan yang ingin dipanen: ";
+    int nomorPanen;
+    cin >> nomorPanen;
+    int jumlahPetak;
+    cout << "Berapa petak yang ingin dipanen: ";
+    cin >> jumlahPetak;
+    if (this->penyimpanan.getBanyakIsi() + jumlahPetak > this->penyimpanan.getBaris() * this->penyimpanan.getKolom()) {
+        cout << "Pilih petak yang ingin dipanen:" << endl;
+        for (int i = 1; i <= jumlahPetak; ++i) {
+            cout << "Petak ke-" << std::to_string(i) << ": ";
+            std::pair<int, int> barisdankolompetak = this->peternakan.extractSlot();
+            bool found = false;
+            for (int j = 1; j <= this->penyimpanan.getBaris(); ++j) {
+                for (int k = 1; k <= this->penyimpanan.getKolom(); ++k) {
+                    if (this->penyimpanan.getValue(j, k)->getKode() == "XXXX") {
+                        this->penyimpanan.setValue(j, k, this->peternakan.getValue(barisdankolompetak.first, barisdankolompetak.second));
+                        this->peternakan.setValue(barisdankolompetak.first, barisdankolompetak.second, nullptr);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+        }
+        cout << std::to_string(jumlahPetak) << " petak hewan telah dipanen!" << endl;
+    }
+    else {
+        cout << "Jumlah penyimpanan tidak cukup!" << endl;
+    }
+}
+
+void Pemain::setUang(int newUang){
+	this->uang = newUang;
+}
+
+Matrix<Simpanan> Pemain::getPenyimpanan(){
+	return this->penyimpanan;
+}
+
+Matrix<Tanaman> Petani::getLadang(){
+	return this->ladang;
 }
 
 Matrix<Hewan> Peternak::getPeternakan(){

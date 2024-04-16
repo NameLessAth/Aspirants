@@ -201,6 +201,7 @@ void Matrix<Tanaman>::printSimpananMatrix() {
     cout << endl;
     this->printGaris();
     std::set<std::string> KodedanNamaUnik;
+    std::string KodedanNama;
     for (int i = 0; i < this->baris; i++) {
         cout << i+1 << "\t|";
         for (int j = 0; j < this->kolom; j++) {
@@ -208,7 +209,7 @@ void Matrix<Tanaman>::printSimpananMatrix() {
             if (this->matrix[i][j]->getKode() != "XXXX") {
                 cout << this->matrix[i][j]->getKode();
                 cout << "  |";
-                std::string KodedanNama = "- " + this->matrix[i][j]->getKode() + ": " + this->matrix[i][j]->getNama();
+                KodedanNama = "- " + this->matrix[i][j]->getKode() + ": " + this->matrix[i][j]->getNama();
                 KodedanNamaUnik.insert(KodedanNama);
             } else {
                 cout << "     |";
@@ -303,6 +304,19 @@ bool Matrix<Simpanan>::check(std::string kelas) {
         }
     }
     return found;
+}
+
+template<>
+int Matrix<Tanaman>::countSiapPanen(std::string kode) {
+    int retval = 0;
+    for (int i = 0; i < this->baris; i++) {
+        for (int j = 0; j < this->kolom; j++) {
+            if ((this->getValue(i, j)->getKode() == kode) && (this->getValue(i, j)->getUmur() >= this->getValue(i, j)->getUmurUntukPanen())) {
+                retval++;
+            }
+        }
+    }
+    return retval;
 }
 
 // template<>
