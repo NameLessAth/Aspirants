@@ -30,6 +30,7 @@ class Pemain {
         int getUang();
         int getBerat();
         string getName();
+        Matrix<Simpanan> getPenyimpanan();
 
 };
 
@@ -44,6 +45,10 @@ class ListPemain {
 
 // Walikota
 class Walikota : public Pemain {
+    private:
+        //Helper pungutPajak
+        int getNetoKekayaan(Pemain*);
+        int getTarifBesaranPajak(int KKP);
     public:
         Walikota();
         Walikota(string, int, int, Matrix<Simpanan>);

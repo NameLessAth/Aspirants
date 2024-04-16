@@ -95,6 +95,34 @@ Walikota::Walikota(string username, int uang, int berat, Matrix<Simpanan> invent
     cout << "Walikota " << this->username << " siap bermain!" << endl;
 }
 
+int Walikota::getNetoKekayaan(Pemain* p) {
+    //Neto kekayaan terdiri dari uang, harga setiap penyimpanan, harga setiap lahan/peternakan, dan yang ada di bangunan
+    int netoKekayaan = 0;
+
+    //Uang (gulden)
+    netoKekayaan += p->getUang();
+
+    //Penyimpanan
+    for (int i=1; i<p->getPenyimpanan().getBaris(); i++){
+        for (int j=1; j<p->getPenyimpanan().getKolom(); j++){
+            if (p->getPenyimpanan().getValue(i,j) != nullptr){
+                netoKekayaan += p->getPenyimpanan().getValue(i, j)->getHarga();
+            }
+        }
+    }
+
+    //Lahan/Peternakan
+    
+
+    //Bangunan
+
+	return 0;
+}
+
+int Walikota::getTarifBesaranPajak(int KKP) {
+	return 0;
+}
+
 // Petani
 int Petani::jumlahPetani = 0;
 int Petani::barisLadang = 10; // Berdasarkan berkas
@@ -252,4 +280,7 @@ void Peternak::ternak() {
     }
 }
 
-
+Matrix<Simpanan> Pemain::getPenyimpanan()
+{
+	return this->penyimpanan;
+}
