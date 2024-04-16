@@ -24,6 +24,11 @@ Matrix<T>::~Matrix() {
     delete[] this->matrix;
 }
 
+template <class T>
+int Matrix<T>::getBanyakIsi(){
+    return this->banyakIsi;
+}
+
 template<class T>
 void Matrix<T>::setValue(int row, int col, T* value) {
     if (row >= 1 && row <= this->baris && col >= 1 && col <= this->kolom) {

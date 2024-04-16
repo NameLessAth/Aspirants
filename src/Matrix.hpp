@@ -16,6 +16,7 @@ class Matrix {
     public :
         Matrix(int baris, int kolom);
         ~Matrix();
+        int getBanyakIsi();
         void setValue(int baris, int kolom, T* value);
         void addNearby(T* value);
         int getBaris(){return this->baris;}
