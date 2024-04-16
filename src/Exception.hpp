@@ -1,7 +1,6 @@
 #ifndef __EXCEPTION_H__
 #define __EXCEPTION_H__
 
-
 #include <iostream>
 
 class Exception : public std::exception{
@@ -38,17 +37,24 @@ class FullStorage : public Exception {
 		}
 };
 
-class insufficientMoney : public Exception {
+class InsufficientMoney : public Exception {
 	public:
 		const char * what () const throw(){
 			return "Uang tidak cukup.";
 		}
 };
 
-class insufficientItems : public Exception {
+class InsufficientItems : public Exception {
 	public:
 		const char * what () const throw(){
 			return "Barang tidak cukup.";
+		}
+};
+
+class NameNotUnique : public Exception {
+	public:
+		const char * what () const throw(){
+			return "Nama tidak unik.";
 		}
 };
 

@@ -17,6 +17,13 @@ Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpana
     this->beratBadan = 40;
 }
 
+Pemain::Pemain(string nama) : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpanan) {
+    Pemain::jumlahPemain++;
+    this->username = nama;
+    this->uang = 50;
+    this->beratBadan = 40;
+}
+
 Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory) : penyimpanan(inventory.getBaris(), inventory.getKolom()) {
     Pemain::jumlahPemain++;
     this->username = username;
@@ -109,17 +116,17 @@ void Pemain::beli(){
 
     if(dynamic_cast<Bangunan*>(Toko::getCatalogue()[index-1].first)){
         if(qty > Toko::getCatalogue()[index-1].second){
-            throw insufficientItems();
+            throw InsufficientItems();
         }
         if(this->uang < qty * Toko::getCatalogue()[index-1].first->getHarga()){
-            throw insufficientMoney();
+            throw InsufficientMoney();
         } else {
             this->uang -= qty * Toko::getCatalogue()[index-1].first->getHarga();
             Toko::getCatalogue()[index-1].second -= qty;
         }
     } else {
         if(this->uang < qty * Toko::getCatalogue()[index-1].first->getHarga()){
-            throw insufficientMoney();
+            throw InsufficientMoney();
         } else {
             this->uang -= qty * Toko::getCatalogue()[index-1].first->getHarga();
         }
@@ -232,6 +239,15 @@ string Pemain::getName(){
     return this->username;
 }
 
+
+void Pemain::setUang(int newUang){
+	this->uang = newUang;
+}
+
+Matrix<Simpanan> Pemain::getPenyimpanan(){
+	return this->penyimpanan;
+}
+
 vector<Pemain*> ListPemain::getListPemain(){
     return ListPemain::listPemain;
 }
@@ -320,7 +336,6 @@ float Walikota::getTarifBesaranPajak(int KKP) {
 }
 
 void Walikota::pungutPajak(){
-    int indexWalikota;
     int KTKP;
     int uangPemain;
     int hasilPajak = 0;
@@ -359,12 +374,11 @@ void Walikota::pungutPajak(){
             
         }
         else{
-            indexWalikota = i;
         }
     }
 
-    ListPemain::getListPemain()[indexWalikota]->setUang(
-        ListPemain::getListPemain()[indexWalikota]->getUang() + hasilPajak
+    this->setUang(
+        this->getUang() + hasilPajak
     );
 
     cout << "Cring cring cring..." << endl;
@@ -386,6 +400,39 @@ void Walikota::pungutPajak(){
 
 }
 
+void Walikota::tambahPemain(){
+    string role;
+    string name;
+
+    if (this->getUang() < 50) throw InsufficientMoney();
+    
+    cout << "Masukkan jenis pemain (petani/peternak): ";
+    cin >> role;
+    if ((role != "peternak") && (role != "petani")) throw InvalidInput();
+
+    cout << endl << "Masukkan nama pemain: ";
+    cin >> name;
+
+    for (int i=0; i<ListPemain::getListPemain().size(); i++){
+        if (ListPemain::getListPemain()[i]->getName() == name){
+            throw NameNotUnique();
+        }
+    }
+
+    if (role == "petani"){
+        Petani p(name);
+        ListPemain::pushPemain(&p);
+    }
+    else{
+        Peternak p(name);
+        ListPemain::pushPemain(&p);
+    }
+
+    cout << "Pemain baru ditambahkan!" << endl;
+    cout << "Selamat datang “" << name << "” di kota ini!" << endl;
+    
+}
+
 // Petani
 int Petani::jumlahPetani = 0;
 int Petani::barisLadang = 10; // Berdasarkan berkas
@@ -395,7 +442,14 @@ Petani::Petani() : Pemain(), ladang(Petani::barisLadang, Petani::kolomLadang) {
     Petani::jumlahPetani++;
     this->username = "Petani" + to_string(Petani::jumlahPetani);
     cout << "Petani " << this->username << " siap bermain!" << endl;
+    
 }
+
+Petani::Petani(string nama) : Pemain(nama), ladang(Petani::barisLadang, Petani::kolomLadang){
+    Petani::jumlahPetani++;
+    cout << "Petani " << this->username << " siap bermain!" << endl;
+}
+
 
 Petani::Petani(string username, int uang, int berat, Matrix<Simpanan> inventory, Matrix<Tanaman> kebun) : Pemain(username, uang, berat, inventory), ladang(kebun.getBaris(), kebun.getKolom()) {
     for (int i = 1; i <= this->ladang.getBaris(); i++){
@@ -443,6 +497,11 @@ void Petani::tanam() {
     }
 }
 
+
+Matrix<Tanaman> Petani::getLadang(){
+	return this->ladang;
+}
+
 // Peternak
 int Peternak::jumlahPeternak = 0;
 int Peternak::barisTernak = 10; // Berdasarkan berkas
@@ -451,6 +510,11 @@ int Peternak::kolomTernak = 10; // Berdasarkan berkas
 Peternak::Peternak() : Pemain(), peternakan(Peternak::barisTernak, Peternak::kolomTernak) {
     Peternak::jumlahPeternak++;
     this->username = "Peternak" + to_string(Peternak::jumlahPeternak);
+    cout << "Peternak " << this->username << " siap bermain!" << endl;
+}
+
+Peternak::Peternak(string nama) : Pemain(nama), peternakan(Peternak::barisTernak, Peternak::kolomTernak){
+    Peternak::jumlahPeternak++;
     cout << "Peternak " << this->username << " siap bermain!" << endl;
 }
 
@@ -541,18 +605,6 @@ void Peternak::ternak() {
     else {
         cout << "Perintah tidak dapat dijalankan" << endl;
     }
-}
-
-void Pemain::setUang(int newUang){
-	this->uang = newUang;
-}
-
-Matrix<Simpanan> Pemain::getPenyimpanan(){
-	return this->penyimpanan;
-}
-
-Matrix<Tanaman> Petani::getLadang(){
-	return this->ladang;
 }
 
 Matrix<Hewan> Peternak::getPeternakan(){

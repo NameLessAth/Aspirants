@@ -22,6 +22,7 @@ class Pemain {
 
     public:
         Pemain();
+        Pemain(string);
         Pemain(string, int, int, Matrix<Simpanan>);
         // void next();  
         void makan();
@@ -57,7 +58,7 @@ class Walikota : public Pemain {
         Walikota(string, int, int, Matrix<Simpanan>);
         void pungutPajak();
         // void bangunBangunan();
-        // void tambahPemain();
+        void tambahPemain();
         virtual void tumbal(){};
 };
 
@@ -70,6 +71,7 @@ class Petani : public Pemain {
         static int kolomLadang;
     public:
         Petani();
+        Petani(string);
         Petani(string, int, int, Matrix<Simpanan>, Matrix<Tanaman>);
         void tanam();
         void panen();
@@ -85,6 +87,7 @@ class Peternak : public Pemain {
         static int kolomTernak;
     public:
         Peternak();
+        Peternak(string);
         Peternak(string, int, int, Matrix<Simpanan>, Matrix<Hewan>);
         void kasihMakan();
         void ternak();
