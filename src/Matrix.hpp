@@ -19,8 +19,8 @@ class Matrix {
         int getBanyakIsi();
         void setValue(int baris, int kolom, T* value);
         void addNearby(T* value);
-        int getBaris(){return this->baris;}
-        int getKolom(){return this->kolom;}
+        const int getBaris();
+        const int getKolom();
         T* getValue(int baris, int kolom);
         std::pair<int,int> extractSlot();
         void printSimpananMatrix();

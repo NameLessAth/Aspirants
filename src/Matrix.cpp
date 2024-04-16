@@ -45,6 +45,16 @@ void Matrix<T>::setValue(int row, int col, T* value) {
     }
 }
 
+template <class T>
+const int Matrix<T>::getBaris(){
+    return this->baris;
+}
+
+template <class T>
+const int Matrix<T>::getKolom(){
+    return this->kolom;
+}
+
 template<>
 void Matrix<Simpanan>::addNearby(Simpanan *value){
     cout << "simpanan\n";

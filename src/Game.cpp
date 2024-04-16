@@ -81,36 +81,47 @@ void Game::main(){
             cout << "Sekarang adalah giliran " << (ListPemain::getListPemain()[Game::currentPemain])->getName() << "!\n";
         } else if (input == "CETAK_PENYIMPANAN"){
             ListPemain::getListPemain()[currentPemain]->getPenyimpanan().printSimpananMatrix();
-        } else if (input == "PUNGUT_PAJAK" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
-            
+        } else if ((input == "PUNGUT_PAJAK") && (dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]) != NULL)){
+            cout << "sini";
+            Walikota* newTemp = dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->pungutPajak();
         } else if (input == "CETAK_LADANG" && dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Petani* newTemp = dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->getLadang().printSimpananMatrix();
         } else if (input == "CETAK_PETERNAKAN" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Peternak* newTemp = dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain]);
         } else if (input == "TANAM" && dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Petani* newTemp = dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->tanam();
         } else if (input == "TERNAK" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Peternak* newTemp = dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->ternak();
         } else if (input == "BANGUN" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Walikota* newTemp = dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]);
         } else if (input == "MAKAN"){
-            
+            ListPemain::getListPemain()[currentPemain]->makan();
         } else if (input == "KASIH_MAKAN" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Peternak* newTemp = dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->kasihMakan();
         } else if (input == "BELI"){
-            // ListPemain::getListPemain()[currentPemain]->beli();
+            ListPemain::getListPemain()[currentPemain]->beli();
         } else if (input == "JUAL"){
             ListPemain::getListPemain()[currentPemain]->jual();
-        } else if (input == "PANEN" && (dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]) || dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]))){
+        } else if (input == "PANEN" && dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain])){
+            Petani* newTemp = dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->panen();
+        } else if (input == "PANEN" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
+            Peternak* newTemp = dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->panen();
+        } else if (input == "SIMPAN"){
             cout << "Masukkan lokasi berkas state :"; cin >> input;
             try{
                 Save::saveState(input, ListPemain::getListPemain());
                 cout << "State berhasil disimpan\n";
-            } catch (const exception& err){cout << "Save gagal dengan message " << err.what();}
-        } else if (input == "SIMPAN"){
-            
+            } catch (const exception& err){cout << "Save gagal dengan message " << err.what();}      
         } else if (input == "TAMBAH_PEMAIN" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
-            
+            Walikota* newTemp = dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]);
+            newTemp->tambahPemain();
         } else {
             throw InvalidInput();
         }
