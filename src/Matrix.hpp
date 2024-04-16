@@ -11,6 +11,8 @@ class Matrix {
         const int kolom;
         int banyakIsi;
         T* ** matrix;
+    private:
+        void printGaris();
     public :
         Matrix(int baris, int kolom);
         ~Matrix();
@@ -20,7 +22,6 @@ class Matrix {
         int getKolom(){return this->kolom;}
         T* getValue(int baris, int kolom);
         std::pair<int,int> extractSlot();
-        void printGaris();
         void printSimpananMatrix();
         bool isEmpty();
         bool isFull();
