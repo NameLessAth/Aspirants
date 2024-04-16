@@ -77,6 +77,7 @@ void Game::main(){
 
         if (input == "NEXT"){
             Game::next();
+            ListPemain::next();
             cout << "Sekarang adalah giliran " << (ListPemain::getListPemain()[Game::currentPemain])->getName() << "!\n";
         } else if (input == "CETAK_PENYIMPANAN"){
             ListPemain::getListPemain()[currentPemain]->getPenyimpanan().printSimpananMatrix();
@@ -99,7 +100,7 @@ void Game::main(){
         } else if (input == "BELI"){
             ListPemain::getListPemain()[currentPemain]->beli();
         } else if (input == "JUAL"){
-            
+            ListPemain::getListPemain()[currentPemain]->jual();
         } else if (input == "PANEN" && (dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]) || dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]))){
             
         } else if (input == "SIMPAN"){

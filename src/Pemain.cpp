@@ -198,20 +198,26 @@ void Pemain::jual(){
             char hurufKolom = temp[i][0];
             int baris = stoi(temp[i].substr(1));
             int kolom = toupper(hurufKolom) - 'A' + 1;
-            if(this->penyimpanan.getValue(baris,kolom)->getKode() != "XXXX"){
+            if(this->penyimpanan.getValue(baris,kolom)->getKode() == "XXXX"){
                 continue;
             }
         }
         valid = true;
     }
 
+    int net=0;
+
     for(int i=0;i<temp.size();i++){
         char hurufKolom = temp[i][0];
         int baris = stoi(temp[i].substr(1));
         int kolom = toupper(hurufKolom) - 'A' + 1;
         Toko::insertItem(*this->penyimpanan.getValue(baris,kolom),1);
+        net += this->penyimpanan.getValue(baris,kolom)->getHarga();
         this->penyimpanan.setValue(baris,kolom,nullptr);
     }
+
+    cout << "Barang Anda berhasil dijual! Uang Anda bertambah " << net << " gulden!\n";
+    this->uang += net;
 }
 
 int Pemain::getUang(){
@@ -239,6 +245,20 @@ void ListPemain::setListPemain(vector<Pemain *> inputListPemain){
 
 void ListPemain::pushPemain(Pemain * p){
     ListPemain::listPemain.push_back(p);
+}
+
+void ListPemain::next(){
+    for(int i=0;i<ListPemain::listPemain.size();i++){
+        if(Petani* p2 = dynamic_cast<Petani*>(ListPemain::listPemain[i])){
+            for (int i=1; i<=p2->getLadang().getBaris(); i++){
+                for (int j=1; j<=p2->getLadang().getKolom(); j++){
+                    if (p2->getLadang().getValue(i,j) != nullptr){
+                        p2->getLadang().getValue(i,j)->setUmur(p2->getLadang().getValue(i,j)->getUmur()+1);
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Walikota

@@ -43,6 +43,7 @@ class ListPemain {
         static vector<Pemain*> getListPemain();
         static void setListPemain(vector<Pemain*>);
         static void pushPemain(Pemain*);
+        static void next();
 };
 
 // Walikota

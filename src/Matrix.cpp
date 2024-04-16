@@ -33,7 +33,7 @@ template<class T>
 void Matrix<T>::setValue(int row, int col, T* value) {
     if (row >= 1 && row <= this->baris && col >= 1 && col <= this->kolom) {
         if (value == nullptr) {
-            matrix[row - 1][col - 1] = T();
+            matrix[row - 1][col - 1] = new T();
             this->banyakIsi--;
         }
         else {
