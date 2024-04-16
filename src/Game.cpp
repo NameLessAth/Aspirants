@@ -63,6 +63,10 @@ void Game::start(){
         Petani Petani1;
         Peternak Peternak1;
         Walikota Walikota;
+
+        ListPemain::pushPemain(&Petani1);
+        ListPemain::pushPemain(&Peternak1);
+        ListPemain::pushPemain(&Peternak1);
     }
 }
 
