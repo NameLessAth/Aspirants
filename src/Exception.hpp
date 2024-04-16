@@ -31,7 +31,7 @@ class InvalidInput : public Exception {
 		}
 };
 
-class FullStrorage : public Exception {
+class FullStorage : public Exception {
 	public:
 		const char * what () const throw(){
 			return "Penyimpanan sudah penuh.";
