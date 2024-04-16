@@ -15,7 +15,6 @@ Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpana
     this->username = "Pemain" + to_string(Pemain::jumlahPemain);
     this->uang = 50;
     this->beratBadan = 40;
-    ListPemain::pushPemain(this);
 }
 
 Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory) : penyimpanan(inventory.getBaris(), inventory.getKolom()) {
@@ -28,7 +27,6 @@ Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory)
             this->penyimpanan.setValue(i, j, inventory.getValue(i, j));
         }
     }
-    ListPemain::pushPemain(this);
 }
 
 void Pemain::makan() {
