@@ -26,7 +26,7 @@ class Load{
 
 class Save{
     public:
-        static void saveState(string path);
+        static void saveState(string path, vector<Pemain*> playerVec);
 };
 
 #endif

@@ -324,86 +324,88 @@ vector<Pemain*> Load::loadState(string path){
             playerVec.push_back(tempvar);
         }
     } return playerVec;
-    ListPemain::setListPemain(playerVec);
 }
 
-void Save::saveState(string path){
+void Save::saveState(string path, vector<Pemain*> playerVec){
     FILE *file = fopen(path.c_str(), "w");
 
     if (file == NULL) throw FileNotFound();
 
     // declare var
-    vector<Pemain*> playerVec = ListPemain::getListPemain(); string role;
+    // vector<Pemain*> playerVec = ListPemain::getListPemain(); 
+    string role;
     Peternak* tempPeternak; Petani* tempPetani;
+    int i, j, k;
 
-    // write jumlah pemain
-    fprintf(file, "%d", playerVec.size());
+    // write jumlah pemain'
+    fprintf(file, "%ld", playerVec.size());
 
-    for (int i = 0; i < playerVec.size(); i++){
+    for (i = 0; i < playerVec.size(); i++){
         
         // write nama pemain
-        fprintf(file, "\n%s ", playerVec[i]->getName());
+        fprintf(file, "\n%s ", playerVec[i]->getName().c_str());
+        
         
         // write role
         if (dynamic_cast<Walikota*>(playerVec[i])) role = "Walikota";
-        else if (dynamic_cast<Petani*>(playerVec[i])){
+        else if (tempPetani = dynamic_cast<Petani*>(playerVec[i])){
             role = "Petani";
-            tempPetani = dynamic_cast<Petani*>(playerVec[i]);
         } else{ 
             role = "Peternak";
             tempPeternak = dynamic_cast<Peternak*>(playerVec[i]);
-        }fprintf(file, "%s ", role);
-
+        }fprintf(file, "%s ", role.c_str());
+        
         // write uang dan berat badan
         fprintf(file, "%d %d", playerVec[i]->getBerat(), playerVec[i]->getUang());
 
         // write inventory
-        Matrix<Simpanan> inventory = playerVec[i]->getPenyimpanan();
-        fprintf(file, "\n%d", inventory.getBanyakIsi());
-        
+        fprintf(file, "\n%d", playerVec[i]->getPenyimpanan().getBanyakIsi());
+        cout << "rolenya " << role << playerVec[i]->getName() << endl;
         // write masing2 inventory
-        for (int x = 1; x <= inventory.getBaris(); x++){
-            for (int j = 1; j <= inventory.getKolom(); j++){
-                if (inventory.getValue(x, j)->getKode() != "XXXX"){
-                    fprintf(file, "\n%s", inventory.getValue(x, j)->getNama());
+        for (int x = 1; x <= playerVec[i]->getPenyimpanan().getBaris(); x++){
+            for (int j = 1; j <= playerVec[i]->getPenyimpanan().getKolom(); j++){
+                if (playerVec[i]->getPenyimpanan().getValue(x, j)->getKode() != "XXXX"){
+                    fprintf(file, "\n%s", playerVec[i]->getPenyimpanan().getValue(x, j)->getNama().c_str());
                 }
             }
         }
-
+        cout << "rolenya  asu " << role << endl;
         // write peternakan/ladang
         if (role == "Petani"){
-            
+
             // write banyak tanaman di ladang
             fprintf(file, "\n%d", tempPetani->getLadang().getBanyakIsi());
-
+            cout << "jembut petani " << tempPetani->getLadang().getBaris() << endl;
             // write sesuai format tanaman
-            for (int x = 1; x <= tempPetani->getLadang().getBaris(); x++){
-                for (int j = 1; j <= tempPetani->getLadang().getKolom(); j++){
-                    if (tempPetani->getLadang().getValue(x, j)->getKode() != "XXXX"){
-                        fprintf(file, "\n%c%02d ", char('A'+x-1), j);
-                        fprintf(file, "%s ", tempPetani->getLadang().getValue(x, j)->getNama());
-                        fprintf(file, "%d", tempPetani->getLadang().getValue(x, j)->getUmur());
+            for (k = 1; k <= tempPetani->getLadang().getBaris(); k++){
+                for (j = 1; j <= tempPetani->getLadang().getKolom(); j++){
+                    if (tempPetani->getLadang().getValue(k, j)->getKode() != "XXXX"){
+                        fprintf(file, "\n%c%02d ", char('A'+k-1), j);
+                        fprintf(file, "%s ", tempPetani->getLadang().getValue(k, j)->getNama().c_str());
+                        fprintf(file, "%d", tempPetani->getLadang().getValue(k, j)->getUmur());
                     }
                 }
             }
             
         } else if (role == "Peternak"){
+            cout << "sizenya " << playerVec.size() << endl;
 
             // write banyak hewan di peternakan
             fprintf(file, "\n%d", tempPeternak->getPeternakan().getBanyakIsi());
-
+            cout << "role jembut " << role << " " << tempPeternak->getPeternakan().getBaris() << endl;
             // write sesuai format hewan
-            for (int x = 1; x <= tempPeternak->getPeternakan().getBaris(); x++){
-                for (int j = 1; j <= tempPeternak->getPeternakan().getKolom(); j++){
-                    if (tempPeternak->getPeternakan().getValue(x, j)->getKode() != "XXXX"){
-                        fprintf(file, "\n%c%02d ", char('A'+x-1), j);
-                        fprintf(file, "%s ", tempPeternak->getPeternakan().getValue(x, j)->getNama());
-                        fprintf(file, "%d", tempPeternak->getPeternakan().getValue(x, j)->getBerat());                       
+            cout << "jembut " << tempPeternak->getPeternakan().getBaris() << " " << endl;
+            for (k = 1; k <= tempPeternak->getPeternakan().getBaris(); k++){
+                for (j = 1; j <= tempPeternak->getPeternakan().getKolom(); j++){
+                    if (tempPeternak->getPeternakan().getValue(k, j)->getKode() != "XXXX"){
+                        fprintf(file, "\n%c%02d ", char('A'+k-1), j);
+                        fprintf(file, "%s ", tempPeternak->getPeternakan().getValue(k, j)->getNama().c_str());
+                        fprintf(file, "%d", tempPeternak->getPeternakan().getValue(k, j)->getBerat());                       
                     }
                 }
             }
-            
+            cout << "role jembut " << role << endl;
         }
         
-    }
+    } fclose(file);
 }
