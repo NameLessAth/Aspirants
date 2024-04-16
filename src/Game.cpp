@@ -39,7 +39,7 @@ void Game::start(){
 
     cout << "Selamat datang di Kelola Kerajaan Bersama Labpro\n";
     cout << "Apakah anda ingin memuat state? (y/n)\n\n> ";
-    char* input;
+    string input;
     cin >> input;
 
     if(input != "y" || input != "Y" || input != "n" || input != "N"){
@@ -49,7 +49,7 @@ void Game::start(){
     if(input == "y" || input == "Y"){
         cout << "Masukkan lokasi berkas state : ";
         cin >> input;
-        //Load::loadState(input);
+        Game::listPemain = Load::loadState(input);
     } else {
         Petani Petani1;
         Peternak Peternak1;
@@ -63,7 +63,8 @@ void Game::start(){
 
 void Game::main(){
     string input;
-    while(1){
+    bool win = false;
+    while(!win){
         cout << "> ";
         cin >> input;
 
@@ -101,6 +102,9 @@ void Game::main(){
             throw InvalidInput();
         }
 
-        // Cek apakah menang
+        if(listPemain[currentPemain]->getUang() >= Game::goldRequirement && listPemain[currentPemain]->getBerat() >= Game::weightRequirement){
+            cout << "Pemain " << listPemain[currentPemain]->getName() << " Memenangkan Permainan\nPermainan berakhir.";
+            win = true;
+        }
     }
 }

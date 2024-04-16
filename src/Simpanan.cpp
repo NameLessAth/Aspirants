@@ -31,11 +31,11 @@ string Simpanan::getIsi() {
     return this->kode + " " + this->name + " " + this->tipe;
 }
 
-string Simpanan::getNama() {
+string Simpanan::getNama() const {
     return this->name;
 }
 
-int Simpanan::getHarga(){
+int Simpanan::getHarga() const {
     return this->harga;
 }
 

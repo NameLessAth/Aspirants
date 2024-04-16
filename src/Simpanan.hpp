@@ -22,8 +22,8 @@ class Simpanan {
         Simpanan(int id, string kode, string name, string tipe, int harga);
         string getKode();
         string getIsi();
-        string getNama();
-        int getHarga();
+        string getNama() const;
+        int getHarga() const;
 };
 
 // Bangunan
@@ -33,8 +33,8 @@ class Bangunan : public Simpanan {
     public: 
         Bangunan();
         Bangunan(int id, string kode, string name, string tipe, int harga, map<string, int> material);
-        void setTipe(string tipe);
         map<string, int> getMats();
+        void setTipe(string tipe);
 };
 
 // Hewan
@@ -45,10 +45,10 @@ class Hewan : public Simpanan {
     public:
         Hewan();
         Hewan(int id, string kode, string name, string tipe, int harga, int beratUntukPanen, int berat);
+        // void makan();
         void setBerat(int berat);
         void tambahBerat(int beratTambahan);
         int getBerat();
-        // void makan();
 };
 
 // Tanaman

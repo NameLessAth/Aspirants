@@ -25,6 +25,9 @@ class Pemain {
         virtual void tumbal(){};
         // void beli();
         // void jual();
+        int getUang();
+        int getBerat();
+        string getName();
 };
 
 // Walikota

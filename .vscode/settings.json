@@ -44,6 +44,7 @@
         "typeinfo": "cpp",
         "iostream": "cpp",
         "map": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "xtree": "cpp"
     }
 }

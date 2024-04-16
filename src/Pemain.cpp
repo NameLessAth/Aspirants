@@ -57,6 +57,18 @@ void Pemain::makan() {
     }
 }
 
+int Pemain::getUang(){
+    return this->uang;
+}
+
+int Pemain::getBerat(){
+    return this->beratBadan;
+}
+
+string Pemain::getName(){
+    return this->username;
+}
+
 // Walikota
 Walikota::Walikota() : Pemain() {
     this->username = "Walikota";

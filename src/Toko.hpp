@@ -5,10 +5,8 @@
 
 class Toko {
     private:
-        map<string, pair<int, int>> items;
-
+        static map<Simpanan, int> catalogue;
     public:
-        Toko();
-        void insertItem(Simpanan* item, int quantity);
-        void printToko();        
+        void insertItem(Simpanan item, int quantity);
+        void printToko();
 };
