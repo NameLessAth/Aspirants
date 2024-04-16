@@ -49,6 +49,7 @@ class Hewan : public Simpanan {
         void setBerat(int berat);
         void tambahBerat(int beratTambahan);
         int getBerat();
+        int getBeratUntukPanen();
 };
 
 // Tanaman

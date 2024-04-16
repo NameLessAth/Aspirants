@@ -73,6 +73,10 @@ int Hewan::getBerat() {
     return this->berat;
 }
 
+int Hewan::getBeratUntukPanen() {
+    return this->beratUntukPanen;
+}
+
 // Tanaman
 Tanaman::Tanaman() : Simpanan() {}
 

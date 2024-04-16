@@ -319,6 +319,19 @@ int Matrix<Tanaman>::countSiapPanen(std::string kode) {
     return retval;
 }
 
+template<>
+int Matrix<Hewan>::countSiapPanen(std::string kode) {
+    int retval = 0;
+    for (int i = 0; i < this->baris; i++) {
+        for (int j = 0; j < this->kolom; j++) {
+            if ((this->getValue(i, j)->getKode() == kode) && (this->getValue(i, j)->getBerat() >= this->getValue(i, j)->getBeratUntukPanen())) {
+                retval++;
+            }
+        }
+    }
+    return retval;
+}
+
 // template<>
 // void Matrix<Simpanan>::printMatrix() {
 //     cout << "\t";
