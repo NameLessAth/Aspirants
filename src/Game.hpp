@@ -3,6 +3,7 @@
 
 #include "Pemain.hpp"
 #include "Load.hpp"
+#include "Toko.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;

@@ -8,7 +8,7 @@ pair<int,int> Game::ukuranLadang(0,0);
 pair<int,int> Game::ukuranTernak(0,0);
 
 void Game::next() {
-    Game::currentPemain = (Game::currentPemain + 1) % Pemain::getListPemain().size();
+    Game::currentPemain = (Game::currentPemain + 1) % ListPemain::getListPemain().size();
 }
 
 int Game::getCurrentPemain() {
@@ -26,12 +26,32 @@ void Game::start(){
     Game::ukuranTernak.first = temp[6];
     Game::ukuranTernak.second = temp[7];
 
+    vector<Hewan> temp2 = Load::loadAnimal();
+    for(int i=0;i<temp2.size();i++){
+        Toko::insertItem(temp2[i],0);
+    }
+
+    vector<Tanaman> temp3 = Load::loadPlant();
+    for(int i=0;i<temp3.size();i++){
+        Toko::insertItem(temp3[i],0);
+    }
+
+    vector<Produk> temp4 = Load::loadProduct();
+    for(int i=0;i<temp4.size();i++){
+        Toko::insertItem(temp4[i],0);
+    }
+
+    vector<Bangunan> temp5 = Load::loadRecipe();
+    for(int i=0;i<temp5.size();i++){
+        Toko::insertItem(temp5[i],0);
+    }
+
     cout << "Selamat datang di Kelola Kerajaan Bersama Labpro\n";
     cout << "Apakah anda ingin memuat state? (y/n)\n\n> ";
     string input;
     cin >> input;
 
-    if(input != "y" || input != "Y" || input != "n" || input != "N"){
+    if(input != "y" && input != "Y" && input != "n" && input != "N"){
         throw InvalidInput();
     }
 
@@ -43,11 +63,6 @@ void Game::start(){
         Petani Petani1;
         Peternak Peternak1;
         Walikota Walikota;
-
-        // Sudah dilakukan oleh constructor Pemain
-        // Pemain::listPemain.push_back(&Petani1);
-        // Pemain::listPemain.push_back(&Peternak1);
-        // Pemain::listPemain.push_back(&Walikota);
     }
 }
 
@@ -55,6 +70,8 @@ void Game::main(){
     string input;
     bool win = false;
     while(!win){
+        Toko::printToko();
+        cout << "Sekarang adalah giliran " << ListPemain::getListPemain()[Game::currentPemain]->getName() << "!\n\n";
         cout << "> ";
         cin >> input;
 
@@ -62,38 +79,38 @@ void Game::main(){
             Game::next();
         } else if (input == "CETAK_PENYIMPANAN"){
             
-        } else if (dynamic_cast<Walikota*>(Pemain::getListPemain()[currentPemain]) && input == "PUNGUT_PAJAK"){
+        } else if (input == "PUNGUT_PAJAK" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
             
-        } else if (dynamic_cast<Petani*>(Pemain::getListPemain()[currentPemain]) && input == "CETAK_LADANG"){
+        } else if (input == "CETAK_LADANG" && dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain])){
             
-        } else if (dynamic_cast<Peternak*>(Pemain::getListPemain()[currentPemain]) && input == "CETAK_PETERNAKAN"){
+        } else if (input == "CETAK_PETERNAKAN" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
             
-        } else if (dynamic_cast<Petani*>(Pemain::getListPemain()[currentPemain]) && input == "TANAM"){
+        } else if (input == "TANAM" && dynamic_cast<Petani*>(ListPemain::getListPemain()[currentPemain])){
             
-        } else if (dynamic_cast<Peternak*>(Pemain::getListPemain()[currentPemain]) && input == "TERNAK"){
+        } else if (input == "TERNAK" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
             
-        } else if (dynamic_cast<Walikota*>(Pemain::getListPemain()[currentPemain]) && input == "BANGUN"){
+        } else if (input == "BANGUN" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
             
         } else if (input == "MAKAN"){
             
-        } else if (dynamic_cast<Peternak*>(Pemain::getListPemain()[currentPemain]) && input == "KASIH_MAKAN"){
+        } else if (input == "KASIH_MAKAN" && dynamic_cast<Peternak*>(ListPemain::getListPemain()[currentPemain])){
             
         } else if (input == "BELI"){
-            
+            Toko::printToko();
         } else if (input == "JUAL"){
             
-        } else if ((dynamic_cast<Walikota*>(Pemain::getListPemain()[currentPemain]) || dynamic_cast<Walikota*>(Pemain::getListPemain()[currentPemain])) && input == "PANEN"){
+        } else if (input == "PANEN" && (dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]) || dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain]))){
             
         } else if (input == "SIMPAN"){
             
-        } else if (dynamic_cast<Walikota*>(Pemain::getListPemain()[currentPemain]) && input == "TAMBAH_PEMAIN"){
+        } else if (input == "TAMBAH_PEMAIN" && dynamic_cast<Walikota*>(ListPemain::getListPemain()[currentPemain])){
             
         } else {
             throw InvalidInput();
         }
 
-        if(Pemain::getListPemain()[currentPemain]->getUang() >= Game::goldRequirement && Pemain::getListPemain()[currentPemain]->getBerat() >= Game::weightRequirement){
-            cout << "Pemain " << Pemain::getListPemain()[currentPemain]->getName() << " Memenangkan Permainan\nPermainan berakhir.";
+        if(ListPemain::getListPemain()[currentPemain]->getUang() >= Game::goldRequirement && ListPemain::getListPemain()[currentPemain]->getBerat() >= Game::weightRequirement){
+            cout << "Pemain " << ListPemain::getListPemain()[currentPemain]->getName() << " Memenangkan Permainan\nPermainan berakhir.";
             win = true;
         }
     }
