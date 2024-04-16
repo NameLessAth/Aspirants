@@ -191,7 +191,7 @@ void Peternak::kasihMakan() {
         this->penyimpanan.printSimpananMatrix();
         cout << "Slot: ";
         std::pair<int, int> barisdankolomsimpanan = this->peternakan.extractSlot();
-        Simpanan* simpanan = this->penyimpanan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
+        simpanan = this->penyimpanan.getValue(barisdankolompeternakan.first, barisdankolompeternakan.second);
         Produk* produk = dynamic_cast<Produk*>(simpanan);
         while (!produk || produk->getBeratTambahan() == 0) {
             if (simpanan == nullptr) {

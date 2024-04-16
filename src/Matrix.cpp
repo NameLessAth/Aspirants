@@ -107,7 +107,7 @@ std::pair<int,int> Matrix<T>::extractSlot() {
     char hurufKolom = slot[0];
     int baris = stoi(slot.substr(1));
     int kolom = toupper(hurufKolom) - 'A' + 1;
-    return std::make_pair<baris, kolom>;
+    return std::make_pair(baris, kolom);
 }
 
 // template <>
