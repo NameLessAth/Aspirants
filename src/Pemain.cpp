@@ -581,7 +581,6 @@ void Petani::panen() {
     int jumlahSiapPanen;
 
     std::set<std::string> kodeUnik;
-    std::string kode;
     for (int i = 0; i < this->ladang.getBaris(); i++) {
         for (int j = 0; j < this->ladang.getKolom(); j++) {
             if (this->ladang.getValue(i, j)->getKode() != "XXXX") {
@@ -752,7 +751,6 @@ void Peternak::panen() {
     int jumlahSiapPanen;
 
     std::set<std::string> kodeUnik;
-    std::string kode;
     for (int i = 0; i < this->peternakan.getBaris(); i++) {
         for (int j = 0; j < this->peternakan.getKolom(); j++) {
             if (this->peternakan.getValue(i, j)->getKode() != "XXXX") {
@@ -809,14 +807,6 @@ void Peternak::panen() {
     else {
         cout << "Jumlah penyimpanan tidak cukup!" << endl;
     }
-}
-
-void Pemain::setUang(int newUang){
-	this->uang = newUang;
-}
-
-Matrix<Simpanan> Pemain::getPenyimpanan(){
-	return this->penyimpanan;
 }
 
 Matrix<Tanaman> Petani::getLadang(){

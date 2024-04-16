@@ -74,7 +74,7 @@ class Petani : public Pemain {
         Petani(string);
         Petani(string, int, int, Matrix<Simpanan>, Matrix<Tanaman>);
         void tanam();
-        void panen(){};
+        void panen();
         Matrix<Tanaman> getLadang();
         virtual void placeholder(){};
 };  
@@ -92,7 +92,7 @@ class Peternak : public Pemain {
         Peternak(string, int, int, Matrix<Simpanan>, Matrix<Hewan>);
         void kasihMakan();
         void ternak();
-        void panen(){};
+        void panen();
         Matrix<Hewan> getPeternakan();
         virtual void placeholder(){};
 };
