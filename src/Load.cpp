@@ -338,25 +338,25 @@ void Load::loadState(string path){
                 if (firstArg == animalVec[itr].getNama()){
                     ketemu = true;
                     Hewan* tempvar = new Hewan(animalVec[itr]);
-                    Toko::insertItem(tempvar, secondArg);
+                    Toko::insertItem(*tempvar, secondArg);
                 } else itr++;
             } else if (itr >= animalVec.size() && itr <= animalVec.size()+plantVec.size()-1){
                 if (firstArg == plantVec[itr-animalVec.size()].getNama()){
                     ketemu = true;
                     Tanaman* tempvar = new Tanaman(plantVec[itr-animalVec.size()]);
-                    Toko::insertItem(tempvar, secondArg);;
+                    Toko::insertItem(*tempvar, secondArg);;
                 } else itr++;
             } else if (itr >= animalVec.size()+plantVec.size() && itr <= animalVec.size()+plantVec.size()+prodVec.size()-1){
                 if (firstArg == prodVec[itr-animalVec.size()-plantVec.size()].getNama()){
                     ketemu = true;
                     Produk* tempvar = new Produk(prodVec[itr-animalVec.size()-plantVec.size()]);
-                    Toko::insertItem(tempvar, secondArg);;
+                    Toko::insertItem(*tempvar, secondArg);;
                 } else itr++;
             } else {
                 if (firstArg == buildVec[itr-animalVec.size()-plantVec.size()-prodVec.size()].getNama()){
                     ketemu = true;
                     Bangunan* tempvar = new Bangunan(buildVec[itr-animalVec.size()-plantVec.size()-prodVec.size()]);
-                    Toko::insertItem(tempvar, secondArg);;
+                    Toko::insertItem(*tempvar, secondArg);;
                 } else itr++;
             }
         }

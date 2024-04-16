@@ -400,6 +400,83 @@ void Walikota::pungutPajak(){
 
 }
 
+void Walikota::bangunBangunan(){
+    cout << "Resep bangunan yang ada adalah sebagai berikut.\n";
+    vector<pair<Simpanan*, int>> temp = Toko::getCatalogue();
+    vector<Bangunan> senarayBangunan;
+    int iterator = 1;
+    for(int i=0;i<temp.size();i++){
+        if(dynamic_cast<Bangunan*>(temp[i].first)){
+            cout << iterator << ". " << temp[i].first->getNama() << " (";
+            Bangunan* b = dynamic_cast<Bangunan*>(temp[i].first);
+            senarayBangunan.push_back(*b);
+            map<string, int> tempmats = b->getMats();
+            bool first = true;
+            for(auto it = tempmats.cbegin(); it != tempmats.cend(); ++it){
+                if(first){
+                    cout << it->first << " " << it->second;
+                    first = false;
+                } else {
+                    cout << ", " << it->first << " " << it->second;
+                }
+            }
+            cout << ")\n";
+        }
+    }
+
+    string input;
+    cout << "Bangunan yang ingin dibangun: ";
+    cin >> input;
+    bool found = false;
+    int index;
+
+    for(int i=0;i<senarayBangunan.size();i++){
+        if(input == senarayBangunan[i].getNama()){
+            index = i;
+            found = true;
+            break;
+        }
+    }
+
+    map<string,int> target = senarayBangunan[index].getMats();
+    vector<int> x,y;
+
+    Walikota *p = dynamic_cast<Walikota*>(this);
+    for(int i=1; i<=p->getPenyimpanan().getBaris(); i++){
+        for(int j=1; j<=p->getPenyimpanan().getKolom(); j++){
+            if(target[p->getPenyimpanan().getValue(i,j)->getNama()] > 1){
+                target[p->getPenyimpanan().getValue(i,j)->getNama()]--;
+                x.push_back(i);
+                y.push_back(j);
+            } else if(target[p->getPenyimpanan().getValue(i,j)->getNama()] == 1){
+                target.erase(p->getPenyimpanan().getValue(i,j)->getNama());
+                x.push_back(i);
+                y.push_back(j);
+            }
+        }
+    }
+
+    if(target.empty()){
+        this->penyimpanan.addNearby(&senarayBangunan[index]);
+        cout << senarayBangunan[index].getNama() << " berhasil dibangun dan telah menjadi hak milik walikota!\n";
+        for(int i=0;i<x.size();i++){
+            this->penyimpanan.setValue(x[i],y[i],nullptr);
+        }
+    } else {
+        cout << "Kamu tidak punya sumber daya yang cukup! Masih memerlukan ";
+        bool first = true;
+        for(auto it = target.cbegin(); it != target.cend(); ++it){
+            if(first){
+                cout << it->second << " " << it->first;
+                first = false;
+            } else {
+                cout << ", " << it->second << " " << it->first;
+            }
+        }
+        cout << "!\n";
+    }
+}
+
 void Walikota::tambahPemain(){
     string role;
     string name;

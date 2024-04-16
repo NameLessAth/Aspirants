@@ -57,7 +57,7 @@ class Walikota : public Pemain {
         Walikota();
         Walikota(string, int, int, Matrix<Simpanan>);
         void pungutPajak();
-        // void bangunBangunan();
+        void bangunBangunan();
         void tambahPemain();
         virtual void tumbal(){};
 };
