@@ -174,7 +174,7 @@ vector<Bangunan> Load::loadRecipe(){
     return newVec;
 }
 
-vector<Pemain*> Load::loadState(string path){
+void Load::loadState(string path){
     vector<Hewan> animalVec = Load::loadAnimal();
     vector<Tanaman> plantVec = Load::loadPlant();
     vector<Produk> prodVec = Load::loadProduct();
@@ -314,5 +314,6 @@ vector<Pemain*> Load::loadState(string path){
             Walikota* tempvar = new Walikota(username, uang, beratbadan, invVec);
             playerVec.push_back(tempvar);
         }
-    } return playerVec;
+    }
+    Pemain::setListPemain(playerVec);
 }

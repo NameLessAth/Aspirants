@@ -20,7 +20,7 @@ class Load{
         static vector<int> loadMisc();
         static vector<Produk> loadProduct();
         static vector<Bangunan> loadRecipe();
-        static vector<Pemain*> loadState(string);
+        static void loadState(string);
 };
 
 #endif

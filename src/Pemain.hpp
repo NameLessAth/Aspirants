@@ -2,6 +2,7 @@
 #define __PEMAIN_H__
 
 #include <string>
+#include <vector>
 #include "Matrix.hpp"
 #include "Simpanan.hpp"
 using namespace std;
@@ -17,6 +18,7 @@ class Pemain {
         static int jumlahPemain;
         static int barisPenyimpanan;
         static int kolomPenyimpanan;
+        static vector<Pemain*> listPemain;
     public:
         Pemain();
         Pemain(string, int, int, Matrix<Simpanan>);
@@ -28,6 +30,8 @@ class Pemain {
         int getUang();
         int getBerat();
         string getName();
+        static vector<Pemain*> getListPemain();
+        static void setListPemain(vector<Pemain*>);
 };
 
 // Walikota
@@ -69,17 +73,5 @@ class Peternak : public Pemain {
         void ternak();
         void panen();
 };
-
-// TODO: ListPemain : Aggregate of Pemain
-// Didefine di Pemain.hpp karena ListPemain butuh Pemain dan Walikota butuh ListPemain
-// class ListPemain {
-// private:
-//     static vector<Pemain*> listPemain;
-//     static int currentPemain;
-// public:
-//     static int getCurrentPemain();
-//     static vector<Pemain*> getListPemain();
-//     static void setListPemain(vector<Pemain*>);
-// };
 
 #endif 

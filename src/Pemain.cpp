@@ -8,12 +8,14 @@ using namespace std;
 int Pemain::jumlahPemain = 0;
 int Pemain::barisPenyimpanan = 10; // Berdasarkan berkas
 int Pemain::kolomPenyimpanan = 10; // Berdasarkan berkas
+vector<Pemain*> Pemain::listPemain;
 
 Pemain::Pemain() : penyimpanan(Pemain::barisPenyimpanan, Pemain::kolomPenyimpanan) {
     Pemain::jumlahPemain++;
     this->username = "Pemain" + to_string(Pemain::jumlahPemain);
     this->uang = 50;
     this->beratBadan = 40;
+    this->listPemain.push_back(this);
 }
 
 Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory) : penyimpanan(inventory.getBaris(), inventory.getKolom()) {
@@ -26,6 +28,7 @@ Pemain::Pemain(string username, int uang, int berat, Matrix<Simpanan> inventory)
             this->penyimpanan.setValue(i, j, inventory.getValue(i, j));
         }
     }
+    this->listPemain.push_back(this);
 }
 
 void Pemain::makan() {
@@ -67,6 +70,16 @@ int Pemain::getBerat(){
 
 string Pemain::getName(){
     return this->username;
+}
+
+vector<Pemain*> Pemain::getListPemain(){
+    return Pemain::listPemain;
+}
+
+void Pemain::setListPemain(vector<Pemain *> inputListPemain){
+    for(int i=0;i<inputListPemain.size();i++){
+        Pemain::listPemain.push_back(inputListPemain[i]);
+    }
 }
 
 // Walikota

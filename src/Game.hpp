@@ -9,7 +9,6 @@ using namespace std;
 
 class Game {
 private:
-    static vector<Pemain*> listPemain;
     static int currentPemain;
     static int goldRequirement;
     static int weightRequirement;
@@ -19,8 +18,6 @@ private:
 public:
     static void next();
     static int getCurrentPemain();
-    static vector<Pemain*> getListPemain();
-    static void setListPemain(vector<Pemain*>);
     static void start();
     static void main();
 };
